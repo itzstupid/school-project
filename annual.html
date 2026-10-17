@@ -1,0 +1,964 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Future Forward Desert City - Sustainable Solutions</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Three.js for 3D Scene Rendering -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        sand: {
+                            50: '#fffbf5',
+                            100: '#f7eee3',
+                            200: '#eddac4',
+                            300: '#dfbc9b',
+                            400: '#d1986e',
+                            500: '#c57849',
+                            600: '#b7603c',
+                            700: '#984a33',
+                            800: '#7b3e30',
+                            900: '#2b1810',
+                        },
+                        eco: {
+                            50: '#f0fdf4',
+                            100: '#dcfce7',
+                            200: '#bbf7d0',
+                            300: '#86efac',
+                            400: '#4ade80',
+                            500: '#22c55e',
+                            600: '#16a34a',
+                            700: '#15803d',
+                            800: '#166534',
+                            900: '#14532d',
+                        },
+                        oasis: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            200: '#bae6fd',
+                            300: '#7dd3fc',
+                            400: '#38bdf8',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                            700: '#0369a1',
+                            800: '#075985',
+                            900: '#0c4a6e',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                        display: ['Outfit', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #0d1520;
+            color: #f1f5f9;
+        }
+
+        .glass-panel {
+            background: rgba(18, 28, 45, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .glass-card:hover {
+            border-color: rgba(74, 222, 128, 0.4);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 30px -10px rgba(34, 197, 94, 0.15);
+        }
+
+        .glow-text-green {
+            text-shadow: 0 0 20px rgba(74, 222, 128, 0.5);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0d1520;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1e293b;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #22c55e;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
+        }
+
+        .animate-float {
+            animation: float 4s ease-in-out infinite;
+        }
+
+        #3d-canvas-container {
+            width: 100%;
+            height: 520px;
+            position: relative;
+            border-radius: 1.5rem;
+            overflow: hidden;
+        }
+
+        canvas {
+            display: block;
+            outline: none;
+        }
+    </style>
+</head>
+<body class="selection:bg-eco-500 selection:text-slate-950">
+
+    <!-- FLOATING NAVIGATION BAR WITH DIRECT POINT ACCESSIBILITY -->
+    <nav class="fixed top-0 left-0 right-0 z-50 glass-panel border-b border-white/10 px-4 lg:px-8 py-3">
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
+            
+            <!-- Logo -->
+            <a href="#" class="flex items-center space-x-3">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-eco-600 to-amber-400 flex items-center justify-center text-slate-950 font-bold text-xl shadow-lg shadow-eco-500/20">
+                    <i class="fa-solid fa-sun"></i>
+                </div>
+                <div>
+                    <span class="font-display font-black text-lg tracking-wider text-white block leading-none">FUTURE FORWARD</span>
+                    <span class="text-xs text-amber-400 font-semibold tracking-widest uppercase">Desert City Project</span>
+                </div>
+            </a>
+
+            <!-- Main Menu Links -->
+            <div class="hidden lg:flex items-center space-x-6 text-xs font-semibold text-slate-300">
+                <a href="#vision" class="hover:text-eco-400 transition-colors">Our Vision</a>
+                <a href="#why-it-matters" class="hover:text-eco-400 transition-colors">Why It Matters</a>
+                <a href="#3d-model-view" class="hover:text-eco-400 transition-colors flex items-center gap-1.5 text-amber-400">
+                    <i class="fa-solid fa-cube"></i> Interactive 3D Model
+                </a>
+                
+                <!-- Dropdown for Direct Key Feature Points -->
+                <div class="relative group">
+                    <button class="flex items-center space-x-1 hover:text-eco-400 py-2">
+                        <span>Key Features (7 Points)</span>
+                        <i class="fa-solid fa-chevron-down text-[10px]"></i>
+                    </button>
+                    <div class="absolute top-full left-0 hidden group-hover:block w-72 glass-panel rounded-2xl p-2 shadow-2xl border border-white/15 space-y-1">
+                        <a href="#feature-energy" class="block px-3 py-2 rounded-xl text-xs hover:bg-white/10 hover:text-amber-400 transition-colors">1. Wind & Solar Energy</a>
+                        <a href="#feature-water" class="block px-3 py-2 rounded-xl text-xs hover:bg-white/10 hover:text-oasis-400 transition-colors">2. Water Treatment & Recycling</a>
+                        <a href="#feature-farming" class="block px-3 py-2 rounded-xl text-xs hover:bg-white/10 hover:text-emerald-400 transition-colors">3. Vertical Farming & Food Dome</a>
+                        <a href="#feature-cooling" class="block px-3 py-2 rounded-xl text-xs hover:bg-white/10 hover:text-cyan-400 transition-colors">4. Smart Cooling Systems</a>
+                        <a href="#feature-transport" class="block px-3 py-2 rounded-xl text-xs hover:bg-white/10 hover:text-lime-400 transition-colors">5. Green Transport & EV Network</a>
+                        <a href="#feature-oasis" class="block px-3 py-2 rounded-xl text-xs hover:bg-white/10 hover:text-teal-400 transition-colors">6. Desert Green Zone & Reserve</a>
+                        <a href="#feature-control" class="block px-3 py-2 rounded-xl text-xs hover:bg-white/10 hover:text-eco-400 transition-colors">7. Smart City Control Centre</a>
+                    </div>
+                </div>
+
+                <a href="#simulator" class="hover:text-eco-400 transition-colors">Eco Simulator</a>
+            </div>
+
+            <!-- Header Action Buttons -->
+            <div class="flex items-center space-x-3">
+                <button onclick="openPhotoModal()" class="px-3.5 py-2 rounded-xl glass-panel hover:bg-white/10 border border-amber-500/30 text-amber-300 font-bold text-xs flex items-center space-x-2 transition-all">
+                    <i class="fa-solid fa-image"></i>
+                    <span class="hidden sm:inline">See Original Display Photo</span>
+                </button>
+                <a href="#3d-model-view" class="px-4 py-2 rounded-xl bg-eco-500 hover:bg-eco-400 text-slate-950 font-extrabold text-xs transition-all shadow-lg shadow-eco-500/25">
+                    Launch 3D View
+                </a>
+            </div>
+
+        </div>
+    </nav>
+
+    <!-- HERO SECTION (Human-Centered & Inspiring) -->
+    <header class="relative pt-32 pb-20 md:pt-40 md:pb-28 overflow-hidden">
+        <div class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-amber-500/10 rounded-full blur-[120px] pointer-events-none"></div>
+        <div class="absolute top-1/3 left-1/4 w-[400px] h-[400px] bg-eco-500/15 rounded-full blur-[100px] pointer-events-none"></div>
+
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+            
+            <div class="inline-flex items-center space-x-2 px-4 py-2 rounded-full glass-card border-amber-500/30 text-amber-300 text-xs sm:text-sm font-semibold mb-6 animate-float">
+                <i class="fa-solid fa-sun text-amber-400"></i>
+                <span>SUSTAINABLE SOLUTIONS FOR A BRIGHTER TOMORROW</span>
+                <i class="fa-solid fa-leaf text-eco-400"></i>
+            </div>
+
+            <h1 class="font-display text-4xl sm:text-6xl md:text-7xl font-black text-white tracking-tight mb-6 leading-tight">
+                FUTURE FORWARD <br>
+                <span class="bg-gradient-to-r from-amber-400 via-eco-400 to-oasis-400 bg-clip-text text-transparent glow-text-green">
+                    DESERT CITY
+                </span>
+            </h1>
+
+            <p class="max-w-3xl mx-auto text-base sm:text-lg text-slate-300 font-normal leading-relaxed mb-8">
+                Welcome! Imagine living in a desert where energy comes from the sun and wind, every drop of water is recycled, fresh food grows in high-tech domes, and electric transport moves everyone quietly under palm-shaded avenues. Here is our vision for a thriving, sustainable desert city.
+            </p>
+
+            <!-- Quick Navigation Index Buttons -->
+            <div class="glass-panel p-4 rounded-2xl max-w-4xl mx-auto border border-white/10 mb-10">
+                <span class="text-xs font-bold text-slate-400 uppercase tracking-wider block mb-3">Jump Straight To Any Key Feature Point:</span>
+                <div class="flex flex-wrap items-center justify-center gap-2 text-xs">
+                    <a href="#feature-energy" class="px-3 py-1.5 rounded-lg bg-amber-500/15 text-amber-300 hover:bg-amber-500/30 transition-all border border-amber-500/30"><i class="fa-solid fa-solar-panel mr-1"></i> Solar & Wind</a>
+                    <a href="#feature-water" class="px-3 py-1.5 rounded-lg bg-oasis-500/15 text-oasis-300 hover:bg-oasis-500/30 transition-all border border-oasis-500/30"><i class="fa-solid fa-faucet-drip mr-1"></i> Water Recycling</a>
+                    <a href="#feature-farming" class="px-3 py-1.5 rounded-lg bg-emerald-500/15 text-emerald-300 hover:bg-emerald-500/30 transition-all border border-emerald-500/30"><i class="fa-solid fa-wheat-awn mr-1"></i> Food Biodome</a>
+                    <a href="#feature-cooling" class="px-3 py-1.5 rounded-lg bg-cyan-500/15 text-cyan-300 hover:bg-cyan-500/30 transition-all border border-cyan-500/30"><i class="fa-solid fa-snowflake mr-1"></i> Smart Cooling</a>
+                    <a href="#feature-transport" class="px-3 py-1.5 rounded-lg bg-lime-500/15 text-lime-300 hover:bg-lime-500/30 transition-all border border-lime-500/30"><i class="fa-solid fa-bus mr-1"></i> Green Transport</a>
+                    <a href="#feature-oasis" class="px-3 py-1.5 rounded-lg bg-teal-500/15 text-teal-300 hover:bg-teal-500/30 transition-all border border-teal-500/30"><i class="fa-solid fa-water mr-1"></i> Oasis & Reserve</a>
+                    <a href="#feature-control" class="px-3 py-1.5 rounded-lg bg-eco-500/15 text-eco-300 hover:bg-eco-500/30 transition-all border border-eco-500/30"><i class="fa-solid fa-city mr-1"></i> Control Centre</a>
+                </div>
+            </div>
+
+            <div class="flex flex-wrap items-center justify-center gap-4">
+                <a href="#3d-model-view" class="px-8 py-4 rounded-xl bg-gradient-to-r from-eco-500 to-eco-600 hover:from-eco-400 hover:to-eco-500 text-slate-950 font-extrabold text-sm transition-all shadow-xl shadow-eco-500/25">
+                    <i class="fa-solid fa-cube mr-2"></i> Explore 3D City Model
+                </a>
+                <button onclick="openPhotoModal()" class="px-8 py-4 rounded-xl glass-panel hover:bg-white/10 text-white font-bold text-sm transition-all border border-amber-500/30">
+                    <i class="fa-solid fa-camera mr-2 text-amber-400"></i> View Project Board Photo
+                </button>
+            </div>
+
+        </div>
+    </header>
+
+    <!-- SECTION 1: OUR VISION (Friendly Human Narrative) -->
+    <section id="vision" class="py-20 relative bg-slate-950/60 border-y border-white/5">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                
+                <div class="lg:col-span-7 space-y-6">
+                    <div class="inline-flex items-center space-x-2 text-eco-400 font-bold text-xs uppercase tracking-widest">
+                        <i class="fa-solid fa-eye"></i>
+                        <span>Heart of the Project</span>
+                    </div>
+                    <h2 class="font-display text-3xl sm:text-5xl font-black text-white">Our Vision</h2>
+                    
+                    <blockquote class="p-6 rounded-2xl glass-panel border-l-4 border-eco-400 text-lg sm:text-xl text-slate-200 font-medium leading-relaxed italic">
+                        "To build a clean, green and self-sufficient city in the desert using renewable energy, smart technology and sustainable resources."
+                    </blockquote>
+
+                    <p class="text-slate-300 leading-relaxed text-sm sm:text-base">
+                        Deserts cover over 20% of Earth's land, and as our planet grows warmer, learning to live harmoniously in arid environments is one of humanity's greatest challenges. Our 3D model shows how thoughtful engineering and natural ecological principles can turn harsh desert landscapes into vibrant, self-sustaining communities.
+                    </p>
+
+                    <div class="grid grid-cols-3 gap-4 pt-2">
+                        <div class="glass-card p-4 rounded-xl text-center">
+                            <i class="fa-solid fa-sun text-2xl text-amber-400 mb-1"></i>
+                            <span class="block font-bold text-white text-xs sm:text-sm">100% Sun-Powered</span>
+                        </div>
+                        <div class="glass-card p-4 rounded-xl text-center">
+                            <i class="fa-solid fa-droplet text-2xl text-oasis-400 mb-1"></i>
+                            <span class="block font-bold text-white text-xs sm:text-sm">Closed-Loop Water</span>
+                        </div>
+                        <div class="glass-card p-4 rounded-xl text-center">
+                            <i class="fa-solid fa-tree text-2xl text-eco-400 mb-1"></i>
+                            <span class="block font-bold text-white text-xs sm:text-sm">Zero Waste</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="lg:col-span-5 relative">
+                    <div class="glass-panel p-6 rounded-3xl border border-white/10 text-center relative group">
+                        <div class="w-full aspect-square rounded-2xl bg-gradient-to-tr from-amber-500/20 via-eco-500/20 to-oasis-500/20 flex flex-col items-center justify-center p-6 border border-white/10">
+                            <i class="fa-solid fa-city text-6xl text-amber-400 mb-4 animate-float"></i>
+                            <h3 class="font-display text-2xl font-black text-white mb-2">A Sustainable Oasis</h3>
+                            <p class="text-xs text-slate-300">Combining ancient architectural wisdom with future AI technology.</p>
+                            <button onclick="openPhotoModal()" class="mt-6 px-4 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs transition-all shadow-md">
+                                <i class="fa-solid fa-expand mr-1.5"></i> Inspect Physical Display Board
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 2: WHY IT MATTERS (Interactive Human Point-by-Point Cards) -->
+    <section id="why-it-matters" class="py-20 relative">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <div class="text-center max-w-3xl mx-auto mb-14">
+                <span class="text-amber-400 font-bold text-xs tracking-widest uppercase">Purpose & Impact</span>
+                <h2 class="font-display text-3xl sm:text-5xl font-black text-white mt-2 mb-4">Why It Matters</h2>
+                <p class="text-slate-400 text-sm sm:text-base">
+                    "It helps conserve water, reduces carbon emissions, creates a healthier environment and ensures a better future for generations to come."
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                
+                <!-- Card 1 -->
+                <div class="glass-card p-6 rounded-2xl border-white/10 hover:border-oasis-400/50">
+                    <div class="w-12 h-12 rounded-xl bg-oasis-500/20 text-oasis-400 flex items-center justify-center text-xl mb-4">
+                        <i class="fa-solid fa-hand-holding-droplet"></i>
+                    </div>
+                    <h3 class="font-display text-xl font-bold text-white mb-2">Water Conservation</h3>
+                    <p class="text-slate-300 text-xs leading-relaxed">
+                        Desert regions face extreme water scarcity. By capturing humidity and recycling 100% of graywater, we save every precious drop.
+                    </p>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="glass-card p-6 rounded-2xl border-white/10 hover:border-amber-400/50">
+                    <div class="w-12 h-12 rounded-xl bg-amber-500/20 text-amber-400 flex items-center justify-center text-xl mb-4">
+                        <i class="fa-solid fa-cloud-arrow-down"></i>
+                    </div>
+                    <h3 class="font-display text-xl font-bold text-white mb-2">Reduces Emissions</h3>
+                    <p class="text-slate-300 text-xs leading-relaxed">
+                        Replacing fossil fuels with clean solar panels and wind turbines slashes greenhouse gases, cooling down global climate trends.
+                    </p>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="glass-card p-6 rounded-2xl border-white/10 hover:border-eco-400/50">
+                    <div class="w-12 h-12 rounded-xl bg-eco-500/20 text-eco-400 flex items-center justify-center text-xl mb-4">
+                        <i class="fa-solid fa-heart-pulse"></i>
+                    </div>
+                    <h3 class="font-display text-xl font-bold text-white mb-2">Healthier Living</h3>
+                    <p class="text-slate-300 text-xs leading-relaxed">
+                        Clean air without smog, fresh organic veggies grown locally, and natural green parks reduce stress and keep communities healthy.
+                    </p>
+                </div>
+
+                <!-- Card 4 -->
+                <div class="glass-card p-6 rounded-2xl border-white/10 hover:border-purple-400/50">
+                    <div class="w-12 h-12 rounded-xl bg-purple-500/20 text-purple-400 flex items-center justify-center text-xl mb-4">
+                        <i class="fa-solid fa-child-reaching"></i>
+                    </div>
+                    <h3 class="font-display text-xl font-bold text-white mb-2">For Future Generations</h3>
+                    <p class="text-slate-300 text-xs leading-relaxed">
+                        Building sustainable cities today ensures our children inherit a thriving, clean planet with reliable resources.
+                    </p>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+    <!-- SECTION 3: SEE-ABLE INTERACTIVE 3D MODEL SECTION (Three.js WebGL) -->
+    <section id="3d-model-view" class="py-20 relative bg-slate-950/80 border-y border-white/5">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <div class="text-center max-w-3xl mx-auto mb-8">
+                <span class="text-eco-400 font-bold text-xs tracking-widest uppercase"><i class="fa-solid fa-cube mr-1"></i> Interactive WebGL Render</span>
+                <h2 class="font-display text-3xl sm:text-5xl font-black text-white mt-2 mb-3">Explore the 3D City Model</h2>
+                <p class="text-slate-400 text-sm">
+                    Drag with your mouse or finger to orbit around the 3D city! Scroll to zoom in/out, or click any camera preset button below to inspect specific sectors.
+                </p>
+            </div>
+
+            <!-- 3D Canvas Container -->
+            <div class="glass-panel p-3 sm:p-5 rounded-3xl border border-white/15 relative shadow-2xl">
+                
+                <!-- Camera Preset Buttons Bar -->
+                <div class="flex flex-wrap items-center justify-between gap-2 mb-3 pb-3 border-b border-white/10 text-xs">
+                    <span class="font-bold text-white flex items-center gap-1.5">
+                        <span class="w-2.5 h-2.5 rounded-full bg-eco-400 animate-ping"></span> 3D Controls
+                    </span>
+                    <div class="flex flex-wrap items-center gap-2">
+                        <button onclick="focus3D('overview')" class="px-3 py-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-white font-medium transition-colors">
+                            <i class="fa-solid fa-globe mr-1 text-amber-400"></i> Full Overview
+                        </button>
+                        <button onclick="focus3D('control')" class="px-3 py-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-white font-medium transition-colors">
+                            <i class="fa-solid fa-city mr-1 text-eco-400"></i> Control Dome
+                        </button>
+                        <button onclick="focus3D('energy')" class="px-3 py-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-white font-medium transition-colors">
+                            <i class="fa-solid fa-solar-panel mr-1 text-amber-300"></i> Solar & Wind
+                        </button>
+                        <button onclick="focus3D('farming')" class="px-3 py-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-white font-medium transition-colors">
+                            <i class="fa-solid fa-wheat-awn mr-1 text-emerald-300"></i> Food Dome
+                        </button>
+                        <button onclick="focus3D('water')" class="px-3 py-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-white font-medium transition-colors">
+                            <i class="fa-solid fa-water mr-1 text-oasis-300"></i> Oasis Reserve
+                        </button>
+                    </div>
+                </div>
+
+                <!-- WebGL Canvas Output -->
+                <div id="3d-canvas-container">
+                    <canvas id="threeCanvas"></canvas>
+                    <div id="canvas3dLoader" class="absolute inset-0 bg-slate-900 flex items-center justify-center text-slate-300 font-medium text-sm">
+                        <i class="fa-solid fa-circle-notch fa-spin text-eco-400 text-2xl mr-3"></i> Loading 3D City Model...
+                    </div>
+                </div>
+
+                <div class="mt-3 flex flex-wrap items-center justify-between text-[11px] text-slate-400 px-2">
+                    <span><i class="fa-solid fa-computer-mouse mr-1 text-amber-400"></i> Left Click + Drag to Rotate | Right Click + Drag to Pan | Scroll to Zoom</span>
+                    <button onclick="openPhotoModal()" class="hover:text-amber-300 underline transition-colors">
+                        Compare with original display photo
+                    </button>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+    <!-- SECTION 4: KEY FEATURES - DEDICATED HEADINGS FOR EACH POINT -->
+    <section id="features" class="py-24 relative">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <span class="text-eco-400 font-bold text-xs tracking-widest uppercase">Project Blueprint</span>
+                <h2 class="font-display text-3xl sm:text-5xl font-black text-white mt-2 mb-4">Key Features Breakdown</h2>
+                <p class="text-slate-400 text-sm sm:text-base">
+                    Explore all 7 core sustainable innovations featured in our desert city presentation board.
+                </p>
+            </div>
+
+            <!-- KEY POINT 1: Solar & Wind Energy -->
+            <div id="feature-energy" class="glass-panel p-8 rounded-3xl border border-amber-500/30 mb-12 scroll-mt-28 relative overflow-hidden group">
+                <div class="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6">
+                    <div class="space-y-4 max-w-2xl">
+                        <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-amber-500/20 text-amber-300 text-xs font-bold border border-amber-500/30">
+                            <i class="fa-solid fa-solar-panel"></i>
+                            <span>Key Feature #1</span>
+                        </div>
+                        <h3 class="font-display text-2xl sm:text-4xl font-extrabold text-white">Wind & Solar Renewable Energy</h3>
+                        <p class="text-slate-300 text-sm sm:text-base leading-relaxed">
+                            The desert gets plenty of fierce sun and continuous wind currents. Our city features smart solar photovoltaic tracking arrays that follow the sun's path across the sky, alongside vertical-axis wind turbines placed on high ridgelines to generate clean power 24 hours a day.
+                        </p>
+                        <ul class="text-xs sm:text-sm text-slate-300 space-y-2">
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-eco-400"></i> Continuous clean power generation without carbon fuel</li>
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-eco-400"></i> High-capacity battery storage banks for night-time electricity</li>
+                        </ul>
+                    </div>
+                    <div class="w-full lg:w-72 glass-card p-6 rounded-2xl text-center border-amber-500/20">
+                        <i class="fa-solid fa-sun text-5xl text-amber-400 mb-3 animate-pulse"></i>
+                        <span class="block text-2xl font-black text-amber-300 font-mono">100% Clean</span>
+                        <span class="text-xs text-slate-400">Renewable Energy Matrix</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- KEY POINT 2: Water Treatment & Recycling -->
+            <div id="feature-water" class="glass-panel p-8 rounded-3xl border border-oasis-500/30 mb-12 scroll-mt-28 relative overflow-hidden group">
+                <div class="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6">
+                    <div class="space-y-4 max-w-2xl">
+                        <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-oasis-500/20 text-oasis-300 text-xs font-bold border border-oasis-500/30">
+                            <i class="fa-solid fa-faucet-drip"></i>
+                            <span>Key Feature #2</span>
+                        </div>
+                        <h3 class="font-display text-2xl sm:text-4xl font-extrabold text-white">Water Treatment & Recycling</h3>
+                        <p class="text-slate-300 text-sm sm:text-base leading-relaxed">
+                            Water is life in the desert. The city’s water treatment plant cleans and purifies 100% of used wastewater through bio-membrane filters and reverse osmosis. The recycled water nourishes green parks, fills cooling towers, and irrigates crop biodomes.
+                        </p>
+                        <ul class="text-xs sm:text-sm text-slate-300 space-y-2">
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-eco-400"></i> Closed-loop zero water waste system</li>
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-eco-400"></i> Atmospheric condensation harvesters pull moisture from desert air</li>
+                        </ul>
+                    </div>
+                    <div class="w-full lg:w-72 glass-card p-6 rounded-2xl text-center border-oasis-500/20">
+                        <i class="fa-solid fa-droplet text-5xl text-oasis-400 mb-3 animate-pulse"></i>
+                        <span class="block text-2xl font-black text-oasis-300 font-mono">2.5M Liters</span>
+                        <span class="text-xs text-slate-400">Recycled Daily</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- KEY POINT 3: Vertical Farming & Food Dome -->
+            <div id="feature-farming" class="glass-panel p-8 rounded-3xl border border-emerald-500/30 mb-12 scroll-mt-28 relative overflow-hidden group">
+                <div class="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6">
+                    <div class="space-y-4 max-w-2xl">
+                        <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-300 text-xs font-bold border border-emerald-500/30">
+                            <i class="fa-solid fa-wheat-awn"></i>
+                            <span>Key Feature #3</span>
+                        </div>
+                        <h3 class="font-display text-2xl sm:text-4xl font-extrabold text-white">Vertical Farming & Food Dome</h3>
+                        <p class="text-slate-300 text-sm sm:text-base leading-relaxed">
+                            Instead of relying on long supply chains or harsh open desert heat, fresh crops grow vertically inside temperature-controlled glass biodomes using hydroponic and aeroponic vertical towers that consume 90% less water than traditional soil farming.
+                        </p>
+                        <ul class="text-xs sm:text-sm text-slate-300 space-y-2">
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-eco-400"></i> Year-round organic fruits and vegetables</li>
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-eco-400"></i> Completely pesticide-free cultivation</li>
+                        </ul>
+                    </div>
+                    <div class="w-full lg:w-72 glass-card p-6 rounded-2xl text-center border-emerald-500/20">
+                        <i class="fa-solid fa-seedling text-5xl text-emerald-400 mb-3 animate-pulse"></i>
+                        <span class="block text-2xl font-black text-emerald-300 font-mono">90% Less</span>
+                        <span class="text-xs text-slate-400">Water Needed for Food</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- KEY POINT 4: Smart Cooling Systems -->
+            <div id="feature-cooling" class="glass-panel p-8 rounded-3xl border border-cyan-500/30 mb-12 scroll-mt-28 relative overflow-hidden group">
+                <div class="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6">
+                    <div class="space-y-4 max-w-2xl">
+                        <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-cyan-500/20 text-cyan-300 text-xs font-bold border border-cyan-500/30">
+                            <i class="fa-solid fa-snowflake"></i>
+                            <span>Key Feature #4</span>
+                        </div>
+                        <h3 class="font-display text-2xl sm:text-4xl font-extrabold text-white">Smart Passive Cooling</h3>
+                        <p class="text-slate-300 text-sm sm:text-base leading-relaxed">
+                            Beating the heat doesn't mean wasting power. Buildings feature shaded micro-geometries, reflective rooftop gardens, aerodynamic windcatchers, and underground geothermal chilling pipes that lower urban temperatures by up to 6°C naturally.
+                        </p>
+                        <ul class="text-xs sm:text-sm text-slate-300 space-y-2">
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-eco-400"></i> Microclimate airflow architecture</li>
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-eco-400"></i> Green rooftop gardens insulate against solar heat</li>
+                        </ul>
+                    </div>
+                    <div class="w-full lg:w-72 glass-card p-6 rounded-2xl text-center border-cyan-500/20">
+                        <i class="fa-solid fa-temperature-arrow-down text-5xl text-cyan-400 mb-3 animate-pulse"></i>
+                        <span class="block text-2xl font-black text-cyan-300 font-mono">-6°C Cooler</span>
+                        <span class="text-xs text-slate-400">Ambient Urban Temperature</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- KEY POINT 5: Green Transport & EV Network -->
+            <div id="feature-transport" class="glass-panel p-8 rounded-3xl border border-lime-500/30 mb-12 scroll-mt-28 relative overflow-hidden group">
+                <div class="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6">
+                    <div class="space-y-4 max-w-2xl">
+                        <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-lime-500/20 text-lime-300 text-xs font-bold border border-lime-500/30">
+                            <i class="fa-solid fa-bus"></i>
+                            <span>Key Feature #5</span>
+                        </div>
+                        <h3 class="font-display text-2xl sm:text-4xl font-extrabold text-white">Green Transport & EV Shuttles</h3>
+                        <p class="text-slate-300 text-sm sm:text-base leading-relaxed">
+                            Say goodbye to gas-powered car fumes! City transit relies on quiet electric public buses, autonomous shuttles, and solar-charging tram lines along tree-lined pedestrian streets where walking and cycling are safe and easy.
+                        </p>
+                        <ul class="text-xs sm:text-sm text-slate-300 space-y-2">
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-eco-400"></i> Zero exhaust gas or particulate pollution</li>
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-eco-400"></i> Wireless magnetic road charging tracks</li>
+                        </ul>
+                    </div>
+                    <div class="w-full lg:w-72 glass-card p-6 rounded-2xl text-center border-lime-500/20">
+                        <i class="fa-solid fa-charging-station text-5xl text-lime-400 mb-3 animate-pulse"></i>
+                        <span class="block text-2xl font-black text-lime-300 font-mono">100% EV</span>
+                        <span class="text-xs text-slate-400">Zero-Emission Fleet</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- KEY POINT 6: Desert Green Zone & Water Reserve -->
+            <div id="feature-oasis" class="glass-panel p-8 rounded-3xl border border-teal-500/30 mb-12 scroll-mt-28 relative overflow-hidden group">
+                <div class="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6">
+                    <div class="space-y-4 max-w-2xl">
+                        <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-teal-500/20 text-teal-300 text-xs font-bold border border-teal-500/30">
+                            <i class="fa-solid fa-water"></i>
+                            <span>Key Feature #6</span>
+                        </div>
+                        <h3 class="font-display text-2xl sm:text-4xl font-extrabold text-white">Desert Green Zone & Water Reserve</h3>
+                        <p class="text-slate-300 text-sm sm:text-base leading-relaxed">
+                            A flourishing oasis park filled with native date palms, bio-swales, and a central blue water lake reserve. It acts as the city’s green lungs, filtering dust storms, harboring local birds and wildlife, and offering peaceful natural parks for families.
+                        </p>
+                        <ul class="text-xs sm:text-sm text-slate-300 space-y-2">
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-eco-400"></i> Native drought-tolerant flora ecosystem</li>
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-eco-400"></i> Natural emergency water storage reservoir</li>
+                        </ul>
+                    </div>
+                    <div class="w-full lg:w-72 glass-card p-6 rounded-2xl text-center border-teal-500/20">
+                        <i class="fa-solid fa-tree text-5xl text-teal-400 mb-3 animate-pulse"></i>
+                        <span class="block text-2xl font-black text-teal-300 font-mono">350k m²</span>
+                        <span class="text-xs text-slate-400">Protected Green Reserve</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- KEY POINT 7: Smart City Control Centre -->
+            <div id="feature-control" class="glass-panel p-8 rounded-3xl border border-eco-500/30 scroll-mt-28 relative overflow-hidden group">
+                <div class="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6">
+                    <div class="space-y-4 max-w-2xl">
+                        <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-eco-500/20 text-eco-300 text-xs font-bold border border-eco-500/30">
+                            <i class="fa-solid fa-city"></i>
+                            <span>Key Feature #7</span>
+                        </div>
+                        <h3 class="font-display text-2xl sm:text-4xl font-extrabold text-white">Smart City Control Centre</h3>
+                        <p class="text-slate-300 text-sm sm:text-base leading-relaxed">
+                            Positioned directly at the center of the model under a large glass dome, this AI command center manages energy grid balance, monitors water pipe integrity, optimizes traffic signal timings, and keeps the whole city running efficiently.
+                        </p>
+                        <ul class="text-xs sm:text-sm text-slate-300 space-y-2">
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-eco-400"></i> Real-time AI resource monitoring</li>
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-eco-400"></i> Automated emergency response system</li>
+                        </ul>
+                    </div>
+                    <div class="w-full lg:w-72 glass-card p-6 rounded-2xl text-center border-eco-500/20">
+                        <i class="fa-solid fa-brain text-5xl text-eco-400 mb-3 animate-pulse"></i>
+                        <span class="block text-2xl font-black text-eco-300 font-mono">AI Brain</span>
+                        <span class="text-xs text-slate-400">Centralized City Command</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- SECTION 5: LIVE ECO IMPACT CALCULATOR -->
+    <section id="simulator" class="py-20 relative bg-slate-950/80 border-t border-white/5">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <div class="text-center max-w-3xl mx-auto mb-12">
+                <span class="text-amber-400 font-bold text-xs tracking-widest uppercase">Hands-On Simulator</span>
+                <h2 class="font-display text-3xl sm:text-5xl font-black text-white mt-2 mb-4">Interactive Eco Calculator</h2>
+                <p class="text-slate-400 text-sm">Drag the sliders to see how increasing solar power, water recycling, or EV transit directly impacts carbon savings!</p>
+            </div>
+
+            <div class="glass-panel p-6 sm:p-10 rounded-3xl border border-white/10">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                    
+                    <div class="lg:col-span-6 space-y-6">
+                        <!-- Slider 1 -->
+                        <div>
+                            <div class="flex justify-between text-xs font-bold text-slate-300 mb-2">
+                                <span><i class="fa-solid fa-sun text-amber-400 mr-1.5"></i> Solar & Wind Power Output</span>
+                                <span id="simSolarVal" class="text-amber-400 font-mono">85%</span>
+                            </div>
+                            <input type="range" id="simSolar" min="10" max="100" value="85" class="w-full h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-amber-400">
+                        </div>
+
+                        <!-- Slider 2 -->
+                        <div>
+                            <div class="flex justify-between text-xs font-bold text-slate-300 mb-2">
+                                <span><i class="fa-solid fa-droplet text-oasis-400 mr-1.5"></i> Water Recycling Rate</span>
+                                <span id="simWaterVal" class="text-oasis-400 font-mono">92%</span>
+                            </div>
+                            <input type="range" id="simWater" min="10" max="100" value="92" class="w-full h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-oasis-400">
+                        </div>
+
+                        <!-- Slider 3 -->
+                        <div>
+                            <div class="flex justify-between text-xs font-bold text-slate-300 mb-2">
+                                <span><i class="fa-solid fa-bus text-lime-400 mr-1.5"></i> EV Transit Coverage</span>
+                                <span id="simEVVal" class="text-lime-400 font-mono">95%</span>
+                            </div>
+                            <input type="range" id="simEV" min="10" max="100" value="95" class="w-full h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-lime-400">
+                        </div>
+                    </div>
+
+                    <!-- Output Panel -->
+                    <div class="lg:col-span-6 bg-slate-900/90 p-6 rounded-2xl border border-white/10 grid grid-cols-2 gap-4 text-center">
+                        <div class="glass-card p-4 rounded-xl">
+                            <span class="text-xs text-slate-400 block mb-1">Energy Autonomy</span>
+                            <span id="resEnergy" class="text-2xl sm:text-3xl font-black text-amber-400 font-mono">94.5%</span>
+                        </div>
+                        <div class="glass-card p-4 rounded-xl">
+                            <span class="text-xs text-slate-400 block mb-1">Daily Water Saved</span>
+                            <span id="resWater" class="text-2xl sm:text-3xl font-black text-oasis-400 font-mono">1.84M L</span>
+                        </div>
+                        <div class="glass-card p-4 rounded-xl">
+                            <span class="text-xs text-slate-400 block mb-1">CO₂ Prevented / Year</span>
+                            <span id="resCarbon" class="text-2xl sm:text-3xl font-black text-eco-400 font-mono">-42,500T</span>
+                        </div>
+                        <div class="glass-card p-4 rounded-xl">
+                            <span class="text-xs text-slate-400 block mb-1">City Sustainability Grade</span>
+                            <span id="resGrade" class="text-2xl sm:text-3xl font-black text-emerald-400 font-mono">A+</span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="py-12 bg-slate-950 border-t border-white/10 text-center">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-4">
+            <div class="flex items-center justify-center space-x-2">
+                <i class="fa-solid fa-sun text-amber-400 text-xl"></i>
+                <span class="font-display font-black text-xl text-white">FUTURE FORWARD DESERT CITY</span>
+            </div>
+            <p class="text-xs text-slate-400 max-w-md mx-auto">
+                "A Sustainable Desert City: Sustainable Solutions for a Brighter Tomorrow" — Interactive Web Presentation.
+            </p>
+            <div class="text-[11px] text-slate-600 pt-4 border-t border-white/5">
+                Created with passion for eco-technology & global climate solutions.
+            </div>
+        </div>
+    </footer>
+
+    <!-- MODAL FOR ORIGINAL DISPLAY PHOTO -->
+    <div id="photoModal" class="fixed inset-0 z-50 bg-slate-950/90 backdrop-blur-md hidden flex items-center justify-center p-4">
+        <div class="relative max-w-5xl w-full glass-panel rounded-3xl overflow-hidden border border-amber-500/30 p-4">
+            <div class="flex items-center justify-between pb-3 mb-3 border-b border-white/10">
+                <div class="flex items-center space-x-2 text-amber-300 font-bold text-sm">
+                    <i class="fa-solid fa-camera"></i>
+                    <span>Original Physical Project Model Photo</span>
+                </div>
+                <button onclick="closePhotoModal()" class="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center text-sm transition-colors">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            <div class="relative w-full overflow-hidden rounded-2xl bg-black flex items-center justify-center">
+                <img id="modalImg" src="" alt="Future Forward Desert City Model" class="max-h-[80vh] w-auto object-contain rounded-xl">
+            </div>
+            <div class="mt-3 text-center text-xs text-slate-400">
+                "FUTURE FORWARD DESERT CITY - Sustainable Solutions for a Brighter Tomorrow" display board and 3D physical model.
+            </div>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        // High-Res Image Source for Photo Modal
+        const originalModelPhotoUrl = "https://placehold.co/1200x800/2b1810/f59e0b?text=Future+Forward+Desert+City+Model+Photo";
+
+        function openPhotoModal() {
+            // Set image src if provided or fallback
+            const img = document.getElementById('modalImg');
+            img.src = originalModelPhotoUrl;
+            document.getElementById('photoModal').classList.remove('hidden');
+        }
+
+        function closePhotoModal() {
+            document.getElementById('photoModal').classList.add('hidden');
+        }
+
+        // ==========================================
+        // THREE.JS INTERACTIVE 3D SCENE SETUP
+        // ==========================================
+        let scene, camera, renderer, controls;
+        let windTurbines = [];
+        let shuttleBuses = [];
+
+        function init3DScene() {
+            const container = document.getElementById('3d-canvas-container');
+            const canvas = document.getElementById('threeCanvas');
+
+            // Scene
+            scene = new THREE.Scene();
+            scene.background = new THREE.Color(0x0e1726);
+            scene.fog = new THREE.FogExp2(0x0e1726, 0.015);
+
+            // Camera
+            camera = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 0.1, 1000);
+            camera.position.set(30, 25, 35);
+
+            // Renderer
+            renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true });
+            renderer.setSize(container.clientWidth, container.clientHeight);
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            renderer.shadowMap.enabled = true;
+
+            // Orbit Controls
+            controls = new THREE.OrbitControls(camera, renderer.domElement);
+            controls.enableDamping = true;
+            controls.dampingFactor = 0.05;
+            controls.maxPolarAngle = Math.PI / 2 - 0.05; // Don't go under ground
+
+            // Lights
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.7);
+            scene.add(ambientLight);
+
+            const sunLight = new THREE.DirectionalLight(0xfcd34d, 1.2);
+            sunLight.position.set(40, 50, 20);
+            sunLight.castShadow = true;
+            scene.add(sunLight);
+
+            // --- BUILD DESERT TERRAIN BASE ---
+            const groundGeo = new THREE.PlaneGeometry(80, 80);
+            const groundMat = new THREE.MeshStandardMaterial({ color: 0xc57849, roughness: 0.9 });
+            const ground = new THREE.Mesh(groundGeo, groundMat);
+            ground.rotation.x = -Math.PI / 2;
+            ground.receiveShadow = true;
+            scene.add(ground);
+
+            // Circular Road Base
+            const roadGeo = new THREE.RingGeometry(8, 16, 32);
+            const roadMat = new THREE.MeshStandardMaterial({ color: 0x334155, side: THREE.DoubleSide });
+            const road = new THREE.Mesh(roadGeo, roadMat);
+            road.rotation.x = -Math.PI / 2;
+            road.position.y = 0.02;
+            scene.add(road);
+
+            // River / Oasis Channel
+            const riverGeo = new THREE.PlaneGeometry(12, 40);
+            const riverMat = new THREE.MeshStandardMaterial({ color: 0x0284c7, roughness: 0.1, metalness: 0.8 });
+            const river = new THREE.Mesh(riverGeo, riverMat);
+            river.rotation.x = -Math.PI / 2;
+            river.position.set(22, 0.03, 5);
+            scene.add(river);
+
+            // --- BUILD 1. CENTRAL CONTROL DOME ---
+            const domeGeo = new THREE.SphereGeometry(4.5, 32, 16, 0, Math.PI * 2, 0, Math.PI / 2);
+            const domeMat = new THREE.MeshStandardMaterial({ color: 0x38bdf8, transparent: true, opacity: 0.6, roughness: 0.1, metalness: 0.9 });
+            const dome = new THREE.Mesh(domeGeo, domeMat);
+            dome.position.set(0, 0, 0);
+            scene.add(dome);
+
+            // --- BUILD 2. VERTICAL FARMING DOME ---
+            const farmDome = new THREE.Mesh(
+                new THREE.SphereGeometry(3.5, 24, 12, 0, Math.PI * 2, 0, Math.PI / 2),
+                new THREE.MeshStandardMaterial({ color: 0x4ade80, transparent: true, opacity: 0.65 })
+            );
+            farmDome.position.set(14, 0, -8);
+            scene.add(farmDome);
+
+            // --- BUILD 3. SKYSCRAPERS WITH GREEN ROOFS ---
+            const bldgMat = new THREE.MeshStandardMaterial({ color: 0x94a3b8 });
+            const roofMat = new THREE.MeshStandardMaterial({ color: 0x22c55e });
+
+            const bldgPositions = [
+                { x: -5, z: -10, h: 10, w: 3 },
+                { x: 0, z: -12, h: 14, w: 3.5 },
+                { x: 5, z: -10, h: 11, w: 3 },
+                { x: -11, z: 2, h: 8, w: 3 },
+            ];
+
+            bldgPositions.forEach(b => {
+                const bldg = new THREE.Mesh(new THREE.BoxGeometry(b.w, b.h, b.w), bldgMat);
+                bldg.position.set(b.x, b.h / 2, b.z);
+                scene.add(bldg);
+
+                // Green Roof
+                const roof = new THREE.Mesh(new THREE.BoxGeometry(b.w, 0.4, b.w), roofMat);
+                roof.position.set(b.x, b.h + 0.2, b.z);
+                scene.add(roof);
+            });
+
+            // --- BUILD 4. SOLAR PANELS ---
+            const panelMat = new THREE.MeshStandardMaterial({ color: 0x1e3a8a, metalness: 0.8, roughness: 0.2 });
+            for (let i = 0; i < 6; i++) {
+                const panel = new THREE.Mesh(new THREE.BoxGeometry(2.5, 0.1, 1.8), panelMat);
+                panel.position.set(-20 + (i % 3) * 3, 1, -12 + Math.floor(i / 3) * 2.5);
+                panel.rotation.x = 0.3;
+                scene.add(panel);
+            }
+
+            // --- BUILD 5. WIND TURBINES ---
+            for (let i = 0; i < 3; i++) {
+                const pole = new THREE.Mesh(new THREE.CylinderGeometry(0.2, 0.3, 8), bldgMat);
+                pole.position.set(-22 + i * 4, 4, -22);
+                scene.add(pole);
+
+                const rotorGroup = new THREE.Group();
+                rotorGroup.position.set(-22 + i * 4, 8, -22);
+
+                for (let j = 0; j < 3; j++) {
+                    const blade = new THREE.Mesh(new THREE.BoxGeometry(0.15, 3, 0.05), bldgMat);
+                    blade.rotation.z = (j * Math.PI * 2) / 3;
+                    blade.position.y = 1.2;
+                    rotorGroup.add(blade);
+                }
+                scene.add(rotorGroup);
+                windTurbines.push(rotorGroup);
+            }
+
+            // --- BUILD 6. ELECTRIC BUS SHUTTLES ---
+            const busMat = new THREE.MeshStandardMaterial({ color: 0x84cc16 });
+            const bus = new THREE.Mesh(new THREE.BoxGeometry(1.2, 0.8, 2.2), busMat);
+            bus.position.set(12, 0.5, 0);
+            scene.add(bus);
+            shuttleBuses.push(bus);
+
+            // Hide loader screen
+            document.getElementById('canvas3dLoader').style.display = 'none';
+
+            // Window resize handler
+            window.addEventListener('resize', () => {
+                camera.aspect = container.clientWidth / container.clientHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(container.clientWidth, container.clientHeight);
+            });
+
+            // Animate Loop
+            let angle = 0;
+            function animate() {
+                requestAnimationFrame(animate);
+
+                // Rotate wind turbine blades
+                windTurbines.forEach(wt => wt.rotation.z += 0.04);
+
+                // Move Shuttle Bus around circular road
+                angle += 0.01;
+                shuttleBuses[0].position.x = Math.cos(angle) * 12;
+                shuttleBuses[0].position.z = Math.sin(angle) * 12;
+                shuttleBuses[0].rotation.y = -angle;
+
+                controls.update();
+                renderer.render(scene, camera);
+            }
+
+            animate();
+        }
+
+        // Camera Preset Controller
+        function focus3D(preset) {
+            if (!camera || !controls) return;
+
+            if (preset === 'overview') {
+                camera.position.set(30, 25, 35);
+                controls.target.set(0, 0, 0);
+            } else if (preset === 'control') {
+                camera.position.set(0, 8, 12);
+                controls.target.set(0, 2, 0);
+            } else if (preset === 'energy') {
+                camera.position.set(-18, 10, -10);
+                controls.target.set(-18, 2, -15);
+            } else if (preset === 'farming') {
+                camera.position.set(20, 8, -2);
+                controls.target.set(14, 2, -8);
+            } else if (preset === 'water') {
+                camera.position.set(28, 12, 12);
+                controls.target.set(22, 1, 5);
+            }
+        }
+
+        // Eco Simulator Logic
+        function initSimLogic() {
+            const solar = document.getElementById('simSolar');
+            const water = document.getElementById('simWater');
+            const ev = document.getElementById('simEV');
+
+            function calculate() {
+                const s = parseInt(solar.value);
+                const w = parseInt(water.value);
+                const e = parseInt(ev.value);
+
+                document.getElementById('simSolarVal').innerText = s + '%';
+                document.getElementById('simWaterVal').innerText = w + '%';
+                document.getElementById('simEVVal').innerText = e + '%';
+
+                const energyAutonomy = ((s * 0.75) + (e * 0.25)).toFixed(1);
+                const waterSaved = ((w * 0.02) + (s * 0.001)).toFixed(2);
+                const carbon = Math.round((s * 300) + (e * 180) + (w * 40));
+
+                document.getElementById('resEnergy').innerText = energyAutonomy + '%';
+                document.getElementById('resWater').innerText = waterSaved + 'M L';
+                document.getElementById('resCarbon').innerText = '-' + carbon.toLocaleString() + 'T';
+
+                const avg = (s + w + e) / 3;
+                document.getElementById('resGrade').innerText = avg >= 85 ? 'A+' : (avg >= 70 ? 'A' : 'B');
+            }
+
+            solar.addEventListener('input', calculate);
+            water.addEventListener('input', calculate);
+            ev.addEventListener('input', calculate);
+            calculate();
+        }
+
+        // Window Load Initialization
+        window.onload = function() {
+            init3DScene();
+            initSimLogic();
+        };
+    </script>
+</body>
+</html>
