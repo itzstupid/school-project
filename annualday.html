@@ -177,7 +177,7 @@ footer p{margin:5px 0;font-size:13px}
     <div class="model-layout">
       <div class="card controls">
         <div><h3>Adjustable solar canopy</h3><p class="small">Change the example panel angle and water-reuse setting.</p></div>
-        <div class="control"><label for="angle">Solar-panel angle <output id="angleValue">30°</output></label><input id="angle" type="range" min="0" max="60" value="30"></div>
+        <div class="control"><label for="angle">Solar panel electrical conductivity<output id="angleValue">32°</output></label><input id="angle" type="range" min="0" max="60" value="30"></div>
         <div class="control"><label for="water">Water recovery <output id="waterValue">68%</output></label><input id="water" type="range" min="0" max="100" value="68"></div>
         <div class="control"><label for="light">Crop light level <output id="lightValue">75%</output></label><input id="light" type="range" min="20" max="100" value="75"></div>
         <p class="small">These controls are for a classroom demonstration. The values are illustrative, not engineering predictions.</p>
@@ -185,7 +185,7 @@ footer p{margin:5px 0;font-size:13px}
       <div class="dashboard">
         <div class="dashboard-top"><h3>Food + Energy Dashboard</h3><span class="live">● MODEL VIEW</span></div>
         <div class="metrics">
-          <div class="metric"><span>Energy output</span><strong id="energy">3.5 kW</strong><small>Illustrative model value</small><div class="bar"><i id="energyBar" style="width: 70%;"></i></div></div>
+          <div class="metric"><span>Energy output</span><strong id="energy">3.6 kW</strong><small>Illustrative model value</small><div class="bar"><i id="energyBar" style="width: 72%;"></i></div></div>
           <div class="metric"><span>Crop light level</span><strong id="cropLight">75%</strong><small>Greenhouse conditions</small><div class="bar"><i id="lightBar" style="width: 75%;"></i></div></div>
           <div class="metric"><span>Water recovered</span><strong id="waterOut">68%</strong><small>Collected for reuse</small><div class="bar"><i id="waterBar" style="width: 68%;"></i></div></div>
           <div class="metric"><span>Crop health index</span><strong id="health">84%</strong><small>Example productivity indicator</small><div class="bar"><i id="healthBar" style="width: 84%;"></i></div></div>
@@ -271,6 +271,7 @@ function update(){
 }
 [angle,water,light].forEach(el=>el.addEventListener('input',update)); update();
 </script>
+
 
 
 </body></html>
