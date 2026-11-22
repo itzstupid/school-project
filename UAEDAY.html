@@ -158,8 +158,12 @@ button {
 }
 
 .timetable {
-    max-width: 950px;
+    max-width: 1100px;
     margin: auto;
+}
+
+.table-scroll {
+    overflow-x: auto;
 }
 
 table {
@@ -179,8 +183,30 @@ th {
     background: #101027;
 }
 
-td input {
-    min-width: 100px;
+.timetable table {
+    min-width: 900px;
+}
+
+.timetable th, .timetable td {
+    padding: 9px 6px;
+}
+
+.timetable .day-name {
+    min-width: 110px;
+    color: var(--purple);
+    font-weight: bold;
+}
+
+.timetable .subject {
+    min-width: 78px;
+    width: 100%;
+    padding: 9px 5px;
+    text-align: center;
+}
+
+.timetable .subject:disabled {
+    opacity: 1;
+    color: var(--green);
 }
 
 .action-buttons {
@@ -518,30 +544,28 @@ footer {
     </p>
 
     <div class="panel timetable">
-
         <p style="color:#aaaabd;margin-bottom:15px;">
-            Enter your subjects and study timings below.
+            Enter the subject for each period. Days are listed on the left and periods are across the top.
         </p>
 
-        <div style="overflow-x:auto;">
-        <table>
-            <thead>
-                <tr>
-                    <th>Day</th>
-                    <th>Subject</th>
-                    <th>Study Time</th>
-                </tr>
-            </thead>
-
-            <tbody id="timetableBody"></tbody>
-        </table>
+        <div class="table-scroll">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Day</th>
+                        <th>1</th><th>2</th><th>3</th>
+                        <th>4</th><th>5</th><th>6</th>
+                        <th>7</th><th>8</th><th>9</th>
+                    </tr>
+                </thead>
+                <tbody id="timetableBody"></tbody>
+            </table>
         </div>
 
         <div class="action-buttons">
             <button class="action-btn save-btn" onclick="saveTimetable()">
                 💾 Save Timetable
             </button>
-
             <button class="action-btn change-btn" onclick="editTimetable()">
                 ✏️ Change Timetable
             </button>
@@ -550,7 +574,6 @@ footer {
         <p class="status" id="tableStatus">
             Your timetable is ready to edit.
         </p>
-
     </div>
 </section>
 
@@ -648,8 +671,7 @@ footer {
 // ===============================
 
 const days = [
-    "Monday", "Tuesday", "Wednesday",
-    "Thursday", "Friday", "Saturday", "Sunday"
+    "Monday", "Tuesday", "Wednesday", "Thursday"
 ];
 
 const timetableBody = document.getElementById("timetableBody");
@@ -657,86 +679,85 @@ const timetableBody = document.getElementById("timetableBody");
 function createTimetable() {
     timetableBody.innerHTML = "";
 
-    days.forEach((day, index) => {
+    days.forEach((day, dayIndex) => {
         const row = document.createElement("tr");
 
-        row.innerHTML = `
-            <td>${day}</td>
-            <td>
-                <input type="text" class="subject"
-                placeholder="Enter subject">
-            </td>
-            <td>
-                <input type="text" class="study-time"
-                placeholder="e.g. 4:00 - 5:00 PM">
-            </td>
-        `;
+        const dayCell = document.createElement("th");
+        dayCell.textContent = day;
+        dayCell.className = "day-name";
+        row.appendChild(dayCell);
+
+        for (let period = 1; period <= 9; period++) {
+            const cell = document.createElement("td");
+            const input = document.createElement("input");
+            input.type = "text";
+            input.className = "subject";
+            input.placeholder = "Subject";
+            input.dataset.day = dayIndex;
+            input.dataset.period = period;
+            cell.appendChild(input);
+            row.appendChild(cell);
+        }
 
         timetableBody.appendChild(row);
     });
 }
 
 function saveTimetable() {
-    const subjects = document.querySelectorAll(".subject");
-    const times = document.querySelectorAll(".study-time");
+    const subjects = document.querySelectorAll("#timetableBody .subject");
+    const timetable = Array.from(subjects).map(input => input.value);
 
-    const timetable = [];
+    localStorage.setItem("learningTimetable", JSON.stringify(timetable));
 
-    for(let i = 0; i < days.length; i++) {
-        timetable.push({
-            subject: subjects[i].value,
-            time: times[i].value
-        });
-    }
+    subjects.forEach(input => input.disabled = true);
 
-    localStorage.setItem(
-        "learningTimetable",
-        JSON.stringify(timetable)
-    );
-
-    document.querySelectorAll(".subject, .study-time")
-        .forEach(input => input.disabled = true);
-
-    document.getElementById("tableStatus").textContent =
-        "✓ Timetable saved successfully!";
-
-    document.getElementById("tableStatus").style.color =
-        "#39ff88";
+    const status = document.getElementById("tableStatus");
+    status.textContent = "✓ Timetable saved successfully!";
+    status.style.color = "var(--green)";
 }
 
 function editTimetable() {
-    document.querySelectorAll(".subject, .study-time")
-        .forEach(input => input.disabled = false);
+    document.querySelectorAll("#timetableBody .subject").forEach(input => {
+        input.disabled = false;
+    });
 
-    document.getElementById("tableStatus").textContent =
-        "✏️ You can now change your timetable.";
-
-    document.getElementById("tableStatus").style.color =
-        "#a855f7";
+    const status = document.getElementById("tableStatus");
+    status.textContent = "✏️ You can now change your timetable.";
+    status.style.color = "var(--purple)";
 }
 
 function loadTimetable() {
     createTimetable();
 
-    const saved = JSON.parse(
-        localStorage.getItem("learningTimetable") || "null"
-    );
+    let saved = null;
+    try {
+        saved = JSON.parse(localStorage.getItem("learningTimetable") || "null");
+    } catch (error) {
+        saved = null;
+    }
 
-    if(saved) {
-        const subjects = document.querySelectorAll(".subject");
-        const times = document.querySelectorAll(".study-time");
+    if (Array.isArray(saved)) {
+        const inputs = document.querySelectorAll("#timetableBody .subject");
 
-        saved.forEach((item, index) => {
-            subjects[index].value = item.subject || "";
-            times[index].value = item.time || "";
-        });
+        // Load the new 7-day, 9-period format.
+        if (saved.length && typeof saved[0] === "string") {
+            saved.forEach((value, index) => {
+                if (inputs[index]) inputs[index].value = value;
+            });
+        } else {
+            // Preserve subjects from the older day/subject/time timetable.
+            saved.forEach((item, index) => {
+                if (inputs[index] && item && typeof item === "object") {
+                    inputs[index].value = item.subject || "";
+                }
+            });
+        }
 
-        document.querySelectorAll(".subject, .study-time")
-            .forEach(input => input.disabled = true);
-
-        document.getElementById("tableStatus").textContent =
-            "✓ Your saved timetable is loaded.";
-
+        if (saved.length) {
+            inputs.forEach(input => input.disabled = true);
+            document.getElementById("tableStatus").textContent =
+                "✓ Your saved timetable is loaded. Select Change Timetable to edit it.";
+        }
     }
 }
 
