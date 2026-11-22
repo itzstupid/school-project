@@ -1,0 +1,1089 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Learning Together | Student Hub</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #050509;
+    color: white;
+}
+
+:root {
+    --blue: #00e5ff;
+    --purple: #a855f7;
+    --green: #39ff88;
+    --red: #ff3864;
+    --card: #11111c;
+}
+
+header {
+    background: #090912;
+    padding: 20px 7%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    border-bottom: 1px solid #202038;
+}
+
+.logo {
+    font-size: 23px;
+    font-weight: bold;
+    color: var(--blue);
+    text-shadow: 0 0 12px var(--blue);
+}
+
+nav a {
+    text-decoration: none;
+    color: #ddd;
+    margin-left: 20px;
+    font-size: 14px;
+    transition: .3s;
+}
+
+nav a:hover {
+    color: var(--blue);
+    text-shadow: 0 0 10px var(--blue);
+}
+
+.hero {
+    min-height: 440px;
+    display: flex;
+    align-items: center;
+    padding: 80px 10%;
+    background:
+    radial-gradient(circle at 80% 50%, #17154b 0%, transparent 40%),
+    #050509;
+}
+
+.hero-content {
+    max-width: 750px;
+}
+
+.hero h1 {
+    font-size: 55px;
+    line-height: 1.2;
+    margin-bottom: 20px;
+}
+
+.hero h1 span {
+    color: var(--blue);
+    text-shadow: 0 0 20px #00e5ff80;
+}
+
+.hero p {
+    color: #aaaabd;
+    line-height: 1.8;
+    font-size: 17px;
+    margin-bottom: 25px;
+}
+
+.btn {
+    display: inline-block;
+    padding: 13px 25px;
+    background: var(--blue);
+    color: #050509;
+    border: none;
+    border-radius: 7px;
+    font-weight: bold;
+    text-decoration: none;
+    cursor: pointer;
+    transition: .3s;
+}
+
+.btn:hover {
+    box-shadow: 0 0 20px var(--blue);
+    transform: translateY(-3px);
+}
+
+section {
+    padding: 75px 8%;
+}
+
+.section-title {
+    text-align: center;
+    font-size: 33px;
+    color: var(--blue);
+    margin-bottom: 12px;
+    text-shadow: 0 0 12px #00e5ff55;
+}
+
+.section-description {
+    text-align: center;
+    color: #9292a8;
+    margin-bottom: 40px;
+}
+
+.panel {
+    background: var(--card);
+    border: 1px solid #25253d;
+    border-radius: 14px;
+    padding: 25px;
+    box-shadow: 0 0 18px #000;
+}
+
+input, textarea, select {
+    width: 100%;
+    background: #080811;
+    border: 1px solid #30304a;
+    color: white;
+    padding: 12px;
+    border-radius: 7px;
+    outline: none;
+    font-family: Arial, sans-serif;
+}
+
+input:focus, textarea:focus, select:focus {
+    border-color: var(--blue);
+    box-shadow: 0 0 8px #00e5ff55;
+}
+
+button {
+    cursor: pointer;
+    font-family: Arial, sans-serif;
+}
+
+.timetable {
+    max-width: 950px;
+    margin: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+}
+
+th, td {
+    border: 1px solid #30304a;
+    padding: 10px;
+    text-align: center;
+}
+
+th {
+    color: var(--blue);
+    background: #101027;
+}
+
+td input {
+    min-width: 100px;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+
+.save-btn {
+    background: var(--blue);
+    color: black;
+}
+
+.change-btn {
+    background: var(--purple);
+    color: white;
+}
+
+.action-btn {
+    border: none;
+    padding: 12px 22px;
+    border-radius: 7px;
+    font-weight: bold;
+}
+
+.status {
+    color: var(--green);
+    margin-top: 15px;
+    font-size: 14px;
+}
+
+.notes-container {
+    max-width: 900px;
+    margin: auto;
+}
+
+.note-input {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 25px;
+}
+
+.note-input textarea {
+    min-height: 65px;
+    resize: vertical;
+}
+
+.add-btn {
+    background: var(--blue);
+    border: none;
+    color: black;
+    padding: 15px 23px;
+    border-radius: 7px;
+    font-weight: bold;
+    align-self: stretch;
+}
+
+.note {
+    background: #11111c;
+    border: 1px solid #30304a;
+    border-left: 4px solid var(--purple);
+    border-radius: 10px;
+    padding: 18px;
+    margin-bottom: 18px;
+    transition: .3s;
+}
+
+.note.completed {
+    border-left-color: var(--green);
+    box-shadow: 0 0 14px #39ff8840;
+}
+
+.note.completed .note-text {
+    color: var(--green);
+}
+
+.note-text {
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+    line-height: 1.6;
+    margin-bottom: 15px;
+}
+
+.note-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.tick, .cross, .delete {
+    border: none;
+    border-radius: 6px;
+    padding: 10px 15px;
+    font-size: 17px;
+}
+
+.tick {
+    background: #153b2b;
+    color: var(--green);
+}
+
+.tick.active {
+    background: var(--green);
+    color: black;
+    box-shadow: 0 0 15px var(--green);
+}
+
+.cross {
+    background: #3c1420;
+    color: var(--red);
+}
+
+.cross.active {
+    box-shadow: 0 0 12px var(--red);
+}
+
+.delete {
+    background: #29293a;
+    color: #bbb;
+}
+
+.timer {
+    display: none;
+    background: #080812;
+    border: 1px solid var(--blue);
+    border-radius: 10px;
+    padding: 22px;
+    margin-top: 20px;
+    box-shadow: 0 0 15px #00e5ff30;
+}
+
+.timer.show {
+    display: block;
+}
+
+.timer h3 {
+    color: var(--blue);
+    margin-bottom: 15px;
+}
+
+.timer-display {
+    font-size: 45px;
+    color: var(--green);
+    text-align: center;
+    margin: 20px 0;
+    font-weight: bold;
+    text-shadow: 0 0 15px var(--green);
+    font-variant-numeric: tabular-nums;
+}
+
+.timer-controls {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.start {
+    background: var(--green);
+    color: black;
+}
+
+.pause {
+    background: #ffce44;
+    color: black;
+}
+
+.reset {
+    background: #30304a;
+    color: white;
+}
+
+.timer-status {
+    color: #aaaabd;
+    margin-top: 15px;
+    font-size: 14px;
+}
+
+.tips {
+    background: #0b0b15;
+}
+
+.cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+}
+
+.card {
+    padding: 27px;
+    background: var(--card);
+    border: 1px solid #25253d;
+    border-radius: 12px;
+    transition: .3s;
+}
+
+.card:hover {
+    border-color: var(--blue);
+    box-shadow: 0 0 16px #00e5ff30;
+    transform: translateY(-5px);
+}
+
+.card .emoji {
+    font-size: 35px;
+    margin-bottom: 15px;
+}
+
+.card h3 {
+    color: var(--blue);
+    margin-bottom: 12px;
+}
+
+.card p {
+    color: #aaaabd;
+    line-height: 1.7;
+}
+
+.highlight {
+    text-align: center;
+    background: radial-gradient(circle, #15153a, #050509);
+}
+
+.highlight h2 {
+    color: var(--green);
+    font-size: 32px;
+    margin-bottom: 18px;
+    text-shadow: 0 0 12px #39ff8870;
+}
+
+.highlight p {
+    color: #aaaabd;
+    line-height: 1.8;
+    max-width: 700px;
+    margin: auto;
+}
+
+footer {
+    text-align: center;
+    padding: 28px;
+    background: #090912;
+    border-top: 1px solid #25253d;
+    color: #999;
+    line-height: 1.8;
+}
+
+@media(max-width: 750px) {
+    header {
+        flex-direction: column;
+        gap: 18px;
+    }
+
+    nav {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 14px;
+    }
+
+    nav a {
+        margin: 0;
+    }
+
+    .hero h1 {
+        font-size: 39px;
+    }
+
+    .note-input {
+        flex-direction: column;
+    }
+
+    table {
+        font-size: 12px;
+    }
+
+    th, td {
+        padding: 5px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">📘 Learning Together</div>
+    <nav>
+        <a href="#home">Home</a>
+        <a href="#about">About</a>
+        <a href="#timetable">Timetable</a>
+        <a href="#notes">My Notes</a>
+        <a href="#tips">Study Tips</a>
+    </nav>
+</header>
+
+<!-- HOME -->
+
+<div class="hero" id="home">
+    <div class="hero-content">
+        <h1>Learn Smarter.<br>
+        <span>Achieve More.</span></h1>
+
+        <p>
+            Welcome to Learning Together!
+            Organise your timetable, manage homework,
+            track assignments and make every study session count.
+        </p>
+
+        <a href="#timetable" class="btn">Organise My Studies →</a>
+    </div>
+</div>
+
+<!-- ABOUT -->
+
+<section id="about">
+    <h2 class="section-title">About Our Project</h2>
+    <p class="section-description">
+        Supporting students through better study habits.
+    </p>
+
+    <div class="panel" style="max-width:850px;margin:auto;text-align:center;line-height:2;color:#aaaabd;">
+        Learning Together is a school project designed to help
+        students manage their time and improve their learning.
+        This website provides an interactive timetable, a notes
+        section, assignment timers and useful study tips.
+        Our goal is to make studying organised, productive
+        and enjoyable.
+    </div>
+</section>
+
+<!-- TIMETABLE -->
+
+<section id="timetable">
+    <h2 class="section-title">📅 My Study Timetable</h2>
+    <p class="section-description">
+        Plan your subjects and organise your week.
+    </p>
+
+    <div class="panel timetable">
+
+        <p style="color:#aaaabd;margin-bottom:15px;">
+            Enter your subjects and study timings below.
+        </p>
+
+        <div style="overflow-x:auto;">
+        <table>
+            <thead>
+                <tr>
+                    <th>Day</th>
+                    <th>Subject</th>
+                    <th>Study Time</th>
+                </tr>
+            </thead>
+
+            <tbody id="timetableBody"></tbody>
+        </table>
+        </div>
+
+        <div class="action-buttons">
+            <button class="action-btn save-btn" onclick="saveTimetable()">
+                💾 Save Timetable
+            </button>
+
+            <button class="action-btn change-btn" onclick="editTimetable()">
+                ✏️ Change Timetable
+            </button>
+        </div>
+
+        <p class="status" id="tableStatus">
+            Your timetable is ready to edit.
+        </p>
+
+    </div>
+</section>
+
+<!-- NOTES -->
+
+<section id="notes">
+    <h2 class="section-title">📝 My Notes & Assignments</h2>
+    <p class="section-description">
+        Write down your homework, assignments and important reminders.
+    </p>
+
+    <div class="notes-container">
+
+        <div class="note-input">
+            <textarea id="noteInput"
+            placeholder="Write your homework or assignment here..."></textarea>
+
+            <button class="add-btn" onclick="addNote()">
+                + Add Note
+            </button>
+        </div>
+
+        <div id="notesList"></div>
+
+    </div>
+</section>
+
+<!-- STUDY TIPS -->
+
+<section class="tips" id="tips">
+    <h2 class="section-title">💡 Smart Study Tips</h2>
+    <p class="section-description">
+        Simple ways to make studying easier and save time.
+    </p>
+
+    <div class="cards">
+
+        <div class="card">
+            <div class="emoji">⏰</div>
+            <h3>Use a Timetable</h3>
+            <p>Plan your day so you know exactly which subject to study.</p>
+        </div>
+
+        <div class="card">
+            <div class="emoji">📵</div>
+            <h3>Avoid Distractions</h3>
+            <p>Keep your phone away and concentrate on your work.</p>
+        </div>
+
+        <div class="card">
+            <div class="emoji">🧠</div>
+            <h3>Understand First</h3>
+            <p>Understand a topic instead of only memorising answers.</p>
+        </div>
+
+        <div class="card">
+            <div class="emoji">🔄</div>
+            <h3>Revise Regularly</h3>
+            <p>Review your lessons frequently to remember information.</p>
+        </div>
+
+        <div class="card">
+            <div class="emoji">🤝</div>
+            <h3>Study Together</h3>
+            <p>Discuss difficult topics and share knowledge with friends.</p>
+        </div>
+
+        <div class="card">
+            <div class="emoji">🌙</div>
+            <h3>Get Enough Sleep</h3>
+            <p>Rest properly to stay focused and ready to learn.</p>
+        </div>
+
+    </div>
+</section>
+
+<section class="highlight">
+    <h2>Together We Can Achieve More!</h2>
+    <p>
+        Every minute matters, every lesson counts and every
+        small step brings us closer to success.
+        Learn together, support each other and grow together!
+    </p>
+</section>
+
+<footer>
+    <p>© 2026 Learning Together</p>
+    <p>A School Project | Supporting Study and Learning</p>
+</footer>
+
+<script>
+
+// ===============================
+// TIMETABLE
+// ===============================
+
+const days = [
+    "Monday", "Tuesday", "Wednesday",
+    "Thursday", "Friday", "Saturday", "Sunday"
+];
+
+const timetableBody = document.getElementById("timetableBody");
+
+function createTimetable() {
+    timetableBody.innerHTML = "";
+
+    days.forEach((day, index) => {
+        const row = document.createElement("tr");
+
+        row.innerHTML = `
+            <td>${day}</td>
+            <td>
+                <input type="text" class="subject"
+                placeholder="Enter subject">
+            </td>
+            <td>
+                <input type="text" class="study-time"
+                placeholder="e.g. 4:00 - 5:00 PM">
+            </td>
+        `;
+
+        timetableBody.appendChild(row);
+    });
+}
+
+function saveTimetable() {
+    const subjects = document.querySelectorAll(".subject");
+    const times = document.querySelectorAll(".study-time");
+
+    const timetable = [];
+
+    for(let i = 0; i < days.length; i++) {
+        timetable.push({
+            subject: subjects[i].value,
+            time: times[i].value
+        });
+    }
+
+    localStorage.setItem(
+        "learningTimetable",
+        JSON.stringify(timetable)
+    );
+
+    document.querySelectorAll(".subject, .study-time")
+        .forEach(input => input.disabled = true);
+
+    document.getElementById("tableStatus").textContent =
+        "✓ Timetable saved successfully!";
+
+    document.getElementById("tableStatus").style.color =
+        "#39ff88";
+}
+
+function editTimetable() {
+    document.querySelectorAll(".subject, .study-time")
+        .forEach(input => input.disabled = false);
+
+    document.getElementById("tableStatus").textContent =
+        "✏️ You can now change your timetable.";
+
+    document.getElementById("tableStatus").style.color =
+        "#a855f7";
+}
+
+function loadTimetable() {
+    createTimetable();
+
+    const saved = JSON.parse(
+        localStorage.getItem("learningTimetable") || "null"
+    );
+
+    if(saved) {
+        const subjects = document.querySelectorAll(".subject");
+        const times = document.querySelectorAll(".study-time");
+
+        saved.forEach((item, index) => {
+            subjects[index].value = item.subject || "";
+            times[index].value = item.time || "";
+        });
+
+        document.querySelectorAll(".subject, .study-time")
+            .forEach(input => input.disabled = true);
+
+        document.getElementById("tableStatus").textContent =
+            "✓ Your saved timetable is loaded.";
+
+    }
+}
+
+// ===============================
+// NOTES AND ASSIGNMENTS
+// ===============================
+
+let notes = JSON.parse(
+    localStorage.getItem("learningNotes") || "[]"
+);
+
+function saveNotes() {
+    localStorage.setItem(
+        "learningNotes",
+        JSON.stringify(notes)
+    );
+}
+
+function addNote() {
+    const input = document.getElementById("noteInput");
+    const text = input.value.trim();
+
+    if(!text) {
+        alert("Please write a note first!");
+        return;
+    }
+
+    notes.push({
+        id: Date.now() + Math.random(),
+        text: text,
+        completed: false,
+        timerSeconds: 0
+    });
+
+    input.value = "";
+
+    saveNotes();
+    displayNotes();
+}
+
+function displayNotes() {
+    const container = document.getElementById("notesList");
+
+    container.innerHTML = "";
+
+    notes.forEach(note => {
+
+        const div = document.createElement("div");
+
+        div.className = "note" +
+            (note.completed ? " completed" : "");
+
+        const noteText = document.createElement("div");
+        noteText.className = "note-text";
+        noteText.textContent = note.text;
+
+        const actions = document.createElement("div");
+        actions.className = "note-actions";
+
+        const tick = document.createElement("button");
+        tick.className = "tick" +
+            (note.completed ? " active" : "");
+        tick.textContent = "✓";
+        tick.title = "Mark as completed";
+
+        tick.onclick = () => completeNote(note.id);
+
+        const cross = document.createElement("button");
+        cross.className = "cross";
+        cross.textContent = "✕";
+        cross.title = "Start assignment timer";
+
+        cross.onclick = () => openTimer(note.id);
+
+        const remove = document.createElement("button");
+        remove.className = "delete";
+        remove.textContent = "🗑";
+        remove.title = "Delete note";
+
+        remove.onclick = () => deleteNote(note.id);
+
+        actions.append(tick, cross, remove);
+
+        div.append(noteText, actions);
+
+        const timer = document.createElement("div");
+        timer.className = "timer";
+        timer.id = "timer-" + note.id;
+
+        timer.innerHTML = `
+            <h3>⏳ Assignment Countdown</h3>
+
+            <p style="color:#aaaabd;">
+                Set a time limit for this assignment.
+            </p>
+
+            <div style="display:flex;gap:10px;margin-top:15px;">
+                <input type="number" min="0"
+                placeholder="Hours" id="hours-${note.id}">
+                <input type="number" min="0" max="59"
+                placeholder="Minutes" id="minutes-${note.id}">
+                <input type="number" min="0" max="59"
+                placeholder="Seconds" id="seconds-${note.id}">
+            </div>
+
+            <div class="timer-display"
+            id="display-${note.id}">00:00:00</div>
+
+            <div class="timer-controls">
+                <button class="action-btn start"
+                id="start-${note.id}"
+                onclick="startTimer(${note.id})">
+                    ▶ Start
+                </button>
+
+                <button class="action-btn pause"
+                onclick="pauseTimer(${note.id})">
+                    ⏸ Pause / Finished
+                </button>
+
+                <button class="action-btn reset"
+                onclick="resetTimer(${note.id})">
+                    ↻ Reset
+                </button>
+            </div>
+
+            <p class="timer-status"
+            id="status-${note.id}">
+                Set your time and press Start.
+            </p>
+        `;
+
+        div.appendChild(timer);
+        container.appendChild(div);
+
+        if(note.timerSeconds > 0) {
+            timer.classList.add("show");
+        }
+
+        if(note.completed) {
+            cross.disabled = true;
+            cross.style.opacity = ".4";
+        }
+    });
+}
+
+// ===============================
+// COMPLETE OR DELETE NOTES
+// ===============================
+
+function completeNote(id) {
+    const note = notes.find(n => n.id === id);
+
+    if(!note) return;
+
+    note.completed = !note.completed;
+
+    if(note.completed) {
+        stopTimerInterval(id);
+    }
+
+    saveNotes();
+    displayNotes();
+}
+
+function deleteNote(id) {
+    stopTimerInterval(id);
+
+    notes = notes.filter(n => n.id !== id);
+
+    saveNotes();
+    displayNotes();
+}
+
+// ===============================
+// ASSIGNMENT TIMERS
+// ===============================
+
+const activeTimers = {};
+
+function openTimer(id) {
+    const note = notes.find(n => n.id === id);
+
+    if(!note || note.completed) return;
+
+    const timer = document.getElementById("timer-" + id);
+
+    timer.classList.toggle("show");
+
+    if(timer.classList.contains("show")) {
+        document.getElementById("hours-" + id).focus();
+    }
+}
+
+function formatTime(seconds) {
+    const h = Math.floor(seconds / 3600);
+    const m = Math.floor((seconds % 3600) / 60);
+    const s = seconds % 60;
+
+    return [h, m, s]
+        .map(value => String(value).padStart(2, "0"))
+        .join(":");
+}
+
+function updateDisplay(id) {
+    const note = notes.find(n => n.id === id);
+
+    if(!note) return;
+
+    const display = document.getElementById("display-" + id);
+
+    if(display) {
+        display.textContent = formatTime(note.timerSeconds);
+    }
+}
+
+function stopTimerInterval(id) {
+    if(activeTimers[id]) {
+        clearInterval(activeTimers[id]);
+        delete activeTimers[id];
+    }
+}
+
+function startTimer(id) {
+    const note = notes.find(n => n.id === id);
+
+    if(!note || note.completed || activeTimers[id]) return;
+
+    if(note.timerSeconds <= 0) {
+        const h = Number(document.getElementById("hours-" + id).value) || 0;
+        const m = Number(document.getElementById("minutes-" + id).value) || 0;
+        const s = Number(document.getElementById("seconds-" + id).value) || 0;
+
+        if(h < 0 || m < 0 || s < 0 || m > 59 || s > 59) {
+            alert("Enter a valid time. Minutes and seconds must be between 0 and 59.");
+            return;
+        }
+
+        const total = h * 3600 + m * 60 + s;
+
+        if(total <= 0) {
+            alert("Please set a time greater than zero!");
+            return;
+        }
+
+        note.timerSeconds = total;
+    }
+
+    const status = document.getElementById("status-" + id);
+
+    status.textContent = "🔥 Focus! Your countdown has started.";
+
+    updateDisplay(id);
+    saveNotes();
+
+    activeTimers[id] = setInterval(() => {
+
+        note.timerSeconds--;
+
+        updateDisplay(id);
+        saveNotes();
+
+        if(note.timerSeconds <= 0) {
+            stopTimerInterval(id);
+
+            note.timerSeconds = 0;
+
+            updateDisplay(id);
+            saveNotes();
+
+            status.textContent =
+                "⏰ Time is up! Try to manage your time better next time.";
+
+            speakAlert();
+        }
+
+    }, 1000);
+}
+
+function pauseTimer(id) {
+    const note = notes.find(n => n.id === id);
+
+    if(!note || !activeTimers[id]) return;
+
+    stopTimerInterval(id);
+
+    const status = document.getElementById("status-" + id);
+
+    if(note.timerSeconds > 0) {
+        status.textContent =
+            "✓ Timer paused. Great job working on your assignment!";
+    }
+
+    saveNotes();
+}
+
+function resetTimer(id) {
+    stopTimerInterval(id);
+
+    const note = notes.find(n => n.id === id);
+
+    if(!note) return;
+
+    note.timerSeconds = 0;
+
+    document.getElementById("hours-" + id).value = "";
+    document.getElementById("minutes-" + id).value = "";
+    document.getElementById("seconds-" + id).value = "";
+
+    updateDisplay(id);
+
+    document.getElementById("status-" + id).textContent =
+        "Timer reset. Set a new time!";
+
+    saveNotes();
+}
+
+// ===============================
+// VOICE ALERT
+// ===============================
+
+function speakAlert() {
+    if(!("speechSynthesis" in window)) {
+        alert("You have not completed your assignment on time!");
+        return;
+    }
+
+    speechSynthesis.cancel();
+
+    const message = new SpeechSynthesisUtterance(
+        "You have not completed your assignment on time!"
+    );
+
+    message.rate = 0.9;
+    message.pitch = 1;
+
+    speechSynthesis.speak(message);
+}
+
+// ===============================
+// INITIALISE WEBSITE
+// ===============================
+
+loadTimetable();
+displayNotes();
+
+</script>
+
+</body>
+</html>
