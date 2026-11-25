@@ -1,5 +1,7 @@
-<html lang="en"><head>
-<meta charset="UTF-8">
+
+<!-- saved from url=(0054)https://itzstupid.github.io/school-project/UAEDAY.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Learning Together | Student Hub</title>
 
@@ -489,11 +491,12 @@ footer {
 <header>
     <div class="logo">📘 Learning Together</div>
     <nav>
-        <a href="#home"></a>
-        <a href="#about"></a>
-        <a href="#timetable"></a>
-        <a href="#notes"></a>
-        <a href="#tips"></a>
+        <a href="https://itzstupid.github.io/school-project/UAEDAY.html#home"></a>
+        <a href="https://itzstupid.github.io/school-project/UAEDAY.html#about"></a>
+        <a href="https://itzstupid.github.io/school-project/UAEDAY.html#timetable"></a>
+        <a href="https://itzstupid.github.io/school-project/UAEDAY.html#notes"></a>
+        <a href="https://itzstupid.github.io/school-project/UAEDAY.html#tips"></a>
+        <a href="#" onclick="openBookSidebar(); return false;" style="color:#00e5ff;font-weight:bold;">📚 Book Library</a>
     </nav>
 </header>
 
@@ -510,7 +513,7 @@ footer {
             track assignments and make every study session count.
         </p>
 
-        <a href="#timetable" class="btn">Organise My Studies →</a>
+        <a href="https://itzstupid.github.io/school-project/UAEDAY.html#timetable" class="btn">Organise My Studies →</a>
     </div>
 </div>
 
@@ -660,6 +663,24 @@ footer {
 
 <script>
 
+// Safe storage (works in sandboxed iframes)
+const memoryStore = {};
+function getSafeStorage() {
+  try {
+    const test = "__storage_test__";
+    localStorage.setItem(test, test);
+    localStorage.removeItem(test);
+    return localStorage;
+  } catch (e) {
+    return {
+      getItem: (key) => memoryStore[key] ?? null,
+      setItem: (key, value) => { memoryStore[key] = String(value); }
+    };
+  }
+}
+const storage = getSafeStorage();
+
+
 // ===============================
 // TIMETABLE
 // ===============================
@@ -701,7 +722,7 @@ function saveTimetable() {
     const subjects = document.querySelectorAll("#timetableBody .subject");
     const timetable = Array.from(subjects).map(input => input.value);
 
-    localStorage.setItem("learningTimetable", JSON.stringify(timetable));
+    storage.setItem("learningTimetable", JSON.stringify(timetable));
 
     subjects.forEach(input => input.disabled = true);
 
@@ -725,7 +746,7 @@ function loadTimetable() {
 
     let saved = null;
     try {
-        saved = JSON.parse(localStorage.getItem("learningTimetable") || "null");
+        saved = JSON.parse(storage.getItem("learningTimetable") || "null");
     } catch (error) {
         saved = null;
     }
@@ -760,11 +781,11 @@ function loadTimetable() {
 // ===============================
 
 let notes = JSON.parse(
-    localStorage.getItem("learningNotes") || "[]"
+    storage.getItem("learningNotes") || "[]"
 );
 
 function saveNotes() {
-    localStorage.setItem(
+    storage.setItem(
         "learningNotes",
         JSON.stringify(notes)
     );
@@ -1104,4 +1125,623 @@ displayNotes();
 
 
 
+
+
+<script>
+/* ==========================================
+   LEARNING TOGETHER - READING LIBRARY
+   20 ORIGINAL BOOKS | 4 LEVELS
+========================================== */
+
+const readingBooks = [
+  // BEGINNER
+  {
+    level:"Beginner", title:"The Little Lighthouse",
+    story:[
+      "On the edge of a quiet fishing village stood a small lighthouse. Every evening, its light shone across the sea, guiding boats safely towards the harbour. An old lighthouse keeper named Thomas had cared for it for more than thirty years. His grandson, Leo, often visited him during the holidays. Leo loved listening to stories about the ocean, but he had never understood why the lighthouse was so important.",
+      "One evening, a thick fog covered the coast. The fishing boats were returning home, but the sailors could barely see the shore. Thomas noticed that the lighthouse lamp was flickering. He asked Leo to bring his toolbox while he carefully checked the equipment. Together, they discovered that a loose connection had interrupted the light. Leo held the lamp steady while Thomas repaired it. Soon, its bright beam travelled across the water again.",
+      "The boats reached the harbour safely. The next morning, Leo asked his grandfather whether he could help maintain the lighthouse every weekend. Thomas agreed. Leo realised that even a small building could make a huge difference to many people. From that day onwards, he understood that responsibility was not about being famous or important. It was about doing something useful for others, even when nobody was watching."
+    ],
+    summary:"Leo learns that responsibility and teamwork can make a difference. By helping his grandfather repair the lighthouse, he discovers that even small actions can protect and support an entire community."
+  },
+  {
+    level:"Beginner", title:"The Garden of Second Chances",
+    story:[
+      "Maya received a small packet of flower seeds from her grandmother. She was excited and immediately planted them in a corner of the garden. Every morning, she watered the soil and waited for something to appear. Days passed, but nothing grew. Maya became disappointed and decided that she was not good at gardening. Her grandmother gently reminded her that plants needed time, patience and proper care.",
+      "The following weekend, Maya examined the garden more carefully. She noticed that the soil was very dry and the corner received very little sunlight. With her grandmother's help, she moved the pots to a brighter place and prepared fresh soil. She also created a small watering schedule. This time, she did not expect instant results. She simply followed the routine and observed the changes.",
+      "A few weeks later, tiny green shoots appeared. Maya was delighted. She continued caring for them until colourful flowers filled the garden. She even gave a few seeds to her neighbours. Maya understood that failure did not mean the end of an effort. Sometimes, it was simply an opportunity to learn what needed to change."
+    ],
+    summary:"Maya learns patience and persistence after her first gardening attempt fails. By observing the problem, making changes and trying again, she discovers that mistakes can become valuable learning experiences."
+  },
+  {
+    level:"Beginner", title:"The Missing Map",
+    story:[
+      "During a school holiday, Arjun discovered an old map inside a wooden box in his grandfather's attic. The paper was yellow and covered with strange drawings. A small red cross marked a place near the old railway station. Arjun wondered whether the map showed the location of something valuable. He invited his friend Daniel to help him understand it.",
+      "The boys examined the drawings and compared them with a map of their town. They noticed that the symbols represented familiar places: a bridge, a library and an old water fountain. Instead of rushing outside, they carefully followed the clues on paper. Each location contained another small message. The final clue led them to a neglected community garden behind the railway station.",
+      "There was no treasure chest waiting for them. Instead, they found a wooden sign explaining that the garden had once been created by local children many years earlier. Arjun and Daniel decided to bring the garden back to life. They organised their classmates, collected gardening tools and planted new flowers. The real treasure, they realised, was discovering something meaningful and bringing people together."
+    ],
+    summary:"Arjun and Daniel follow an old map and discover a forgotten community garden. They learn that the greatest treasure is not always money or valuable objects, but something that brings people together."
+  },
+  {
+    level:"Beginner", title:"A Seat for Everyone",
+    story:[
+      "At a new school, a student named Samir found it difficult to make friends. Most students already had their own groups, and he usually spent lunchtime reading alone. One afternoon, he noticed a new student standing near the cafeteria entrance. The student looked just as nervous as Samir had felt on his first day.",
+      "Samir remembered how uncomfortable it was to enter a room where everyone seemed to know one another. He walked over, introduced himself and invited the student to sit with him. They discovered that they both enjoyed drawing, football and science experiments. Soon, another student joined their conversation. By the end of lunch, their table had become a small group of friends.",
+      "A few weeks later, the group started a tradition. Whenever someone new arrived, they made sure there was an empty seat at their table. Samir realised that kindness did not require a grand gesture. Sometimes, a simple invitation could change someone's entire day. The empty seat became a symbol of friendship and belonging at their school."
+    ],
+    summary:"Samir understands the importance of inclusion when he welcomes a new student. His small act of kindness creates a tradition in which everyone is made to feel welcome."
+  },
+  {
+    level:"Beginner", title:"The Clockmaker's Promise",
+    story:[
+      "In a small town lived a clockmaker named Mr. Elias. His shop was filled with clocks of every shape and size. Some ticked loudly, while others made barely any sound. One day, a young girl named Nina brought him a broken clock that had belonged to her grandmother. It had stopped working many years ago, but Nina wanted to repair it before her grandmother's birthday.",
+      "Mr. Elias examined the clock and explained that the repair would take time. Nina offered to help, so he showed her how the different gears worked. She carefully cleaned the small parts while he replaced a damaged spring. The first attempt did not work. They checked every connection and tried again. After several careful adjustments, the clock began ticking.",
+      "Nina thanked the clockmaker and carried the clock home. When her grandmother opened the gift, she recognised it immediately and became delighted. Nina learned that the value of a gift was not always measured by its price. The time, effort and thought behind it could make it truly special."
+    ],
+    summary:"Nina helps a clockmaker repair her grandmother's old clock. She learns that patience, careful work and thoughtful actions can be more meaningful than expensive gifts."
+  },
+
+  // INTERMEDIATE
+  {
+    level:"Intermediate", title:"The Town That Forgot to Listen",
+    story:[
+      "The town of Bellford was once famous for its lively market square. Every weekend, farmers, artists and shopkeepers gathered there to exchange goods and stories. Over time, however, the town council began making decisions without asking the residents what they needed. A new shopping complex was planned near the square, and the old community library was scheduled for demolition. Many residents were upset, but nobody seemed to be listening.",
+      "A sixteen-year-old student named Elena decided to understand the disagreement. She interviewed shopkeepers, spoke to older residents and collected opinions from students. She discovered that people did not oppose development itself. They wanted the town to preserve its history while creating better facilities. Elena organised a meeting and invited everyone to share their ideas. At first, the discussion was tense. People interrupted one another, and several arguments broke out.",
+      "Elena suggested that each person should speak without interruption before anyone responded. Slowly, the atmosphere changed. The residents began discovering common goals. They proposed renovating the library, improving the market square and building the shopping complex on a different site. The council agreed to study the proposal. Months later, the project began with the library still standing.",
+      "Elena learned that leadership was not simply about giving instructions. It also required listening carefully, understanding different opinions and finding solutions that benefited the wider community."
+    ],
+    summary:"Elena brings a divided town together by encouraging respectful discussion. She learns that good leadership begins with listening and finding common ground."
+  },
+  {
+    level:"Intermediate", title:"The Science Fair Challenge",
+    story:[
+      "Every year, Westbridge School organised a science fair. Students competed to present the most interesting experiments and inventions. This year, three friends—Ayaan, Olivia and Marcus—decided to build a model that could collect rainwater and demonstrate how it could be filtered. They believed their project would be simple, affordable and useful for communities with limited water supplies.",
+      "Their first design looked impressive, but it did not work properly. Water leaked from the container, and the filter became blocked. Marcus wanted to abandon the idea and choose an easier project. Olivia suggested examining the design instead. They recorded each problem, researched basic filtration and tested different materials using safe classroom equipment. Ayaan created a chart to compare their results.",
+      "After several improvements, the model began collecting and filtering water more effectively. Their presentation explained that the model demonstrated basic filtration, but that filtered demonstration water was not automatically safe to drink. The judges appreciated their honesty and the way they had documented their mistakes. The team did not win first prize, but they received a special award for clear scientific explanation.",
+      "The three friends realised that a successful experiment was not one that worked perfectly on the first attempt. It was one that helped them ask better questions, test ideas and understand the evidence."
+    ],
+    summary:"Three students improve a rainwater model by studying its weaknesses and testing solutions. They discover that scientific progress depends on curiosity, teamwork and honest evaluation."
+  },
+  {
+    level:"Intermediate", title:"The Photograph in the Attic",
+    story:[
+      "While cleaning her family's attic, Sofia found a photograph inside an old envelope. It showed a group of children standing in front of a small schoolhouse. On the back, someone had written a date from nearly sixty years earlier. Sofia recognised the schoolhouse from an old photograph displayed in the town museum. Curious, she asked her grandfather about it.",
+      "Her grandfather explained that the building had once been a temporary school for children from several nearby villages. Teachers travelled long distances to provide lessons, and students often helped maintain the building. He remembered a teacher named Mrs. Rahman who had encouraged children to continue studying even when resources were limited. Sofia became interested in discovering what had happened to the students in the photograph.",
+      "She visited the local museum and spoke to its historian. Together, they identified several names and located a few former students. Sofia recorded their memories and collected copies of old school materials. She eventually created a small exhibition at her school, showing how education in the area had changed over the decades.",
+      "At the exhibition, visitors shared their own memories. Sofia realised that history was not only about famous leaders and major events. It was also made up of ordinary people whose experiences deserved to be remembered."
+    ],
+    summary:"Sofia investigates an old photograph and uncovers the history of a small village school. She learns that everyday experiences and personal memories are important parts of history."
+  },
+  {
+    level:"Intermediate", title:"The Team Behind the Trophy",
+    story:[
+      "The school football team had reached the final of an important tournament. Their captain, Ryan, was determined to win. During training, he focused almost entirely on scoring goals and improving his own performance. He rarely passed the ball to teammates unless he had no other option. Although he was talented, the team began struggling to work together.",
+      "Before the final, their coach showed them recordings of previous matches. The players noticed that several scoring opportunities had been missed because they had not communicated properly. Ryan realised that his decisions were affecting the entire team. He began listening to the defenders, discussing strategies with the midfielders and encouraging younger players to contribute.",
+      "During the final, the opposing team scored first. Instead of becoming frustrated, Ryan encouraged everyone to remain organised. A midfielder created an opportunity, a defender made an important clearance and Ryan assisted the equalising goal. In the final minutes, another teammate scored the winning goal.",
+      "The team celebrated together. Ryan understood that the trophy represented more than individual talent. It represented trust, preparation, communication and the contributions of every player."
+    ],
+    summary:"Ryan learns that teamwork matters more than individual recognition. The team succeeds because every player communicates, supports others and contributes to a shared goal."
+  },
+  {
+    level:"Intermediate", title:"The River's Secret",
+    story:[
+      "A river flowed through the town of Greenfield, providing water for farms and creating a peaceful place for families to visit. Recently, residents had noticed that the water looked different and fewer birds were appearing along its banks. Some people blamed nearby factories, while others believed the problem was caused by litter from visitors. Nobody had enough information to explain what was happening.",
+      "A group of students decided to investigate as part of an environmental project. With guidance from their science teacher, they observed the river, recorded visible changes and examined publicly available environmental reports. They did not make accusations. Instead, they collected information and invited local residents to describe what they had noticed.",
+      "Their findings suggested that several factors might be affecting the river, including litter, changes in land use and possible pollution from different sources. The students presented their observations to the community and recommended a proper environmental assessment by qualified authorities. They also organised a clean-up campaign and prepared posters explaining why rivers should be protected.",
+      "The project attracted attention from local organisations. More residents joined the effort, and the council agreed to review the available evidence. The students learned that protecting the environment required cooperation, reliable information and long-term commitment."
+    ],
+    summary:"Students investigate changes in a local river without jumping to conclusions. They learn the importance of evidence, environmental responsibility and community cooperation."
+  },
+
+  // PROFESSIONAL
+  {
+    level:"Professional", title:"Beyond the Glass Tower",
+    story:[
+      "In the centre of Meridian City stood a glass tower that housed one of the most successful technology companies in the region. From the outside, the building represented progress and opportunity. Inside, hundreds of employees worked on projects designed to improve everyday life. Among them was a young engineer named Daniel, who had recently joined a team developing a digital learning platform for schools.",
+      "The project was ambitious. The team wanted to create a platform that could help students organise their studies, access learning materials and communicate with teachers. During early testing, however, they discovered that the platform worked well only on expensive devices and fast internet connections. Many students in smaller communities could not use it effectively. Some team members argued that the company should launch the product anyway and improve it later.",
+      "Daniel believed that a learning platform should serve different kinds of students, not only those with the best technology. He proposed a new testing programme involving schools with different resources. The team redesigned several features, reduced unnecessary data usage and created a simpler interface. They also asked teachers and students to provide feedback throughout the process.",
+      "The revised platform took longer to complete, but it became more accessible and easier to use. The company eventually introduced it to a wider group of schools. Daniel's experience changed his understanding of innovation. He realised that a successful invention was not measured only by its technical complexity. Its real value depended on how many people it could help.",
+      "Years later, Daniel became a project leader. He continued to ask one question whenever his team developed something new: who might be left out, and how could the design become more inclusive?"
+    ],
+    summary:"Daniel challenges his team to make a learning platform accessible to students with different resources. He learns that meaningful innovation must consider the needs of the people it is intended to serve."
+  },
+  {
+    level:"Professional", title:"The Last Train to Northbridge",
+    story:[
+      "Northbridge was a town built around its railway station. For generations, the railway had connected farmers, students and workers with larger cities. When a new highway opened, fewer people used the trains. The railway company announced that the old route would close unless passenger numbers improved. Residents feared losing an important connection to hospitals, colleges and workplaces.",
+      "A university student named Amira returned home during her break and noticed how worried the residents had become. She began researching the railway's passenger records and interviewed people who depended on the service. She discovered that the timetable did not match the needs of many commuters. Some trains arrived too early, while others left before students finished their classes.",
+      "Amira shared her findings at a public meeting. Rather than simply demanding that the railway remain open, she proposed a revised timetable, improved station information and partnerships with nearby colleges. A local business association offered to support a trial campaign encouraging people to use the service. The railway company agreed to test the changes for three months.",
+      "Passenger numbers increased during the trial. The route was not immediately guaranteed forever, but the company agreed to continue reviewing its performance. Residents understood that the railway's future would depend on continued planning and cooperation.",
+      "Amira returned to university with a new appreciation for local decision-making. She had learned that solving a community problem required more than identifying what was wrong. It required understanding people's needs, studying evidence and creating a realistic plan."
+    ],
+    summary:"Amira helps a town improve its railway service by researching passenger needs and proposing practical changes. The story highlights evidence-based decision-making and community participation."
+  },
+  {
+    level:"Professional", title:"The Archive of Forgotten Ideas",
+    story:[
+      "At the National Innovation Museum, a quiet archive stored thousands of notebooks, sketches and unfinished inventions. Many had been created by people whose names were no longer remembered. A young researcher named Ishaan was assigned to organise a collection from an inventor who had worked decades earlier. Most of the pages appeared incomplete, and several designs seemed impossible to understand.",
+      "As Ishaan studied the notebooks, he noticed repeated drawings of a low-cost device intended to help farmers monitor soil moisture. The inventor had never completed the project because the necessary components were too expensive at the time. Ishaan became interested in the idea and discussed it with a group of engineering students.",
+      "The students compared the old design with modern sensors and developed a small demonstration model. Their first version produced inconsistent readings. They documented the errors, adjusted the design and tested it under different conditions. The museum invited agricultural specialists to review the work, and the students learned that a device could be technically interesting without being practical for every farm.",
+      "They redesigned the model to make it easier to repair and less expensive to maintain. The final demonstration included the original notebook pages, showing how ideas could develop across generations. Visitors were surprised that a forgotten project could still inspire useful research.",
+      "Ishaan wrote a note for the archive: an unfinished idea was not necessarily a failed idea. Sometimes, it was a question waiting for the right tools, knowledge and people to continue exploring it."
+    ],
+    summary:"Ishaan discovers an unfinished invention and works with students to develop a modern demonstration. He learns that knowledge builds across generations and that unfinished ideas can inspire future innovation."
+  },
+  {
+    level:"Professional", title:"A City Without Shadows",
+    story:[
+      "When the city of Solara began expanding, its leaders celebrated the arrival of new buildings, roads and shopping centres. Yet the rapid development created an unexpected problem. Many neighbourhoods had very few trees or shaded public spaces. During hot months, walking outside became uncomfortable, and older residents found it difficult to reach nearby services.",
+      "An urban planning student named Leena decided to study the problem. She mapped areas with limited shade, interviewed residents and examined how people travelled through the city. Her research showed that some streets had wide pavements but almost no trees, while several unused spaces could potentially become small parks. She also discovered that planting trees without considering water availability and maintenance could create new difficulties.",
+      "Leena presented a proposal that combined native and climate-appropriate planting, shaded seating areas and improved pedestrian routes. She suggested that residents should help identify the locations most in need of improvement. The proposal received mixed reactions. Some business owners worried that construction would interrupt customers, while others questioned the cost of long-term maintenance.",
+      "Instead of ignoring the concerns, Leena helped organise a pilot project on one street. The team worked with local authorities, residents and environmental specialists. They selected suitable planting locations, planned maintenance and added shaded seating. After several months, residents reported that the street had become more comfortable to use.",
+      "The pilot did not solve every problem in Solara, but it provided useful evidence for future planning. Leena realised that a successful city was not defined only by the height of its buildings. It was also defined by how thoughtfully its spaces supported the people who lived there."
+    ],
+    summary:"Leena studies the lack of shaded public spaces in a growing city and develops a practical pilot project. She discovers that good urban planning must balance environmental needs, cost and community feedback."
+  },
+  {
+    level:"Professional", title:"The Equation of Trust",
+    story:[
+      "At a respected research centre, a team of analysts was preparing a report about how students used digital learning tools. The report would influence decisions about future educational programmes. A junior analyst named Noor was responsible for checking the survey results before publication. She was excited because it was her first major project.",
+      "While reviewing the data, Noor noticed that one group of responses had been counted twice. The mistake made the results appear more positive than they actually were. She informed the project manager, who was under pressure to submit the report before a deadline. The manager suggested that the team could correct the issue in a later version because the overall conclusion seemed unchanged.",
+      "Noor understood the pressure, but she believed that accuracy was essential. She explained that even a small error could affect how decision-makers interpreted the findings. The team reviewed the original responses, corrected the calculations and documented the change. The revised report was submitted slightly later than planned.",
+      "The final report received positive feedback for its transparency. The research centre also introduced an additional checking process for future studies. Noor's manager thanked her for raising the issue respectfully and clearly.",
+      "Noor realised that trust in research was built through careful methods and honest reporting. Numbers could support important decisions, but only when the people presenting them were willing to examine their own work critically."
+    ],
+    summary:"Noor identifies an error in an important research report and insists that it be corrected. She learns that integrity, transparency and accuracy are essential for building trust."
+  },
+
+  // EXPERT
+  {
+    level:"Expert", title:"The Republic of Tomorrow",
+    story:[
+      "In the year 2085, the floating republic of Aster had become a model of advanced engineering. Its buildings rested on enormous platforms, its transport system used automated electric vehicles, and its energy network combined solar and tidal power. Citizens enjoyed many conveniences, but the republic faced a difficult question: how should its leaders balance technological progress with fairness, privacy and public participation?",
+      "A young policy researcher named Mira worked for the Council of Futures. Her task was to evaluate a proposal that would use artificial intelligence to manage the distribution of energy and essential services. Supporters argued that automated systems could respond faster than human administrators and reduce waste. Critics worried that the system might make decisions without understanding unusual circumstances or the needs of smaller communities.",
+      "Mira began by studying the proposal's assumptions. She examined the data used to train the system, interviewed residents and asked independent experts to evaluate its limitations. She found that the system performed well under ordinary conditions but struggled when information was incomplete. It also gave greater priority to areas with more historical data, which meant that recently established communities could be overlooked.",
+      "At the Council meeting, Mira presented a different approach. Rather than allowing the system to make every decision independently, she recommended human oversight, clear explanations for important decisions and a process through which residents could challenge errors. She also proposed regular public reviews to determine whether the system was treating communities fairly.",
+      "The council agreed to test the revised model in a limited number of districts. The trial was not perfect. Some decisions still required manual review, and the system needed frequent updates. However, residents were able to understand how decisions were made and report problems. The council collected feedback before considering a wider introduction.",
+      "Mira's work changed the discussion in Aster. People stopped asking only whether technology could perform a task. They began asking whether it should perform that task, under what conditions and with whose interests in mind. The republic learned that progress required more than powerful tools. It required institutions capable of using those tools responsibly.",
+      "Years later, Mira wrote that the future was not something a society simply received. It was something people designed through choices, values and the willingness to question their own systems."
+    ],
+    summary:"Mira evaluates an automated public-services system and recommends transparency, human oversight and fairness. The story explores responsible innovation and the importance of keeping people involved in decisions that affect them."
+  },
+  {
+    level:"Expert", title:"The Cartographers of Memory",
+    story:[
+      "The Memory Institute was established after a series of severe storms damaged several coastal settlements. Its researchers collected photographs, maps, letters and oral histories to preserve the experiences of communities whose buildings and records had been lost. The institute's newest project aimed to create a digital map that connected personal memories with the physical places where events had occurred.",
+      "A historian named Elias was assigned to lead a team of researchers, designers and software developers. Their challenge was more complicated than collecting information. Different residents remembered the same event in different ways. Some records contained incorrect dates, while others had been passed down through several generations. The team needed to preserve these differences without presenting uncertain details as established facts.",
+      "Elias proposed that each memory should include information about its source, date of collection and level of certainty. Residents could also explain when their accounts disagreed with other records. The team created a system that allowed visitors to compare multiple perspectives rather than forcing every account into a single version of history.",
+      "During the first public demonstration, an elderly resident recognised a photograph of a street that no longer existed. She shared a memory about a small community centre where neighbours had gathered during difficult times. Another resident added a different account, explaining that the building had also served as a temporary classroom. Both memories were included, with their sources clearly identified.",
+      "Some visitors questioned whether personal memories were reliable enough for a historical archive. Elias explained that memories could be incomplete or influenced by time, but that did not make them worthless. Their value depended on how carefully they were recorded, compared and interpreted alongside other evidence.",
+      "The project eventually became an important educational resource. Students used it to study geography, local history and the ways communities responded to change. More importantly, it taught them that historical understanding was built through evidence, context and careful consideration of different perspectives.",
+      "Elias later described the archive as a map of human experience. It did not claim that every memory was perfect. Instead, it showed how a community could preserve its past honestly while acknowledging uncertainty."
+    ],
+    summary:"Elias leads a project that preserves community memories while clearly identifying sources and uncertainty. The story examines historical evidence, perspective and the responsibility involved in recording the past."
+  },
+  {
+    level:"Expert", title:"The Silence of the Observatory",
+    story:[
+      "High above the desert, the International Observatory studied distant stars and searched for patterns that could help scientists understand the universe. Its newest instrument detected a repeating signal from a region of space that had rarely been observed. The discovery attracted worldwide attention, and several research teams began analysing the data.",
+      "Dr. Amara, a young astrophysicist, was part of the team responsible for verifying the signal. The pattern appeared unusual, but unusual did not automatically mean extraordinary. The instrument had recently received a software update, and the team needed to determine whether the signal came from space or from an error in the equipment.",
+      "Amara organised a series of independent checks. The team examined older recordings, compared observations from other instruments and tested whether the signal changed when the observatory altered its position. They also invited researchers from another institution to examine the data without being told the team's preferred explanation.",
+      "The independent review revealed that part of the pattern was caused by interference from a nearby electronic system. However, a weaker repeating feature remained unexplained. The team published its findings carefully, separating what they had confirmed from what still required investigation. Some media reports focused on the unexplained signal and ignored the limitations described in the paper.",
+      "Amara was disappointed by the exaggerated headlines, but she refused to change the team's conclusions to attract attention. She explained that science advanced through questions, evidence and the willingness to admit when an answer was not yet known. The observatory continued collecting data for several months.",
+      "Eventually, the researchers discovered that the remaining pattern came from a natural astronomical process that had not been properly modelled in their earlier analysis. It was not evidence of an extraordinary message, but it provided useful information about the behaviour of the observed region.",
+      "The discovery received less attention than the original headlines, yet the research community valued the careful investigation. Amara learned that scientific achievement was not always about making the most surprising claim. Sometimes, it was about removing uncertainty one piece at a time."
+    ],
+    summary:"Amara investigates an unusual astronomical signal and separates genuine observations from equipment interference. The story highlights scientific integrity, independent verification and the importance of communicating uncertainty."
+  },
+  {
+    level:"Expert", title:"The Architecture of a Promise",
+    story:[
+      "The city of Veyra had experienced decades of rapid growth. Its population had doubled, new districts had appeared and businesses had transformed the local economy. Yet the development had not benefited every neighbourhood equally. Some areas had modern transport, schools and healthcare facilities, while others struggled with overcrowded services and limited public spaces. A new generation of planners was asked to prepare a long-term development strategy.",
+      "Among them was architect and researcher Samira. She believed that a city plan should be judged not only by its buildings but also by the opportunities it created for residents. Her team studied transport networks, public facilities, housing patterns and environmental conditions. They discovered that many residents travelled long distances because essential services were concentrated in a few central districts.",
+      "The first proposal focused on building a new business district. It promised economic growth and employment, but it required a large investment and offered limited improvements to existing neighbourhoods. Samira suggested a broader strategy: improve public transport, strengthen local schools, create accessible public spaces and encourage smaller business centres in underserved areas.",
+      "The proposal faced criticism. Some investors believed that spreading resources across different districts would reduce the immediate financial return. Residents also disagreed about which improvements should come first. Samira recognised that no single plan could satisfy every group. She organised public consultations and asked the team to publish the assumptions behind its cost estimates.",
+      "The revised strategy introduced measurable targets. These included travel times to essential services, access to educational facilities and the availability of shaded public spaces. It also established regular reviews so that the city could adjust its plans when population patterns or environmental conditions changed.",
+      "Implementation took several years. Some projects were delayed, and certain targets had to be revised after new information became available. However, the planning process became more transparent. Residents could see how decisions were made and understand why some projects were prioritised over others.",
+      "Samira eventually presented the results to a new group of planners. She explained that a promise made by a city was not simply a statement in a document. It was a responsibility that had to be measured through real improvements in people's lives.",
+      "The city continued to change, but its approach to planning had become more thoughtful. Veyra had learned that development was not a race to build the most impressive skyline. It was a long-term commitment to creating a place where more people could participate, contribute and thrive."
+    ],
+    summary:"Samira develops a long-term city strategy that balances economic growth with fair access to essential services. The story explores public accountability, inclusive planning and the difference between making promises and delivering results."
+  },
+  {
+    level:"Expert", title:"The Final Question",
+    story:[
+      "At the Global Academy of Knowledge, the final examination was unlike any other. Students were given a complex problem involving energy, education, technology and public policy. They had one week to research the issue, work with a team and present a proposal. The academy's director explained that the purpose was not to find one perfect answer. It was to evaluate how students handled uncertainty, evidence and competing priorities.",
+      "A student named Adrian joined a team with members from different academic backgrounds. One studied engineering, another focused on economics, and a third specialised in environmental science. Adrian was interested in education policy. Their assigned problem concerned a remote region that needed reliable electricity and better access to learning resources, but had limited funding and difficult geographical conditions.",
+      "At first, the team disagreed about where to begin. The engineering student wanted to design a new energy system. The economist argued that the budget should be examined first. The environmental student questioned whether the proposed technology would be sustainable. Adrian suggested that they begin by understanding the community itself. They needed to know what residents valued, what facilities already existed and what difficulties they experienced daily.",
+      "The team reviewed available reports and conducted supervised interviews with community representatives. They discovered that some households needed reliable lighting, while schools required stable power for essential equipment. They also learned that maintenance and training were just as important as the initial installation. A technically impressive system would not be useful if nobody could repair it.",
+      "Their proposal combined several smaller measures rather than relying on one expensive solution. It included an assessment of local energy needs, training for maintenance workers, improvements to school facilities and a plan for monitoring performance. They clearly stated which parts were supported by evidence and which required further testing.",
+      "During the presentation, one examiner challenged the team's assumptions. What would happen if funding was reduced? Another asked how the project would remain fair if some villages were easier to reach than others. The team did not pretend to have complete answers. They explained their priorities, identified risks and described how the plan could be adjusted after collecting new information.",
+      "The final result was not a perfect solution, but the examiners praised the team's reasoning. They had considered technical, financial, environmental and social factors rather than treating the problem as a single engineering challenge.",
+      "After the examination, Adrian asked the director what the final question had been intended to test. The director replied that knowledge was important, but judgement mattered too. The most capable people were not those who always claimed to know the answer. They were those who could investigate carefully, work with others, recognise limitations and make responsible decisions.",
+      "Adrian left the academy thinking about the difference between learning facts and learning how to think. He understood that education was not simply preparation for one examination or one career. It was preparation for a lifetime of questions, decisions and opportunities to contribute to the world."
+    ],
+    summary:"Adrian and his team develop a balanced proposal for a community facing energy and education challenges. They learn that complex problems require evidence, collaboration, flexibility and responsible judgement."
+  }
+];
+
+/* ==========================================
+   READING LIBRARY DESIGN
+========================================== */
+
+const bookStyle = document.createElement("style");
+bookStyle.textContent = `
+#bookLaunch {
+  background:transparent;
+  border:1px solid #00e5ff;
+  color:#00e5ff;
+  padding:10px 17px;
+  border-radius:7px;
+  font-weight:bold;
+  margin-left:18px;
+}
+#bookLaunch:hover {
+  background:#00e5ff;
+  color:#050509;
+  box-shadow:0 0 15px #00e5ff80;
+}
+#bookSidebar {
+  position:fixed;
+  top:0; left:0;
+  width:310px;
+  height:100vh;
+  background:#090912;
+  border-right:1px solid #25253d;
+  z-index:1001;
+  padding:25px;
+  overflow-y:auto;
+  transform:translateX(-105%);
+  transition:.3s;
+}
+#bookSidebar.open {transform:translateX(0);}
+#bookOverlay {
+  display:none;
+  position:fixed;
+  inset:0;
+  background:#000b;
+  z-index:1000;
+}
+#bookOverlay.open {display:block;}
+#bookSidebar h2 {color:#00e5ff;margin:12px 0;}
+#bookPoints {
+  background:#11111c;
+  border:1px solid #00e5ff;
+  padding:15px;
+  border-radius:10px;
+  color:#39ff88;
+  margin:20px 0;
+  text-align:center;
+  font-size:20px;
+  font-weight:bold;
+}
+.book-level {
+  border:1px solid #30304a;
+  border-radius:9px;
+  margin:13px 0;
+  overflow:hidden;
+}
+.book-level-heading {
+  padding:14px;
+  background:#11111c;
+  color:#00e5ff;
+  font-weight:bold;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+.book-list {padding:8px;}
+.book-entry {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  width:100%;
+  text-align:left;
+  padding:11px;
+  margin:5px 0;
+  background:#080811;
+  border:1px solid #25253d;
+  border-radius:7px;
+  color:#ddd;
+  cursor:pointer;
+}
+.book-entry:hover:not(:disabled) {
+  border-color:#00e5ff;
+  color:#00e5ff;
+}
+.book-entry:disabled {opacity:.45;cursor:not-allowed;}
+.book-small {font-size:11px;color:#39ff88;}
+#bookReader {
+  display:none;
+  position:fixed;
+  inset:3%;
+  z-index:1003;
+  background:#090912;
+  border:1px solid #00e5ff;
+  border-radius:15px;
+  padding:30px;
+  overflow-y:auto;
+  box-shadow:0 0 35px #00e5ff30;
+}
+#bookReader.open {display:block;}
+#bookReader h2 {color:#00e5ff;font-size:30px;margin:15px 0;}
+#bookReader h3 {color:#39ff88;margin:30px 0 12px;}
+#bookStory p {
+  color:#d0d0df;
+  line-height:2;
+  font-size:17px;
+  margin:20px 0;
+  max-width:900px;
+}
+#bookSummary {
+  background:#11111c;
+  border-left:4px solid #a855f7;
+  padding:20px;
+  border-radius:8px;
+  color:#ddd;
+  line-height:1.8;
+}
+#bookReader button {
+  border:0;
+  border-radius:7px;
+  padding:12px 18px;
+  font-weight:bold;
+  margin:12px 8px 12px 0;
+}
+#bookClose {background:#30304a;color:white;}
+#bookClaim {background:#39ff88;color:#050509;}
+#bookClaim:disabled {opacity:.4;cursor:not-allowed;}
+#bookReadCheck {accent-color:#39ff88;width:18px;height:18px;}
+#bookNotice {color:#39ff88;margin-top:12px;}
+@media(max-width:600px) {
+  #bookSidebar {width:85%;}
+  #bookReader {inset:2%;padding:18px;}
+  #bookReader h2 {font-size:23px;}
+  #bookStory p {font-size:15px;}
+}
+`;
+document.head.appendChild(bookStyle);
+
+/* ==========================================
+   SAVE DATA (uses the safe storage from above)
+========================================== */
+
+let bookPoints = Number(storage.getItem("ltBookPoints")) || 0;
+let unlockedBookLevels = JSON.parse(
+  storage.getItem("ltUnlockedLevels") || '["Beginner"]'
+);
+let completedBookIds = JSON.parse(
+  storage.getItem("ltCompletedBooks") || "[]"
+);
+
+const bookLevelNames = [
+  "Beginner", "Intermediate", "Professional", "Expert"
+];
+
+const bookLevelCosts = {
+  Beginner:0,
+  Intermediate:30,
+  Professional:30,
+  Expert:30
+};
+
+function saveBookProgress() {
+  storage.setItem("ltBookPoints", bookPoints);
+  storage.setItem("ltUnlockedLevels", JSON.stringify(unlockedBookLevels));
+  storage.setItem("ltCompletedBooks", JSON.stringify(completedBookIds));
+}
+
+/* ==========================================
+   CREATE SIDEBAR
+========================================== */
+
+const bookButton = document.createElement("button");
+bookButton.id = "bookLaunch";
+bookButton.textContent = "📚 Book Library";
+document.querySelector("header").appendChild(bookButton);
+
+const bookOverlay = document.createElement("div");
+bookOverlay.id = "bookOverlay";
+document.body.appendChild(bookOverlay);
+
+const bookSidebar = document.createElement("aside");
+bookSidebar.id = "bookSidebar";
+bookSidebar.innerHTML = `
+  <button id="bookClose" style="float:right;">✕</button>
+  <h2>📚 Reading Library</h2>
+  <p style="color:#aaaabd;line-height:1.6;">
+    Read stories, explore new ideas and earn points.
+  </p>
+  <div id="bookPoints">⭐ 0 Points</div>
+  <div id="bookLevels"></div>
+  <p style="color:#888;font-size:12px;line-height:1.6;margin-top:20px;">
+    Complete a book and read its summary to earn 10 points.
+  </p>
+`;
+document.body.appendChild(bookSidebar);
+
+const bookReader = document.createElement("div");
+bookReader.id = "bookReader";
+bookReader.innerHTML = `
+  <button id="bookCloseReader" style="background:#30304a;color:white;float:right;">✕ Close</button>
+  <p id="bookReaderLevel" style="color:#a855f7;font-weight:bold;"></p>
+  <h2 id="bookReaderTitle"></h2>
+  <div id="bookStory"></div>
+  <h3>📖 Story Summary</h3>
+  <div id="bookSummary"></div>
+  <div style="margin-top:25px;background:#11111c;padding:18px;border-radius:9px;">
+    <label style="color:#ddd;display:flex;align-items:center;gap:10px;">
+      <input type="checkbox" id="bookReadCheck">
+      I have finished reading the story and its summary.
+    </label>
+    <button id="bookClaim" disabled>⭐ Complete Book & Earn 10 Points</button>
+    <p id="bookNotice"></p>
+  </div>
+`;
+document.body.appendChild(bookReader);
+
+function openBookSidebar() {
+  bookSidebar.classList.add("open");
+  bookOverlay.classList.add("open");
+  renderBookLevels();
+}
+function closeBookSidebar() {
+  bookSidebar.classList.remove("open");
+  bookOverlay.classList.remove("open");
+}
+bookButton.addEventListener("click",openBookSidebar);
+bookOverlay.addEventListener("click",closeBookSidebar);
+document.getElementById("bookClose").addEventListener("click",closeBookSidebar);
+document.getElementById("bookCloseReader").addEventListener("click",()=>{
+  bookReader.classList.remove("open");
+});
+
+/* ==========================================
+   LEVELS AND BOOK LIST
+========================================== */
+
+function renderBookLevels() {
+  document.getElementById("bookPoints").textContent =
+    "⭐ " + bookPoints + " Points";
+
+  const container = document.getElementById("bookLevels");
+  container.innerHTML = "";
+
+  bookLevelNames.forEach((level,index)=>{
+    const unlocked = unlockedBookLevels.includes(level);
+    const books = readingBooks.filter(book=>book.level===level);
+    const completedCount = books.filter(book=>
+      completedBookIds.includes(book.title)
+    ).length;
+
+    const section = document.createElement("div");
+    section.className = "book-level";
+
+    const heading = document.createElement("div");
+    heading.className = "book-level-heading";
+    heading.textContent =
+      ["🌱 ","📘 ","🚀 ","🏆 "][index] + level;
+
+    const status = document.createElement("span");
+    status.style.fontSize = "12px";
+    status.textContent = unlocked
+      ? completedCount + "/5 completed"
+      : "🔒 Locked";
+    heading.appendChild(status);
+    section.appendChild(heading);
+
+    const list = document.createElement("div");
+    list.className = "book-list";
+
+    if(unlocked) {
+      books.forEach(book=>{
+        const done = completedBookIds.includes(book.title);
+        const button = document.createElement("button");
+        button.className = "book-entry";
+        button.innerHTML = `
+          <span>${done ? "✅ " : "📕 "}${book.title}</span>
+          <span class="book-small">${done ? "Read" : "+10 pts"}</span>
+        `;
+        button.addEventListener("click",()=>openReadingBook(book));
+        list.appendChild(button);
+      });
+    } else {
+      const cost = bookLevelCosts[level];
+      const unlockButton = document.createElement("button");
+      unlockButton.className = "book-entry";
+      unlockButton.innerHTML = `<span>🔒 Unlock ${level}</span><span>⭐ ${cost} points</span>`;
+      unlockButton.disabled = bookPoints < cost;
+
+      unlockButton.addEventListener("click",()=>{
+        if(bookPoints < cost) return;
+        if(!confirm("Unlock " + level + " for " + cost + " points?")) return;
+
+        bookPoints -= cost;
+        unlockedBookLevels.push(level);
+        saveBookProgress();
+        renderBookLevels();
+      });
+      list.appendChild(unlockButton);
+
+      const message = document.createElement("p");
+      message.style.cssText = "color:#999;font-size:12px;padding:8px;";
+      message.textContent = "Complete books in the previous level to earn points.";
+      list.appendChild(message);
+    }
+
+    section.appendChild(list);
+    container.appendChild(section);
+  });
+}
+
+/* ==========================================
+   OPEN AND COMPLETE A BOOK
+========================================== */
+
+let currentReadingBook = null;
+
+function openReadingBook(book) {
+  currentReadingBook = book;
+
+  document.getElementById("bookReaderLevel").textContent =
+    book.level.toUpperCase() + " LEVEL";
+
+  document.getElementById("bookReaderTitle").textContent = book.title;
+
+  const storyContainer = document.getElementById("bookStory");
+  storyContainer.innerHTML = "";
+
+  book.story.forEach(paragraph=>{
+    const p = document.createElement("p");
+    p.textContent = paragraph;
+    storyContainer.appendChild(p);
+  });
+
+  document.getElementById("bookSummary").textContent = book.summary;
+
+  const check = document.getElementById("bookReadCheck");
+  const claim = document.getElementById("bookClaim");
+  const notice = document.getElementById("bookNotice");
+
+  check.checked = false;
+  check.disabled = completedBookIds.includes(book.title);
+  claim.disabled = true;
+
+  if(completedBookIds.includes(book.title)) {
+    claim.textContent = "✅ Book Already Completed";
+    notice.textContent = "You have already earned points for this book.";
+  } else {
+    claim.textContent = "⭐ Complete Book & Earn 10 Points";
+    notice.textContent = "Read the complete story and summary to claim your points.";
+  }
+
+  bookReader.classList.add("open");
+}
+
+document.getElementById("bookReadCheck").addEventListener("change",event=>{
+  document.getElementById("bookClaim").disabled = !event.target.checked;
+});
+
+document.getElementById("bookClaim").addEventListener("click",()=>{
+  if(!currentReadingBook) return;
+  if(!document.getElementById("bookReadCheck").checked) return;
+  if(completedBookIds.includes(currentReadingBook.title)) return;
+
+  completedBookIds.push(currentReadingBook.title);
+  bookPoints += 10;
+
+  saveBookProgress();
+
+  document.getElementById("bookReadCheck").disabled = true;
+  document.getElementById("bookClaim").disabled = true;
+  document.getElementById("bookClaim").textContent = "✅ Completed!";
+  document.getElementById("bookNotice").textContent =
+    "Excellent work! You earned 10 points. Your new total is " +
+    bookPoints + " points.";
+
+  renderBookLevels();
+});
+
+renderBookLevels();
+</script>
 </body></html>
