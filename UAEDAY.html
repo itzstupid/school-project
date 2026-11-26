@@ -1386,8 +1386,9 @@ function speakAlert() {
         "You have not completed your assignment on time!"
     );
 
-    message.rate = 0.9;
-    message.pitch = 1;
+    message.rate = 0.95;
+    message.pitch = 1.2;
+    message.volume = 0.7;
 
     speechSynthesis.speak(message);
 }
@@ -2043,8 +2044,9 @@ function speakBookMessage(message) {
   if(!("speechSynthesis" in window)) return;
   speechSynthesis.cancel();
   const utterance = new SpeechSynthesisUtterance(message);
-  utterance.rate = 0.9;
-  utterance.pitch = 1;
+  utterance.rate = 0.95;
+  utterance.pitch = 1.2;
+  utterance.volume = 0.7;
   speechSynthesis.speak(utterance);
 }
 
