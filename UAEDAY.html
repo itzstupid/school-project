@@ -615,6 +615,139 @@ footer {
   #bookReader h2 {font-size:23px;}
   #bookStory p {font-size:15px;}
 }
+</style><style>
+#bookLaunch {
+  background:transparent;
+  border:1px solid #00e5ff;
+  color:#00e5ff;
+  padding:10px 17px;
+  border-radius:7px;
+  font-weight:bold;
+  margin-left:18px;
+}
+#bookLaunch:hover {
+  background:#00e5ff;
+  color:#050509;
+  box-shadow:0 0 15px #00e5ff80;
+}
+#bookSidebar {
+  position:fixed;
+  top:0; left:0;
+  width:310px;
+  height:100vh;
+  background:#090912;
+  border-right:1px solid #25253d;
+  z-index:1001;
+  padding:25px;
+  overflow-y:auto;
+  transform:translateX(-105%);
+  transition:.3s;
+}
+#bookSidebar.open {transform:translateX(0);}
+#bookOverlay {
+  display:none;
+  position:fixed;
+  inset:0;
+  background:#000b;
+  z-index:1000;
+}
+#bookOverlay.open {display:block;}
+#bookSidebar h2 {color:#00e5ff;margin:12px 0;}
+#bookPoints {
+  background:#11111c;
+  border:1px solid #00e5ff;
+  padding:15px;
+  border-radius:10px;
+  color:#39ff88;
+  margin:20px 0;
+  text-align:center;
+  font-size:20px;
+  font-weight:bold;
+}
+.book-level {
+  border:1px solid #30304a;
+  border-radius:9px;
+  margin:13px 0;
+  overflow:hidden;
+}
+.book-level-heading {
+  padding:14px;
+  background:#11111c;
+  color:#00e5ff;
+  font-weight:bold;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+.book-list {padding:8px;}
+.book-entry {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  width:100%;
+  text-align:left;
+  padding:11px;
+  margin:5px 0;
+  background:#080811;
+  border:1px solid #25253d;
+  border-radius:7px;
+  color:#ddd;
+  cursor:pointer;
+}
+.book-entry:hover:not(:disabled) {
+  border-color:#00e5ff;
+  color:#00e5ff;
+}
+.book-entry:disabled {opacity:.45;cursor:not-allowed;}
+.book-small {font-size:11px;color:#39ff88;}
+#bookReader {
+  display:none;
+  position:fixed;
+  inset:3%;
+  z-index:1003;
+  background:#090912;
+  border:1px solid #00e5ff;
+  border-radius:15px;
+  padding:30px;
+  overflow-y:auto;
+  box-shadow:0 0 35px #00e5ff30;
+}
+#bookReader.open {display:block;}
+#bookReader h2 {color:#00e5ff;font-size:30px;margin:15px 0;}
+#bookReader h3 {color:#39ff88;margin:30px 0 12px;}
+#bookStory p {
+  color:#d0d0df;
+  line-height:2;
+  font-size:17px;
+  margin:20px 0;
+  max-width:900px;
+}
+#bookSummary {
+  background:#11111c;
+  border-left:4px solid #a855f7;
+  padding:20px;
+  border-radius:8px;
+  color:#ddd;
+  line-height:1.8;
+}
+#bookReader button {
+  border:0;
+  border-radius:7px;
+  padding:12px 18px;
+  font-weight:bold;
+  margin:12px 8px 12px 0;
+}
+#bookClose {background:#30304a;color:white;}
+#bookClaim {background:#39ff88;color:#050509;}
+#bookClaim:disabled {opacity:.4;cursor:not-allowed;}
+#bookReadCheck {accent-color:#39ff88;width:18px;height:18px;}
+#bookNotice {color:#39ff88;margin-top:12px;}
+@media(max-width:600px) {
+  #bookSidebar {width:85%;}
+  #bookReader {inset:2%;padding:18px;}
+  #bookReader h2 {font-size:23px;}
+  #bookStory p {font-size:15px;}
+}
 </style></head>
 
 <body>
@@ -1915,11 +2048,52 @@ renderBookLevels();
     <button id="bookClaim" disabled="">⭐ Complete Book &amp; Earn 10 Points</button>
     <p id="bookNotice"></p>
   </div>
+</div><div id="bookOverlay"></div><aside id="bookSidebar">
+  <button id="bookClose" style="float:right;">✕</button>
+  <h2>📚 Reading Library</h2>
+  <p style="color:#aaaabd;line-height:1.6;">
+    Read stories, explore new ideas and earn points.
+  </p>
+  <div id="bookPoints">⭐ 0 Points</div>
+  <div id="bookLevels"><div class="book-level"><div class="book-level-heading">🌱 Beginner<span style="font-size: 12px;">0/5 completed</span></div><div class="book-list"><button class="book-entry">
+          <span>📕 The Little Lighthouse</span>
+          <span class="book-small">+10 pts</span>
+        </button><button class="book-entry">
+          <span>📕 The Garden of Second Chances</span>
+          <span class="book-small">+10 pts</span>
+        </button><button class="book-entry">
+          <span>📕 The Missing Map</span>
+          <span class="book-small">+10 pts</span>
+        </button><button class="book-entry">
+          <span>📕 A Seat for Everyone</span>
+          <span class="book-small">+10 pts</span>
+        </button><button class="book-entry">
+          <span>📕 The Clockmaker's Promise</span>
+          <span class="book-small">+10 pts</span>
+        </button></div></div><div class="book-level"><div class="book-level-heading">📘 Intermediate<span style="font-size: 12px;">🔒 Locked</span></div><div class="book-list"><button class="book-entry" disabled=""><span>🔒 Unlock Intermediate</span><span>⭐ 30 points</span></button><p style="color: rgb(153, 153, 153); font-size: 12px; padding: 8px;">Complete books in the previous level to earn points.</p></div></div><div class="book-level"><div class="book-level-heading">🚀 Professional<span style="font-size: 12px;">🔒 Locked</span></div><div class="book-list"><button class="book-entry" disabled=""><span>🔒 Unlock Professional</span><span>⭐ 30 points</span></button><p style="color: rgb(153, 153, 153); font-size: 12px; padding: 8px;">Complete books in the previous level to earn points.</p></div></div><div class="book-level"><div class="book-level-heading">🏆 Expert<span style="font-size: 12px;">🔒 Locked</span></div><div class="book-list"><button class="book-entry" disabled=""><span>🔒 Unlock Expert</span><span>⭐ 30 points</span></button><p style="color: rgb(153, 153, 153); font-size: 12px; padding: 8px;">Complete books in the previous level to earn points.</p></div></div></div>
+  <p style="color:#888;font-size:12px;line-height:1.6;margin-top:20px;">
+    Complete a book and read its summary to earn 10 points.
+  </p>
+</aside><div id="bookReader">
+  <button id="bookCloseReader" style="background:#30304a;color:white;float:right;">✕ Close</button>
+  <p id="bookReaderLevel" style="color:#a855f7;font-weight:bold;"></p>
+  <h2 id="bookReaderTitle"></h2>
+  <div id="bookStory"></div>
+  <h3>📖 Story Summary</h3>
+  <div id="bookSummary"></div>
+  <div style="margin-top:25px;background:#11111c;padding:18px;border-radius:9px;">
+    <label style="color:#ddd;display:flex;align-items:center;gap:10px;">
+      <input type="checkbox" id="bookReadCheck">
+      I have finished reading the story and its summary.
+    </label>
+    <button id="bookClaim" disabled="">⭐ Complete Book &amp; Earn 10 Points</button>
+    <p id="bookNotice"></p>
+  </div>
 </div>
 
-</body></html>
-<!-- saved from url=(0054)https://itzstupid.github.io/school-project/UAEDAY.html -->
-<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Learning Together | Student Hub</title>
@@ -2403,9 +2577,9 @@ footer {
     }
 }
 </style>
-</head>
 
-<body>
+
+
 
 <header>
     <div class="logo">📘 Learning Together</div>
@@ -3663,4 +3837,5 @@ document.getElementById("bookClaim").addEventListener("click",()=>{
 
 renderBookLevels();
 </script>
+
 </body></html>
