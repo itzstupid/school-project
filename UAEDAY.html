@@ -13,20 +13,20 @@
 
 body {
     font-family: Arial, sans-serif;
-    background: #050509;
+    background: #100018;
     color: white;
 }
 
 :root {
-    --blue: #00e5ff;
-    --purple: #a855f7;
-    --green: #39ff88;
+    --blue: #ff8c00;
+    --purple: #6d28d9;
+    --green: #ffb000;
     --red: #ff3864;
-    --card: #11111c;
+    --card: #21002d;
 }
 
 header {
-    background: #090912;
+    background: #160020;
     padding: 20px 7%;
     display: flex;
     justify-content: space-between;
@@ -34,7 +34,7 @@ header {
     position: sticky;
     top: 0;
     z-index: 100;
-    border-bottom: 1px solid #202038;
+    border-bottom: 1px solid #3a164a;
 }
 
 .logo {
@@ -64,7 +64,7 @@ nav a:hover {
     padding: 80px 10%;
     background:
     radial-gradient(circle at 80% 50%, #17154b 0%, transparent 40%),
-    #050509;
+    #100018;
 }
 
 .hero-content {
@@ -79,7 +79,7 @@ nav a:hover {
 
 .hero h1 span {
     color: var(--blue);
-    text-shadow: 0 0 20px #00e5ff80;
+    text-shadow: 0 0 20px #ff8c0080;
 }
 
 .hero p {
@@ -93,7 +93,7 @@ nav a:hover {
     display: inline-block;
     padding: 13px 25px;
     background: var(--blue);
-    color: #050509;
+    color: #100018;
     border: none;
     border-radius: 7px;
     font-weight: bold;
@@ -116,7 +116,7 @@ section {
     font-size: 33px;
     color: var(--blue);
     margin-bottom: 12px;
-    text-shadow: 0 0 12px #00e5ff55;
+    text-shadow: 0 0 12px #ff8c0055;
 }
 
 .section-description {
@@ -127,7 +127,7 @@ section {
 
 .panel {
     background: var(--card);
-    border: 1px solid #25253d;
+    border: 1px solid #40164d;
     border-radius: 14px;
     padding: 25px;
     box-shadow: 0 0 18px #000;
@@ -135,8 +135,8 @@ section {
 
 input, textarea, select {
     width: 100%;
-    background: #080811;
-    border: 1px solid #30304a;
+    background: #13001b;
+    border: 1px solid #3a164a;
     color: white;
     padding: 12px;
     border-radius: 7px;
@@ -146,7 +146,7 @@ input, textarea, select {
 
 input:focus, textarea:focus, select:focus {
     border-color: var(--blue);
-    box-shadow: 0 0 8px #00e5ff55;
+    box-shadow: 0 0 8px #ff8c0055;
 }
 
 button {
@@ -170,14 +170,14 @@ table {
 }
 
 th, td {
-    border: 1px solid #30304a;
+    border: 1px solid #3a164a;
     padding: 10px;
     text-align: center;
 }
 
 th {
     color: var(--blue);
-    background: #101027;
+    background: #20002b;
 }
 
 .timetable table {
@@ -263,8 +263,8 @@ th {
 }
 
 .note {
-    background: #11111c;
-    border: 1px solid #30304a;
+    background: #21002d;
+    border: 1px solid #3a164a;
     border-left: 4px solid var(--purple);
     border-radius: 10px;
     padding: 18px;
@@ -274,7 +274,7 @@ th {
 
 .note.completed {
     border-left-color: var(--green);
-    box-shadow: 0 0 14px #39ff8840;
+    box-shadow: 0 0 14px #ffb00040;
 }
 
 .note.completed .note-text {
@@ -327,12 +327,12 @@ th {
 
 .timer {
     display: none;
-    background: #080812;
+    background: #13001b;
     border: 1px solid var(--blue);
     border-radius: 10px;
     padding: 22px;
     margin-top: 20px;
-    box-shadow: 0 0 15px #00e5ff30;
+    box-shadow: 0 0 15px #ff8c0030;
 }
 
 .timer.show {
@@ -371,7 +371,7 @@ th {
 }
 
 .reset {
-    background: #30304a;
+    background: #3a164a;
     color: white;
 }
 
@@ -394,14 +394,14 @@ th {
 .card {
     padding: 27px;
     background: var(--card);
-    border: 1px solid #25253d;
+    border: 1px solid #40164d;
     border-radius: 12px;
     transition: .3s;
 }
 
 .card:hover {
     border-color: var(--blue);
-    box-shadow: 0 0 16px #00e5ff30;
+    box-shadow: 0 0 16px #ff8c0030;
     transform: translateY(-5px);
 }
 
@@ -422,14 +422,14 @@ th {
 
 .highlight {
     text-align: center;
-    background: radial-gradient(circle, #15153a, #050509);
+    background: radial-gradient(circle, #270039, #100018);
 }
 
 .highlight h2 {
     color: var(--green);
     font-size: 32px;
     margin-bottom: 18px;
-    text-shadow: 0 0 12px #39ff8870;
+    text-shadow: 0 0 12px #ffb00070;
 }
 
 .highlight p {
@@ -442,8 +442,8 @@ th {
 footer {
     text-align: center;
     padding: 28px;
-    background: #090912;
-    border-top: 1px solid #25253d;
+    background: #160020;
+    border-top: 1px solid #40164d;
     color: #999;
     line-height: 1.8;
 }
@@ -485,25 +485,25 @@ footer {
 <style>
 #bookLaunch {
   background:transparent;
-  border:1px solid #00e5ff;
-  color:#00e5ff;
+  border:1px solid #ff8c00;
+  color:#ff8c00;
   padding:10px 17px;
   border-radius:7px;
   font-weight:bold;
   margin-left:18px;
 }
 #bookLaunch:hover {
-  background:#00e5ff;
-  color:#050509;
-  box-shadow:0 0 15px #00e5ff80;
+  background:#ff8c00;
+  color:#100018;
+  box-shadow:0 0 15px #ff8c0080;
 }
 #bookSidebar {
   position:fixed;
   top:0; left:0;
   width:310px;
   height:100vh;
-  background:#090912;
-  border-right:1px solid #25253d;
+  background:#160020;
+  border-right:1px solid #40164d;
   z-index:1001;
   padding:25px;
   overflow-y:auto;
@@ -519,28 +519,28 @@ footer {
   z-index:1000;
 }
 #bookOverlay.open {display:block;}
-#bookSidebar h2 {color:#00e5ff;margin:12px 0;}
+#bookSidebar h2 {color:#ff8c00;margin:12px 0;}
 #bookPoints {
-  background:#11111c;
-  border:1px solid #00e5ff;
+  background:#21002d;
+  border:1px solid #ff8c00;
   padding:15px;
   border-radius:10px;
-  color:#39ff88;
+  color:#ffb000;
   margin:20px 0;
   text-align:center;
   font-size:20px;
   font-weight:bold;
 }
 .book-level {
-  border:1px solid #30304a;
+  border:1px solid #3a164a;
   border-radius:9px;
   margin:13px 0;
   overflow:hidden;
 }
 .book-level-heading {
   padding:14px;
-  background:#11111c;
-  color:#00e5ff;
+  background:#21002d;
+  color:#ff8c00;
   font-weight:bold;
   display:flex;
   justify-content:space-between;
@@ -555,33 +555,33 @@ footer {
   text-align:left;
   padding:11px;
   margin:5px 0;
-  background:#080811;
-  border:1px solid #25253d;
+  background:#13001b;
+  border:1px solid #40164d;
   border-radius:7px;
   color:#ddd;
   cursor:pointer;
 }
 .book-entry:hover:not(:disabled) {
-  border-color:#00e5ff;
-  color:#00e5ff;
+  border-color:#ff8c00;
+  color:#ff8c00;
 }
 .book-entry:disabled {opacity:.45;cursor:not-allowed;}
-.book-small {font-size:11px;color:#39ff88;}
+.book-small {font-size:11px;color:#ffb000;}
 #bookReader {
   display:none;
   position:fixed;
   inset:3%;
   z-index:1003;
-  background:#090912;
-  border:1px solid #00e5ff;
+  background:#160020;
+  border:1px solid #ff8c00;
   border-radius:15px;
   padding:30px;
   overflow-y:auto;
-  box-shadow:0 0 35px #00e5ff30;
+  box-shadow:0 0 35px #ff8c0030;
 }
 #bookReader.open {display:block;}
-#bookReader h2 {color:#00e5ff;font-size:30px;margin:15px 0;}
-#bookReader h3 {color:#39ff88;margin:30px 0 12px;}
+#bookReader h2 {color:#ff8c00;font-size:30px;margin:15px 0;}
+#bookReader h3 {color:#ffb000;margin:30px 0 12px;}
 #bookStory p {
   color:#d0d0df;
   line-height:2;
@@ -590,8 +590,8 @@ footer {
   max-width:900px;
 }
 #bookSummary {
-  background:#11111c;
-  border-left:4px solid #a855f7;
+  background:#21002d;
+  border-left:4px solid #6d28d9;
   padding:20px;
   border-radius:8px;
   color:#ddd;
@@ -604,11 +604,11 @@ footer {
   font-weight:bold;
   margin:12px 8px 12px 0;
 }
-#bookClose {background:#30304a;color:white;}
-#bookClaim {background:#39ff88;color:#050509;}
+#bookClose {background:#3a164a;color:white;}
+#bookClaim {background:#ffb000;color:#100018;}
 #bookClaim:disabled {opacity:.4;cursor:not-allowed;}
-#bookReadCheck {accent-color:#39ff88;width:18px;height:18px;}
-#bookNotice {color:#39ff88;margin-top:12px;}
+#bookReadCheck {accent-color:#ffb000;width:18px;height:18px;}
+#bookNotice {color:#ffb000;margin-top:12px;}
 @media(max-width:600px) {
   #bookSidebar {width:85%;}
   #bookReader {inset:2%;padding:18px;}
@@ -618,25 +618,25 @@ footer {
 </style><style>
 #bookLaunch {
   background:transparent;
-  border:1px solid #00e5ff;
-  color:#00e5ff;
+  border:1px solid #ff8c00;
+  color:#ff8c00;
   padding:10px 17px;
   border-radius:7px;
   font-weight:bold;
   margin-left:18px;
 }
 #bookLaunch:hover {
-  background:#00e5ff;
-  color:#050509;
-  box-shadow:0 0 15px #00e5ff80;
+  background:#ff8c00;
+  color:#100018;
+  box-shadow:0 0 15px #ff8c0080;
 }
 #bookSidebar {
   position:fixed;
   top:0; left:0;
   width:310px;
   height:100vh;
-  background:#090912;
-  border-right:1px solid #25253d;
+  background:#160020;
+  border-right:1px solid #40164d;
   z-index:1001;
   padding:25px;
   overflow-y:auto;
@@ -652,28 +652,28 @@ footer {
   z-index:1000;
 }
 #bookOverlay.open {display:block;}
-#bookSidebar h2 {color:#00e5ff;margin:12px 0;}
+#bookSidebar h2 {color:#ff8c00;margin:12px 0;}
 #bookPoints {
-  background:#11111c;
-  border:1px solid #00e5ff;
+  background:#21002d;
+  border:1px solid #ff8c00;
   padding:15px;
   border-radius:10px;
-  color:#39ff88;
+  color:#ffb000;
   margin:20px 0;
   text-align:center;
   font-size:20px;
   font-weight:bold;
 }
 .book-level {
-  border:1px solid #30304a;
+  border:1px solid #3a164a;
   border-radius:9px;
   margin:13px 0;
   overflow:hidden;
 }
 .book-level-heading {
   padding:14px;
-  background:#11111c;
-  color:#00e5ff;
+  background:#21002d;
+  color:#ff8c00;
   font-weight:bold;
   display:flex;
   justify-content:space-between;
@@ -688,33 +688,33 @@ footer {
   text-align:left;
   padding:11px;
   margin:5px 0;
-  background:#080811;
-  border:1px solid #25253d;
+  background:#13001b;
+  border:1px solid #40164d;
   border-radius:7px;
   color:#ddd;
   cursor:pointer;
 }
 .book-entry:hover:not(:disabled) {
-  border-color:#00e5ff;
-  color:#00e5ff;
+  border-color:#ff8c00;
+  color:#ff8c00;
 }
 .book-entry:disabled {opacity:.45;cursor:not-allowed;}
-.book-small {font-size:11px;color:#39ff88;}
+.book-small {font-size:11px;color:#ffb000;}
 #bookReader {
   display:none;
   position:fixed;
   inset:3%;
   z-index:1003;
-  background:#090912;
-  border:1px solid #00e5ff;
+  background:#160020;
+  border:1px solid #ff8c00;
   border-radius:15px;
   padding:30px;
   overflow-y:auto;
-  box-shadow:0 0 35px #00e5ff30;
+  box-shadow:0 0 35px #ff8c0030;
 }
 #bookReader.open {display:block;}
-#bookReader h2 {color:#00e5ff;font-size:30px;margin:15px 0;}
-#bookReader h3 {color:#39ff88;margin:30px 0 12px;}
+#bookReader h2 {color:#ff8c00;font-size:30px;margin:15px 0;}
+#bookReader h3 {color:#ffb000;margin:30px 0 12px;}
 #bookStory p {
   color:#d0d0df;
   line-height:2;
@@ -723,8 +723,8 @@ footer {
   max-width:900px;
 }
 #bookSummary {
-  background:#11111c;
-  border-left:4px solid #a855f7;
+  background:#21002d;
+  border-left:4px solid #6d28d9;
   padding:20px;
   border-radius:8px;
   color:#ddd;
@@ -737,11 +737,11 @@ footer {
   font-weight:bold;
   margin:12px 8px 12px 0;
 }
-#bookClose {background:#30304a;color:white;}
-#bookClaim {background:#39ff88;color:#050509;}
+#bookClose {background:#3a164a;color:white;}
+#bookClaim {background:#ffb000;color:#100018;}
 #bookClaim:disabled {opacity:.4;cursor:not-allowed;}
-#bookReadCheck {accent-color:#39ff88;width:18px;height:18px;}
-#bookNotice {color:#39ff88;margin-top:12px;}
+#bookReadCheck {accent-color:#ffb000;width:18px;height:18px;}
+#bookNotice {color:#ffb000;margin-top:12px;}
 @media(max-width:600px) {
   #bookSidebar {width:85%;}
   #bookReader {inset:2%;padding:18px;}
@@ -760,7 +760,7 @@ footer {
         <a href="https://itzstupid.github.io/school-project/UAEDAY.html#timetable"></a>
         <a href="https://itzstupid.github.io/school-project/UAEDAY.html#notes"></a>
         <a href="https://itzstupid.github.io/school-project/UAEDAY.html#tips"></a>
-        <a href="#" onclick="openBookSidebar(); return false;" style="color:#00e5ff;font-weight:bold;"></a>
+        <a href="#" onclick="openBookSidebar(); return false;" style="color:#ff8c00;font-weight:bold;"></a>
     </nav>
 <button id="bookLaunch">📚 Book Library</button></header>
 
@@ -775,6 +775,7 @@ footer {
             Welcome to Learning Together!
             Organise your timetable, manage homework,
             track assignments and make every study session count.
+            Learning grows even stronger when students and families learn together.
         </p>
 
         <a href="https://itzstupid.github.io/school-project/UAEDAY.html#timetable" class="btn">Organise My Studies →</a>
@@ -1646,25 +1647,25 @@ const bookStyle = document.createElement("style");
 bookStyle.textContent = `
 #bookLaunch {
   background:transparent;
-  border:1px solid #00e5ff;
-  color:#00e5ff;
+  border:1px solid #ff8c00;
+  color:#ff8c00;
   padding:10px 17px;
   border-radius:7px;
   font-weight:bold;
   margin-left:18px;
 }
 #bookLaunch:hover {
-  background:#00e5ff;
-  color:#050509;
-  box-shadow:0 0 15px #00e5ff80;
+  background:#ff8c00;
+  color:#100018;
+  box-shadow:0 0 15px #ff8c0080;
 }
 #bookSidebar {
   position:fixed;
   top:0; left:0;
   width:310px;
   height:100vh;
-  background:#090912;
-  border-right:1px solid #25253d;
+  background:#160020;
+  border-right:1px solid #40164d;
   z-index:1001;
   padding:25px;
   overflow-y:auto;
@@ -1680,28 +1681,28 @@ bookStyle.textContent = `
   z-index:1000;
 }
 #bookOverlay.open {display:block;}
-#bookSidebar h2 {color:#00e5ff;margin:12px 0;}
+#bookSidebar h2 {color:#ff8c00;margin:12px 0;}
 #bookPoints {
-  background:#11111c;
-  border:1px solid #00e5ff;
+  background:#21002d;
+  border:1px solid #ff8c00;
   padding:15px;
   border-radius:10px;
-  color:#39ff88;
+  color:#ffb000;
   margin:20px 0;
   text-align:center;
   font-size:20px;
   font-weight:bold;
 }
 .book-level {
-  border:1px solid #30304a;
+  border:1px solid #3a164a;
   border-radius:9px;
   margin:13px 0;
   overflow:hidden;
 }
 .book-level-heading {
   padding:14px;
-  background:#11111c;
-  color:#00e5ff;
+  background:#21002d;
+  color:#ff8c00;
   font-weight:bold;
   display:flex;
   justify-content:space-between;
@@ -1716,33 +1717,33 @@ bookStyle.textContent = `
   text-align:left;
   padding:11px;
   margin:5px 0;
-  background:#080811;
-  border:1px solid #25253d;
+  background:#13001b;
+  border:1px solid #40164d;
   border-radius:7px;
   color:#ddd;
   cursor:pointer;
 }
 .book-entry:hover:not(:disabled) {
-  border-color:#00e5ff;
-  color:#00e5ff;
+  border-color:#ff8c00;
+  color:#ff8c00;
 }
 .book-entry:disabled {opacity:.45;cursor:not-allowed;}
-.book-small {font-size:11px;color:#39ff88;}
+.book-small {font-size:11px;color:#ffb000;}
 #bookReader {
   display:none;
   position:fixed;
   inset:3%;
   z-index:1003;
-  background:#090912;
-  border:1px solid #00e5ff;
+  background:#160020;
+  border:1px solid #ff8c00;
   border-radius:15px;
   padding:30px;
   overflow-y:auto;
-  box-shadow:0 0 35px #00e5ff30;
+  box-shadow:0 0 35px #ff8c0030;
 }
 #bookReader.open {display:block;}
-#bookReader h2 {color:#00e5ff;font-size:30px;margin:15px 0;}
-#bookReader h3 {color:#39ff88;margin:30px 0 12px;}
+#bookReader h2 {color:#ff8c00;font-size:30px;margin:15px 0;}
+#bookReader h3 {color:#ffb000;margin:30px 0 12px;}
 #bookStory p {
   color:#d0d0df;
   line-height:2;
@@ -1751,8 +1752,8 @@ bookStyle.textContent = `
   max-width:900px;
 }
 #bookSummary {
-  background:#11111c;
-  border-left:4px solid #a855f7;
+  background:#21002d;
+  border-left:4px solid #6d28d9;
   padding:20px;
   border-radius:8px;
   color:#ddd;
@@ -1765,11 +1766,11 @@ bookStyle.textContent = `
   font-weight:bold;
   margin:12px 8px 12px 0;
 }
-#bookClose {background:#30304a;color:white;}
-#bookClaim {background:#39ff88;color:#050509;}
+#bookClose {background:#3a164a;color:white;}
+#bookClaim {background:#ffb000;color:#100018;}
 #bookClaim:disabled {opacity:.4;cursor:not-allowed;}
-#bookReadCheck {accent-color:#39ff88;width:18px;height:18px;}
-#bookNotice {color:#39ff88;margin-top:12px;}
+#bookReadCheck {accent-color:#ffb000;width:18px;height:18px;}
+#bookNotice {color:#ffb000;margin-top:12px;}
 @media(max-width:600px) {
   #bookSidebar {width:85%;}
   #bookReader {inset:2%;padding:18px;}
@@ -1832,7 +1833,7 @@ bookSidebar.innerHTML = `
   <div id="bookPoints">⭐ 0 Points</div>
   <div id="bookLevels"></div>
   <p style="color:#888;font-size:12px;line-height:1.6;margin-top:20px;">
-    Complete a book and read its summary to earn 20 points.
+    Read a book, pass its five-question quiz and earn 20 points.
   </p>
 `;
 document.body.appendChild(bookSidebar);
@@ -1840,17 +1841,16 @@ document.body.appendChild(bookSidebar);
 const bookReader = document.createElement("div");
 bookReader.id = "bookReader";
 bookReader.innerHTML = `
-  <button id="bookCloseReader" style="background:#30304a;color:white;float:right;">✕ Close</button>
-  <p id="bookReaderLevel" style="color:#a855f7;font-weight:bold;"></p>
+  <button id="bookCloseReader" style="background:#3a164a;color:white;float:right;">✕ Close</button>
+  <p id="bookReaderLevel" style="color:#6d28d9;font-weight:bold;"></p>
   <h2 id="bookReaderTitle"></h2>
   <div id="bookStory"></div>
-  <h3>📖 Story Summary</h3>
-  <div id="bookSummary"></div>
-  <div style="margin-top:25px;background:#11111c;padding:18px;border-radius:9px;">
-    <label style="color:#ddd;display:flex;align-items:center;gap:10px;">
-      <input type="checkbox" id="bookReadCheck">
-      I have finished reading the story and its summary.
-    </label>
+  <h3>📝 Reading Quiz</h3>
+  <p style="color:#ddd;line-height:1.6">Answer all five questions and press Submit Answers. You must get all five correct to unlock your 20 points. If you get any wrong, read the story again and wait 20 seconds before trying the quiz again.</p>
+  <div id="bookQuiz"></div>
+  <button id="bookQuizSubmit" style="background:#ff8c00;color:#100018;padding:12px 18px;border:0;border-radius:7px;font-weight:bold;margin-top:15px">Submit Answers</button>
+  <p id="bookQuizFeedback" style="color:#ffb000;margin-top:12px"></p>
+  <div style="margin-top:25px;background:#21002d;padding:18px;border-radius:9px;">
     <button id="bookClaim" disabled>⭐ Complete Book & Earn 20 Points</button>
     <p id="bookNotice"></p>
   </div>
@@ -1956,8 +1956,13 @@ function renderBookLevels() {
 ========================================== */
 
 let currentReadingBook = null;
+let bookQuizValidated = false;
 let bookOpenedAt = 0;
+let quizRetryAt = 0;
+const quizRetryTimes = {};
 const MIN_BOOK_READING_TIME = 20 * 1000;
+const QUIZ_RETRY_DELAY = 20 * 1000;
+let activeQuiz = [];
 
 function speakBookMessage(message) {
   if(!("speechSynthesis" in window)) return;
@@ -1968,52 +1973,65 @@ function speakBookMessage(message) {
   speechSynthesis.speak(utterance);
 }
 
-function openReadingBook(book) {
-  currentReadingBook = book;
-  bookOpenedAt = Date.now();
-
-  document.getElementById("bookReaderLevel").textContent =
-    book.level.toUpperCase() + " LEVEL";
-
-  document.getElementById("bookReaderTitle").textContent = book.title;
-
-  const storyContainer = document.getElementById("bookStory");
-  storyContainer.innerHTML = "";
-
-  book.story.forEach(paragraph=>{
-    const p = document.createElement("p");
-    p.textContent = paragraph;
-    storyContainer.appendChild(p);
+function buildQuiz(book) {
+  // Build grounded questions from the story's paragraphs and its internally stored main idea.
+  const paragraphs = book.story.slice(0,3);
+  const mainIdea = book.summary;
+  const otherIdeas = readingBooks.filter(b=>b.title!==book.title).map(b=>b.summary);
+  const extractSentence = p => {
+    const sentences=p.match(/[^.!?]+[.!?]+/g)||[p];
+    return sentences.find(x=>x.trim().length>35)||sentences[0]||p;
+  };
+  const correctFacts=paragraphs.map(extractSentence);
+  const questions=[];
+  correctFacts.slice(0,3).forEach((fact,i)=>questions.push({q:`What is described in story part ${i+1}?`,correct:fact.trim(),choices:[fact.trim(),correctFacts[(i+1)%3].trim(),correctFacts[(i+2)%3].trim(),extractSentence(otherIdeas[i%otherIdeas.length]).trim()]}));
+  questions.push({q:"Which statement best describes the main idea of this story?",correct:mainIdea,choices:[mainIdea,otherIdeas[0],otherIdeas[1],otherIdeas[2]]});
+  questions.push({q:"Which lesson or message is most closely connected to this story?",correct:mainIdea,choices:[mainIdea,otherIdeas[3],otherIdeas[4],otherIdeas[5]]});
+  return questions.map(q=>{q.choices=[...new Set(q.choices)];while(q.choices.length<4)q.choices.push(otherIdeas[q.choices.length]);q.choices=q.choices.slice(0,4);q.choices.sort(()=>Math.random()-0.5);return q;});
+}
+function renderBookQuiz() {
+  const container=document.getElementById("bookQuiz");container.innerHTML="";
+  activeQuiz.forEach((q,i)=>{
+    const card=document.createElement("div");card.style.cssText="background:#21002d;border:1px solid #ff8c00;border-radius:9px;padding:15px;margin:14px 0";
+    const title=document.createElement("p");title.textContent=`${i+1}. ${q.q}`;title.style.cssText="font-weight:bold;margin-bottom:10px";card.appendChild(title);
+    q.choices.forEach((choice,j)=>{
+      const label=document.createElement("label");label.style.cssText="display:flex;gap:10px;align-items:flex-start;margin:10px 0;cursor:pointer";
+      const radio=document.createElement("input");radio.type="radio";radio.name="bookQuizQ"+i;radio.value=choice;radio.style.width="auto";
+      const text=document.createElement("span");text.textContent=choice;
+      label.appendChild(radio);label.appendChild(text);card.appendChild(label);
+    });container.appendChild(card);
   });
-
-  document.getElementById("bookSummary").textContent = book.summary;
-
-  const check = document.getElementById("bookReadCheck");
-  const claim = document.getElementById("bookClaim");
-  const notice = document.getElementById("bookNotice");
-
-  check.checked = false;
-  check.disabled = completedBookIds.includes(book.title);
-  claim.disabled = true;
-
-  if(completedBookIds.includes(book.title)) {
-    claim.textContent = "✅ Book Already Completed";
-    notice.textContent = "You have already earned points for this book.";
-  } else {
-    claim.textContent = "⭐ Complete Book & Earn 20 Points";
-    notice.textContent = "Read the complete story and summary to claim your points.";
-  }
-
+}
+function openReadingBook(book) {
+  currentReadingBook = book;bookOpenedAt=Date.now();quizRetryAt=quizRetryTimes[book.title]||0;
+  document.getElementById("bookReaderLevel").textContent=book.level.toUpperCase()+" LEVEL";
+  document.getElementById("bookReaderTitle").textContent=book.title;
+  const storyContainer=document.getElementById("bookStory");storyContainer.innerHTML="";
+  book.story.forEach(paragraph=>{const p=document.createElement("p");p.textContent=paragraph;storyContainer.appendChild(p);});
+  bookQuizValidated=false;activeQuiz=buildQuiz(book);renderBookQuiz();
+  document.getElementById("bookQuizFeedback").textContent="";
+  document.getElementById("bookQuizSubmit").disabled=false;
+  const claim=document.getElementById("bookClaim"),notice=document.getElementById("bookNotice");claim.disabled=true;
+  if(completedBookIds.includes(book.title)){claim.textContent="✅ Book Already Completed";notice.textContent="You have already earned points for this book.";}
+  else {claim.textContent="⭐ Complete Book & Earn 20 Points";notice.textContent="Read the story and pass all five quiz questions to claim your points.";}
   bookReader.classList.add("open");
 }
 
-document.getElementById("bookReadCheck").addEventListener("change",event=>{
-  document.getElementById("bookClaim").disabled = !event.target.checked;
+document.getElementById("bookQuizSubmit").addEventListener("click",()=>{
+  if(!currentReadingBook||completedBookIds.includes(currentReadingBook.title))return;
+  const feedback=document.getElementById("bookQuizFeedback"),claim=document.getElementById("bookClaim");
+  bookQuizValidated=false;claim.disabled=true;
+  if(Date.now()<quizRetryAt){const wait=Math.ceil((quizRetryAt-Date.now())/1000);feedback.textContent=`Please read again and wait ${wait} seconds before retaking the quiz.`;return;}
+  const answers=activeQuiz.map((q,i)=>document.querySelector(`input[name="bookQuizQ${i}"]:checked`));
+  if(answers.some(a=>!a)){feedback.textContent="Please answer all five questions before submitting.";return;}
+  const correct=answers.filter((a,i)=>a.value===activeQuiz[i].correct).length;
+  if(correct===5){bookQuizValidated=true;feedback.textContent="🎉 All five answers are correct! You can claim your 20 points.";claim.disabled=false;}
+  else {quizRetryAt=Date.now()+QUIZ_RETRY_DELAY;quizRetryTimes[currentReadingBook.title]=quizRetryAt;feedback.textContent=`You got ${correct}/5 correct. Read the story again. You can try again in 20 seconds.`;speakBookMessage("Some answers were incorrect. Please read the story again and wait twenty seconds before trying again.");}
 });
 
 document.getElementById("bookClaim").addEventListener("click",()=>{
   if(!currentReadingBook) return;
-  if(!document.getElementById("bookReadCheck").checked) return;
+  if(!bookQuizValidated) return;
   if(completedBookIds.includes(currentReadingBook.title)) return;
 
   const elapsed = Date.now() - bookOpenedAt;
@@ -2021,7 +2039,7 @@ document.getElementById("bookClaim").addEventListener("click",()=>{
     const remaining = Math.ceil((MIN_BOOK_READING_TIME - elapsed) / 1000);
     document.getElementById("bookNotice").textContent =
       "You have read this book very quickly. Read it again. Please wait " + remaining + " more seconds.";
-    speakBookMessage("You have read this book very quickly. Please Read it again.");
+    speakBookMessage("You have read this book very quickly. Read it again.");
     return;
   }
 
@@ -2029,7 +2047,6 @@ document.getElementById("bookClaim").addEventListener("click",()=>{
   bookPoints += 20;
   saveBookProgress();
 
-  document.getElementById("bookReadCheck").disabled = true;
   document.getElementById("bookClaim").disabled = true;
   document.getElementById("bookClaim").textContent = "✅ Completed!";
   document.getElementById("bookNotice").textContent =
