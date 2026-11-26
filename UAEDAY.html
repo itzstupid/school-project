@@ -1861,6 +1861,7 @@ bookSidebar.id = "bookSidebar";
 bookSidebar.innerHTML = `
   <button id="bookClose" style="float:right;">✕</button>
   <button id="bookDevOpen" style="float:right;margin-right:10px;background:#ff8c00;color:#160020;border:0;padding:10px 16px;border-radius:8px;font-weight:bold;">DEV</button>
+  <button id="bookLibraryFullscreen" style="float:right;margin-right:10px;background:#3a164a;color:white;border:1px solid #ff8c00;padding:10px 12px;border-radius:8px;">⛶ Full Screen</button>
   <div style="clear:both"></div>
   <p style="color:#aaaabd;line-height:1.6;">
     Read stories, explore new ideas and earn points.
@@ -1891,6 +1892,7 @@ const bookReader = document.createElement("div");
 bookReader.id = "bookReader";
 bookReader.innerHTML = `
   <button id="bookCloseReader" style="background:#3a164a;color:white;float:right;">✕ Close</button>
+  <button id="bookReaderFullscreen" style="background:#3a164a;color:white;float:right;margin-right:10px;border:1px solid #ff8c00;">⛶ Full Screen</button>
   <p id="bookReaderLevel" style="color:#6d28d9;font-weight:bold;"></p>
   <h2 id="bookReaderTitle"></h2>
   <div id="bookStory"></div>
@@ -1915,6 +1917,34 @@ function closeBookSidebar() {
   bookSidebar.classList.remove("open");
   bookOverlay.classList.remove("open");
 }
+
+// Full-screen controls for the library and story reader.
+async function toggleBookFullscreen(element, button) {
+  try {
+    if (document.fullscreenElement === element) {
+      await document.exitFullscreen();
+    } else {
+      if (document.fullscreenElement) await document.exitFullscreen();
+      await element.requestFullscreen();
+    }
+  } catch (error) {
+    button.textContent = "Full Screen unavailable";
+    setTimeout(() => button.textContent = document.fullscreenElement === element ? "⛶ Exit Full Screen" : "⛶ Full Screen", 1800);
+  }
+}
+
+document.getElementById("bookLibraryFullscreen").addEventListener("click", () => {
+  toggleBookFullscreen(bookSidebar, document.getElementById("bookLibraryFullscreen"));
+});
+document.getElementById("bookReaderFullscreen").addEventListener("click", () => {
+  toggleBookFullscreen(bookReader, document.getElementById("bookReaderFullscreen"));
+});
+document.addEventListener("fullscreenchange", () => {
+  const libraryButton = document.getElementById("bookLibraryFullscreen");
+  const readerButton = document.getElementById("bookReaderFullscreen");
+  if (libraryButton) libraryButton.textContent = document.fullscreenElement === bookSidebar ? "⛶ Exit Full Screen" : "⛶ Full Screen";
+  if (readerButton) readerButton.textContent = document.fullscreenElement === bookReader ? "⛶ Exit Full Screen" : "⛶ Full Screen";
+});
 document.querySelectorAll("#bookLaunch").forEach(button => button.addEventListener("click",openBookSidebar));
 bookOverlay.addEventListener("click",closeBookSidebar);
 document.getElementById("bookClose").addEventListener("click",closeBookSidebar);
