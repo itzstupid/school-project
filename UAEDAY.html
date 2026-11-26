@@ -750,6 +750,169 @@ footer {
   #bookReader h2 {font-size:23px;}
   #bookStory p {font-size:15px;}
 }
+</style><style>
+#bookLaunch {
+  background:transparent;
+  border:1px solid #b6ff00;
+  color:#b6ff00;
+  padding:10px 17px;
+  border-radius:7px;
+  font-weight:bold;
+  margin-left:18px;
+}
+#bookLaunch:hover {
+  background:#b6ff00;
+  color:#100018;
+  box-shadow:0 0 15px #b6ff0080;
+}
+#bookSidebar {
+  position:fixed;
+  top:0; left:0;
+  width:310px;
+  height:100vh;
+  background:#160020;
+  border-right:1px solid #40164d;
+  z-index:1001;
+  padding:25px;
+  overflow-y:auto;
+  transform:translateX(-105%);
+  transition:.3s;
+}
+#bookSidebar.open {transform:translateX(0);}
+#bookOverlay {
+  display:none;
+  position:fixed;
+  inset:0;
+  background:#000b;
+  z-index:1000;
+}
+#bookOverlay.open {display:block;}
+#bookSidebar h2 {color:#b6ff00;margin:12px 0;}
+#bookPoints {
+  background:#21002d;
+  border:1px solid #b6ff00;
+  padding:15px;
+  border-radius:10px;
+  color:#dfff00;
+  margin:20px 0;
+  text-align:center;
+  font-size:20px;
+  font-weight:bold;
+}
+.book-level {
+  border:1px solid #3a164a;
+  border-radius:9px;
+  margin:13px 0;
+  overflow:hidden;
+}
+.book-level-heading {
+  padding:14px;
+  background:#21002d;
+  color:#b6ff00;
+  font-weight:bold;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+.book-list {padding:8px;}
+.book-entry {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  width:100%;
+  text-align:left;
+  padding:11px;
+  margin:5px 0;
+  background:#13001b;
+  border:1px solid #40164d;
+  border-radius:7px;
+  color:#ddd;
+  cursor:pointer;
+}
+.book-entry:hover:not(:disabled) {
+  border-color:#b6ff00;
+  color:#b6ff00;
+}
+.book-entry:disabled {opacity:.45;cursor:not-allowed;}
+.book-small {font-size:11px;color:#dfff00;}
+#bookReader {
+  display:none;
+  position:fixed;
+  inset:0;
+  z-index:2005;
+  border-radius:0;
+  background:#160020;
+  border:1px solid #b6ff00;
+  border-radius:15px;
+  padding:30px;
+  overflow-y:auto;
+  box-shadow:0 0 35px #b6ff0030;
+}
+#bookReader.open {display:block;}
+#bookReader h2 {color:#b6ff00;font-size:30px;margin:15px 0;}
+#bookReader h3 {color:#dfff00;margin:30px 0 12px;}
+#bookStory p {
+  color:#d0d0df;
+  line-height:2;
+  font-size:17px;
+  margin:20px 0;
+  max-width:900px;
+}
+#bookSummary {
+  background:#21002d;
+  border-left:4px solid #6d28d9;
+  padding:20px;
+  border-radius:8px;
+  color:#ddd;
+  line-height:1.8;
+}
+#bookReader button {
+  border:0;
+  border-radius:7px;
+  padding:12px 18px;
+  font-weight:bold;
+  margin:12px 8px 12px 0;
+}
+#bookClose {background:#3a164a;color:white;}
+#bookClaim {background:#dfff00;color:#100018;}
+#bookClaim:disabled {opacity:.4;cursor:not-allowed;}
+#bookReadCheck {accent-color:#dfff00;width:18px;height:18px;}
+#bookNotice {color:#dfff00;margin-top:12px;}
+@media(max-width:600px) {
+  #bookReader {inset:0;padding:18px;}
+  #bookReader h2 {font-size:23px;}
+  #bookStory p {font-size:15px;}
+}
+/* Book Library opens as a full-screen section */
+#bookSidebar {
+  box-sizing:border-box;
+  width:100vw !important;
+  max-width:none !important;
+  height:100vh;
+  height:100dvh;
+  top:0;
+  left:0;
+  border:0;
+  border-radius:0;
+  padding:28px clamp(18px, 4vw, 60px);
+  overflow-y:auto;
+  z-index:2001;
+  background:#160020;
+}
+#bookSidebar.open { transform:translateX(0); }
+#bookOverlay { z-index:2000; }
+#bookSidebar #bookClose {
+  position:sticky;
+  top:0;
+  float:right;
+  z-index:2;
+  cursor:pointer;
+  border:1px solid #b6ff00;
+  background:#2b0738;
+  color:#b6ff00;
+  padding:10px 15px;
+  border-radius:8px;
+}
 </style></head>
 
 <body>
@@ -764,7 +927,7 @@ footer {
         <a href="https://itzstupid.github.io/school-project/UAEDAY.html#tips"></a>
         <a href="#" onclick="openBookSidebar(); return false;" style="color:#b6ff00;font-weight:bold;"></a>
     </nav>
-<button id="bookLaunch">📚 Book Library</button></header>
+<button id="bookLaunch">📚 Book Library</button><button id="bookLaunch">📚 Book Library</button></header>
 
 <!-- HOME -->
 
@@ -873,26 +1036,26 @@ footer {
 
         <div class="card">
             <div class="emoji"></div>
-            <h3>Use a Timetable</h3>
-            <p>Plan your day so you know exactly which subject to study.</p>
+            <h3>Learning Together</h3>
+            <p>Families strengthen connections and learning when they regularly join children in short, shared activities</p>
         </div>
 
         <div class="card">
             <div class="emoji"></div>
-            <h3>Avoid Distractions</h3>
-            <p>Keep your phone away and concentrate on your work.</p>
+            <h3>Daily Reading Together</h3>
+            <p>Families build stronger connections and support learning by reading aloud or sharing books for even 10–15 minutes each day</p>
         </div>
 
         <div class="card">
             <div class="emoji"></div>
-            <h3>Understand First</h3>
-            <p>Understand a topic instead of only memorising answers.</p>
+            <h3>Homework as Team Time</h3>
+            <p>Parents and caregivers support study by sitting nearby during homework</p>
         </div>
 
         <div class="card">
             <div class="emoji"></div>
-            <h3>Revise Regularly</h3>
-            <p>Review your lessons frequently to remember information.</p>
+            <h3>Talking About the Day’s Learning</h3>
+            <p>Simple daily conversations about what was learned at school</p>
         </div>
 
         <div class="card">
@@ -2186,7 +2349,104 @@ document.getElementById("bookClaim").addEventListener("click",()=>{
 });
 
 renderBookLevels();
-</script>
+</script><div id="bookOverlay" class=""></div><aside id="bookSidebar" class="">
+  <button id="bookClose" style="float:right;">✕</button>
+  <button id="bookDevOpen" style="float:right;margin-right:10px;background:#b6ff00;color:#160020;border:0;padding:10px 16px;border-radius:8px;font-weight:bold;">DEV</button>
+  <button id="bookLibraryFullscreen" style="float:right;margin-right:10px;background:#3a164a;color:white;border:1px solid #b6ff00;padding:10px 12px;border-radius:8px;">⛶ Full Screen</button>
+  <div style="clear:both"></div>
+  <p style="color:#aaaabd;line-height:1.6;">
+    Read stories, explore new ideas and earn points.
+  </p>
+  <div id="bookPoints">⭐ ∞ Points · DEV MODE</div>
+  <div id="bookLevels"><div class="book-level"><div class="book-level-heading">🌱 Beginner<span style="font-size: 12px;">0/5 completed</span></div><div class="book-list"><button class="book-entry">
+          <span>📕 The Little Lighthouse</span>
+          <span class="book-small">+20 pts</span>
+        </button><button class="book-entry">
+          <span>📕 The Garden of Second Chances</span>
+          <span class="book-small">+20 pts</span>
+        </button><button class="book-entry">
+          <span>📕 The Missing Map</span>
+          <span class="book-small">+20 pts</span>
+        </button><button class="book-entry">
+          <span>📕 A Seat for Everyone</span>
+          <span class="book-small">+20 pts</span>
+        </button><button class="book-entry">
+          <span>📕 The Clockmaker's Promise</span>
+          <span class="book-small">+20 pts</span>
+        </button></div></div><div class="book-level"><div class="book-level-heading">📘 Intermediate<span style="font-size: 12px;">0/5 completed</span></div><div class="book-list"><button class="book-entry">
+          <span>📕 The Town That Forgot to Listen</span>
+          <span class="book-small">+20 pts</span>
+        </button><button class="book-entry">
+          <span>📕 The Science Fair Challenge</span>
+          <span class="book-small">+20 pts</span>
+        </button><button class="book-entry">
+          <span>📕 The Photograph in the Attic</span>
+          <span class="book-small">+20 pts</span>
+        </button><button class="book-entry">
+          <span>📕 The Team Behind the Trophy</span>
+          <span class="book-small">+20 pts</span>
+        </button><button class="book-entry">
+          <span>📕 The River's Secret</span>
+          <span class="book-small">+20 pts</span>
+        </button></div></div><div class="book-level"><div class="book-level-heading">🚀 Professional<span style="font-size: 12px;">0/5 completed</span></div><div class="book-list"><button class="book-entry">
+          <span>📕 Beyond the Glass Tower</span>
+          <span class="book-small">+20 pts</span>
+        </button><button class="book-entry">
+          <span>📕 The Last Train to Northbridge</span>
+          <span class="book-small">+20 pts</span>
+        </button><button class="book-entry">
+          <span>📕 The Archive of Forgotten Ideas</span>
+          <span class="book-small">+20 pts</span>
+        </button><button class="book-entry">
+          <span>📕 A City Without Shadows</span>
+          <span class="book-small">+20 pts</span>
+        </button><button class="book-entry">
+          <span>📕 The Equation of Trust</span>
+          <span class="book-small">+20 pts</span>
+        </button></div></div><div class="book-level"><div class="book-level-heading">🏆 Expert<span style="font-size: 12px;">0/5 completed</span></div><div class="book-list"><button class="book-entry">
+          <span>📕 The Republic of Tomorrow</span>
+          <span class="book-small">+20 pts</span>
+        </button><button class="book-entry">
+          <span>📕 The Cartographers of Memory</span>
+          <span class="book-small">+20 pts</span>
+        </button><button class="book-entry">
+          <span>📕 The Silence of the Observatory</span>
+          <span class="book-small">+20 pts</span>
+        </button><button class="book-entry">
+          <span>📕 The Architecture of a Promise</span>
+          <span class="book-small">+20 pts</span>
+        </button><button class="book-entry">
+          <span>📕 The Final Question</span>
+          <span class="book-small">+20 pts</span>
+        </button></div></div></div>
+  <p style="color:#888;font-size:12px;line-height:1.6;margin-top:20px;">
+    Read a book, pass its five-question quiz and earn 20 points.
+  </p>
+</aside><div id="bookDevDialog" style="display: none; position: fixed; inset: 0px; z-index: 2010; background: rgba(8, 0, 13, 0.8); align-items: center; justify-content: center; padding: 20px;">
+  <div style="width:min(420px,100%);background:#160020;border:1px solid #b6ff00;border-radius:14px;padding:24px;box-shadow:0 0 30px #b6ff0040;">
+    <h2 style="color:#b6ff00;margin-top:0;">Developer Access</h2>
+    <label for="bookDevPassword" style="display:block;color:#ddd;margin-bottom:8px;">Enter password</label>
+    <input id="bookDevPassword" type="password" autocomplete="off" placeholder="Password" style="box-sizing:border-box;width:100%;padding:12px;border:1px solid #b6ff00;border-radius:7px;background:#260832;color:white;">
+    <p id="bookDevFeedback" style="color:#dfff00;min-height:20px;"></p>
+    <button id="bookDevSubmit" style="background:#b6ff00;color:#160020;">Unlock</button>
+    <button id="bookDevCancel" style="background:#3a164a;color:white;">Cancel</button>
+  </div></div><div id="bookReader" class="">
+  <button id="bookCloseReader" style="background:#3a164a;color:white;float:right;">✕ Close</button>
+  <button id="bookReaderFullscreen" style="background:#3a164a;color:white;float:right;margin-right:10px;border:1px solid #b6ff00;">⛶ Full Screen</button>
+  <p id="bookReaderLevel" style="color:#6d28d9;font-weight:bold;">EXPERT LEVEL</p>
+  <h2 id="bookReaderTitle">The Final Question</h2>
+  <div id="bookStory"><p>At the Global Academy of Knowledge, the final examination was unlike any other. Students were given a complex problem involving energy, education, technology and public policy. They had one week to research the issue, work with a team and present a proposal. The academy's director explained that the purpose was not to find one perfect answer. It was to evaluate how students handled uncertainty, evidence and competing priorities.</p><p>A student named Adrian joined a team with members from different academic backgrounds. One studied engineering, another focused on economics, and a third specialised in environmental science. Adrian was interested in education policy. Their assigned problem concerned a remote region that needed reliable electricity and better access to learning resources, but had limited funding and difficult geographical conditions.</p><p>At first, the team disagreed about where to begin. The engineering student wanted to design a new energy system. The economist argued that the budget should be examined first. The environmental student questioned whether the proposed technology would be sustainable. Adrian suggested that they begin by understanding the community itself. They needed to know what residents valued, what facilities already existed and what difficulties they experienced daily.</p><p>The team reviewed available reports and conducted supervised interviews with community representatives. They discovered that some households needed reliable lighting, while schools required stable power for essential equipment. They also learned that maintenance and training were just as important as the initial installation. A technically impressive system would not be useful if nobody could repair it.</p><p>Their proposal combined several smaller measures rather than relying on one expensive solution. It included an assessment of local energy needs, training for maintenance workers, improvements to school facilities and a plan for monitoring performance. They clearly stated which parts were supported by evidence and which required further testing.</p><p>During the presentation, one examiner challenged the team's assumptions. What would happen if funding was reduced? Another asked how the project would remain fair if some villages were easier to reach than others. The team did not pretend to have complete answers. They explained their priorities, identified risks and described how the plan could be adjusted after collecting new information.</p><p>The final result was not a perfect solution, but the examiners praised the team's reasoning. They had considered technical, financial, environmental and social factors rather than treating the problem as a single engineering challenge.</p><p>After the examination, Adrian asked the director what the final question had been intended to test. The director replied that knowledge was important, but judgement mattered too. The most capable people were not those who always claimed to know the answer. They were those who could investigate carefully, work with others, recognise limitations and make responsible decisions.</p><p>Adrian left the academy thinking about the difference between learning facts and learning how to think. He understood that education was not simply preparation for one examination or one career. It was preparation for a lifetime of questions, decisions and opportunities to contribute to the world.</p></div>
+  <h3>📝 Reading Quiz</h3>
+  <p style="color:#ddd;line-height:1.6">Complete all five questions and press Submit Answers. Question types depend on the book level. Every answer must be correct to unlock your 20 points. If any answer is wrong, reread the story and wait 20 seconds before trying again.</p>
+  <div id="bookQuiz"><div style="background: rgb(33, 0, 45); border: 1px solid rgb(182, 255, 0); border-radius: 9px; padding: 15px; margin: 14px 0px;"><p style="font-weight: bold; margin-bottom: 10px; color: rgb(255, 255, 255);">1. Which event or detail is described in the story?</p><label style="display: flex; gap: 10px; align-items: flex-start; margin: 10px 0px; cursor: pointer; color: rgb(221, 221, 221);"><input type="radio" name="bookQuizQ0" value="The Missing Map: Arjun and Daniel follow an old map and discover a forgotten community garden. They learn that the greatest treasure is not always money or valuable objects, but something that brings people together." style="width: auto;"><span>The Missing Map: Arjun and Daniel follow an old map and discover a forgotten community garden. They learn that the greatest treasure is not always money or valuable objects, but something that brings people together.</span></label><label style="display: flex; gap: 10px; align-items: flex-start; margin: 10px 0px; cursor: pointer; color: rgb(221, 221, 221);"><input type="radio" name="bookQuizQ0" value="At the Global Academy of Knowledge, the final examination was unlike any other." style="width: auto;"><span>At the Global Academy of Knowledge, the final examination was unlike any other.</span></label><label style="display: flex; gap: 10px; align-items: flex-start; margin: 10px 0px; cursor: pointer; color: rgb(221, 221, 221);"><input type="radio" name="bookQuizQ0" value="The Little Lighthouse: Leo learns that responsibility and teamwork can make a difference. By helping his grandfather repair the lighthouse, he discovers that even small actions can protect and support an entire community." style="width: auto;"><span>The Little Lighthouse: Leo learns that responsibility and teamwork can make a difference. By helping his grandfather repair the lighthouse, he discovers that even small actions can protect and support an entire community.</span></label><label style="display: flex; gap: 10px; align-items: flex-start; margin: 10px 0px; cursor: pointer; color: rgb(221, 221, 221);"><input type="radio" name="bookQuizQ0" value="The Garden of Second Chances: Maya learns patience and persistence after her first gardening attempt fails. By observing the problem, making changes and trying again, she discovers that mistakes can become valuable learning experiences." style="width: auto;"><span>The Garden of Second Chances: Maya learns patience and persistence after her first gardening attempt fails. By observing the problem, making changes and trying again, she discovers that mistakes can become valuable learning experiences.</span></label></div><div style="background: rgb(33, 0, 45); border: 1px solid rgb(182, 255, 0); border-radius: 9px; padding: 15px; margin: 14px 0px;"><p style="font-weight: bold; margin-bottom: 10px; color: rgb(255, 255, 255);">2. Which statement matches the story?</p><label style="display: flex; gap: 10px; align-items: flex-start; margin: 10px 0px; cursor: pointer; color: rgb(221, 221, 221);"><input type="radio" name="bookQuizQ1" value="Students were given a complex problem involving energy, education, technology and public policy." style="width: auto;"><span>Students were given a complex problem involving energy, education, technology and public policy.</span></label><label style="display: flex; gap: 10px; align-items: flex-start; margin: 10px 0px; cursor: pointer; color: rgb(221, 221, 221);"><input type="radio" name="bookQuizQ1" value="The Garden of Second Chances: Maya learns patience and persistence after her first gardening attempt fails. By observing the problem, making changes and trying again, she discovers that mistakes can become valuable learning experiences." style="width: auto;"><span>The Garden of Second Chances: Maya learns patience and persistence after her first gardening attempt fails. By observing the problem, making changes and trying again, she discovers that mistakes can become valuable learning experiences.</span></label><label style="display: flex; gap: 10px; align-items: flex-start; margin: 10px 0px; cursor: pointer; color: rgb(221, 221, 221);"><input type="radio" name="bookQuizQ1" value="A Seat for Everyone: Samir understands the importance of inclusion when he welcomes a new student. His small act of kindness creates a tradition in which everyone is made to feel welcome." style="width: auto;"><span>A Seat for Everyone: Samir understands the importance of inclusion when he welcomes a new student. His small act of kindness creates a tradition in which everyone is made to feel welcome.</span></label><label style="display: flex; gap: 10px; align-items: flex-start; margin: 10px 0px; cursor: pointer; color: rgb(221, 221, 221);"><input type="radio" name="bookQuizQ1" value="The Missing Map: Arjun and Daniel follow an old map and discover a forgotten community garden. They learn that the greatest treasure is not always money or valuable objects, but something that brings people together." style="width: auto;"><span>The Missing Map: Arjun and Daniel follow an old map and discover a forgotten community garden. They learn that the greatest treasure is not always money or valuable objects, but something that brings people together.</span></label></div><div style="background: rgb(33, 0, 45); border: 1px solid rgb(182, 255, 0); border-radius: 9px; padding: 15px; margin: 14px 0px;"><p style="font-weight: bold; margin-bottom: 10px; color: rgb(255, 255, 255);">3. They had one week to research the ________, work with a team and present a proposal.</p><input name="bookQuizQ2" id="bookQuizQ2" placeholder="Type the missing word" style="box-sizing: border-box; width: 100%; padding: 12px; border: 1px solid rgb(182, 255, 0); border-radius: 7px; background: rgb(22, 0, 32); color: white; min-height: 44px;"></div><div style="background: rgb(33, 0, 45); border: 1px solid rgb(182, 255, 0); border-radius: 9px; padding: 15px; margin: 14px 0px;"><p style="font-weight: bold; margin-bottom: 10px; color: rgb(255, 255, 255);">4. The academy's director ________ that the purpose was not to find one perfect answer.</p><input name="bookQuizQ3" id="bookQuizQ3" placeholder="Type the missing word" style="box-sizing: border-box; width: 100%; padding: 12px; border: 1px solid rgb(182, 255, 0); border-radius: 7px; background: rgb(22, 0, 32); color: white; min-height: 44px;"></div><div style="background: rgb(33, 0, 45); border: 1px solid rgb(182, 255, 0); border-radius: 9px; padding: 15px; margin: 14px 0px;"><p style="font-weight: bold; margin-bottom: 10px; color: rgb(255, 255, 255);">5. In your own words, explain the main challenge or important lesson in this story.</p><textarea name="bookQuizQ4" id="bookQuizQ4" placeholder="Write your answer here" style="box-sizing: border-box; width: 100%; padding: 12px; border: 1px solid rgb(182, 255, 0); border-radius: 7px; background: rgb(22, 0, 32); color: white; min-height: 44px;"></textarea></div><div style="background: rgb(33, 0, 45); border: 1px solid rgb(182, 255, 0); border-radius: 9px; padding: 15px; margin: 14px 0px;"><p style="font-weight: bold; margin-bottom: 10px; color: rgb(255, 255, 255);">6. Describe an important event in the story and explain why it matters.</p><textarea name="bookQuizQ5" id="bookQuizQ5" placeholder="Write your answer here" style="box-sizing: border-box; width: 100%; padding: 12px; border: 1px solid rgb(182, 255, 0); border-radius: 7px; background: rgb(22, 0, 32); color: white; min-height: 44px;"></textarea></div><div style="background: rgb(33, 0, 45); border: 1px solid rgb(182, 255, 0); border-radius: 9px; padding: 15px; margin: 14px 0px;"><p style="font-weight: bold; margin-bottom: 10px; color: rgb(255, 255, 255);">7. What can readers learn from this story? Support your answer with details from the story.</p><textarea name="bookQuizQ6" id="bookQuizQ6" placeholder="Write your answer here" style="box-sizing: border-box; width: 100%; padding: 12px; border: 1px solid rgb(182, 255, 0); border-radius: 7px; background: rgb(22, 0, 32); color: white; min-height: 44px;"></textarea></div></div>
+  <button id="bookQuizSubmit" style="background:#b6ff00;color:#100018;padding:12px 18px;border:0;border-radius:7px;font-weight:bold;margin-top:15px">Submit Answers</button>
+  <p id="bookQuizFeedback" style="color:#dfff00;margin-top:12px"></p>
+  <div style="margin-top:25px;background:#21002d;padding:18px;border-radius:9px;">
+    <button id="bookClaim" disabled="">⭐ Complete Book &amp; Earn 20 Points</button>
+    <p id="bookNotice">Read the story and pass all five quiz questions to claim your points.</p>
+  </div>
+</div>
 
-</body>
-</html>
+
+
+</body></html>
