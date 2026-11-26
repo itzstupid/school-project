@@ -570,8 +570,9 @@ footer {
 #bookReader {
   display:none;
   position:fixed;
-  inset:3%;
-  z-index:1003;
+  inset:0;
+  z-index:2005;
+  border-radius:0;
   background:#160020;
   border:1px solid #ff8c00;
   border-radius:15px;
@@ -611,7 +612,7 @@ footer {
 #bookNotice {color:#ffb000;margin-top:12px;}
 @media(max-width:600px) {
   #bookSidebar {width:85%;}
-  #bookReader {inset:2%;padding:18px;}
+  #bookReader {inset:0;padding:18px;}
   #bookReader h2 {font-size:23px;}
   #bookStory p {font-size:15px;}
 }
@@ -703,8 +704,9 @@ footer {
 #bookReader {
   display:none;
   position:fixed;
-  inset:3%;
-  z-index:1003;
+  inset:0;
+  z-index:2005;
+  border-radius:0;
   background:#160020;
   border:1px solid #ff8c00;
   border-radius:15px;
@@ -744,7 +746,7 @@ footer {
 #bookNotice {color:#ffb000;margin-top:12px;}
 @media(max-width:600px) {
   #bookSidebar {width:85%;}
-  #bookReader {inset:2%;padding:18px;}
+  #bookReader {inset:0;padding:18px;}
   #bookReader h2 {font-size:23px;}
   #bookStory p {font-size:15px;}
 }
@@ -1732,8 +1734,9 @@ bookStyle.textContent = `
 #bookReader {
   display:none;
   position:fixed;
-  inset:3%;
-  z-index:1003;
+  inset:0;
+  z-index:2005;
+  border-radius:0;
   background:#160020;
   border:1px solid #ff8c00;
   border-radius:15px;
@@ -1772,10 +1775,39 @@ bookStyle.textContent = `
 #bookReadCheck {accent-color:#ffb000;width:18px;height:18px;}
 #bookNotice {color:#ffb000;margin-top:12px;}
 @media(max-width:600px) {
-  #bookSidebar {width:85%;}
-  #bookReader {inset:2%;padding:18px;}
+  #bookReader {inset:0;padding:18px;}
   #bookReader h2 {font-size:23px;}
   #bookStory p {font-size:15px;}
+}
+/* Book Library opens as a full-screen section */
+#bookSidebar {
+  box-sizing:border-box;
+  width:100vw !important;
+  max-width:none !important;
+  height:100vh;
+  height:100dvh;
+  top:0;
+  left:0;
+  border:0;
+  border-radius:0;
+  padding:28px clamp(18px, 4vw, 60px);
+  overflow-y:auto;
+  z-index:2001;
+  background:#160020;
+}
+#bookSidebar.open { transform:translateX(0); }
+#bookOverlay { z-index:2000; }
+#bookSidebar #bookClose {
+  position:sticky;
+  top:0;
+  float:right;
+  z-index:2;
+  cursor:pointer;
+  border:1px solid #ff8c00;
+  background:#2b0738;
+  color:#ff8c00;
+  padding:10px 15px;
+  border-radius:8px;
 }
 `;
 document.head.appendChild(bookStyle);
@@ -1791,6 +1823,7 @@ let unlockedBookLevels = JSON.parse(
 let completedBookIds = JSON.parse(
   storage.getItem("ltCompletedBooks") || "[]"
 );
+let devMode = storage.getItem("ltDevMode") === "true";
 
 const bookLevelNames = [
   "Beginner", "Intermediate", "Professional", "Expert"
@@ -1826,7 +1859,8 @@ const bookSidebar = document.createElement("aside");
 bookSidebar.id = "bookSidebar";
 bookSidebar.innerHTML = `
   <button id="bookClose" style="float:right;">✕</button>
-  <h2>📚 Reading Library</h2>
+  <button id="bookDevOpen" style="float:right;margin-right:10px;background:#ff8c00;color:#160020;border:0;padding:10px 16px;border-radius:8px;font-weight:bold;">DEV</button>
+  <div style="clear:both"></div>
   <p style="color:#aaaabd;line-height:1.6;">
     Read stories, explore new ideas and earn points.
   </p>
@@ -1838,6 +1872,20 @@ bookSidebar.innerHTML = `
 `;
 document.body.appendChild(bookSidebar);
 
+const devDialog = document.createElement("div");
+devDialog.id = "bookDevDialog";
+devDialog.style.cssText = "display:none;position:fixed;inset:0;z-index:2010;background:#08000dcc;align-items:center;justify-content:center;padding:20px;";
+devDialog.innerHTML = `
+  <div style="width:min(420px,100%);background:#160020;border:1px solid #ff8c00;border-radius:14px;padding:24px;box-shadow:0 0 30px #ff8c0040;">
+    <h2 style="color:#ff8c00;margin-top:0;">Developer Access</h2>
+    <label for="bookDevPassword" style="display:block;color:#ddd;margin-bottom:8px;">Enter password</label>
+    <input id="bookDevPassword" type="password" autocomplete="off" placeholder="Password" style="box-sizing:border-box;width:100%;padding:12px;border:1px solid #ff8c00;border-radius:7px;background:#260832;color:white;">
+    <p id="bookDevFeedback" style="color:#ffb000;min-height:20px;"></p>
+    <button id="bookDevSubmit" style="background:#ff8c00;color:#160020;">Unlock</button>
+    <button id="bookDevCancel" style="background:#3a164a;color:white;">Cancel</button>
+  </div>`;
+document.body.appendChild(devDialog);
+
 const bookReader = document.createElement("div");
 bookReader.id = "bookReader";
 bookReader.innerHTML = `
@@ -1846,7 +1894,7 @@ bookReader.innerHTML = `
   <h2 id="bookReaderTitle"></h2>
   <div id="bookStory"></div>
   <h3>📝 Reading Quiz</h3>
-  <p style="color:#ddd;line-height:1.6">Answer all five questions and press Submit Answers. You must get all five correct to unlock your 20 points. If you get any wrong, read the story again and wait 20 seconds before trying the quiz again.</p>
+  <p style="color:#ddd;line-height:1.6">Complete all five questions and press Submit Answers. Question types depend on the book level. Every answer must be correct to unlock your 20 points. If any answer is wrong, reread the story and wait 20 seconds before trying again.</p>
   <div id="bookQuiz"></div>
   <button id="bookQuizSubmit" style="background:#ff8c00;color:#100018;padding:12px 18px;border:0;border-radius:7px;font-weight:bold;margin-top:15px">Submit Answers</button>
   <p id="bookQuizFeedback" style="color:#ffb000;margin-top:12px"></p>
@@ -1866,11 +1914,38 @@ function closeBookSidebar() {
   bookSidebar.classList.remove("open");
   bookOverlay.classList.remove("open");
 }
-bookButton.addEventListener("click",openBookSidebar);
+document.querySelectorAll("#bookLaunch").forEach(button => button.addEventListener("click",openBookSidebar));
 bookOverlay.addEventListener("click",closeBookSidebar);
 document.getElementById("bookClose").addEventListener("click",closeBookSidebar);
 document.getElementById("bookCloseReader").addEventListener("click",()=>{
   bookReader.classList.remove("open");
+});
+
+document.getElementById("bookDevOpen").addEventListener("click",()=>{
+  devDialog.style.display="flex";
+  document.getElementById("bookDevPassword").value="";
+  document.getElementById("bookDevFeedback").textContent="";
+  document.getElementById("bookDevPassword").focus();
+});
+document.getElementById("bookDevCancel").addEventListener("click",()=>devDialog.style.display="none");
+document.getElementById("bookDevSubmit").addEventListener("click",()=>{
+  const entered=document.getElementById("bookDevPassword").value;
+  if(entered === "FRIENDS") {
+    devMode=true;
+    unlockedBookLevels=[...bookLevelNames];
+    storage.setItem("ltDevMode","true");
+    saveBookProgress();
+    devDialog.style.display="none";
+    renderBookLevels();
+    speakBookMessage("Developer mode enabled. All books are unlocked and points are unlimited.");
+  } else {
+    document.getElementById("bookDevFeedback").textContent="Incorrect password. Please try again.";
+    document.getElementById("bookDevPassword").value="";
+    document.getElementById("bookDevPassword").focus();
+  }
+});
+document.getElementById("bookDevPassword").addEventListener("keydown",e=>{
+  if(e.key==="Enter") document.getElementById("bookDevSubmit").click();
 });
 
 /* ==========================================
@@ -1879,13 +1954,13 @@ document.getElementById("bookCloseReader").addEventListener("click",()=>{
 
 function renderBookLevels() {
   document.getElementById("bookPoints").textContent =
-    "⭐ " + bookPoints + " Points";
+    devMode ? "⭐ ∞ Points · DEV MODE" : "⭐ " + bookPoints + " Points";
 
   const container = document.getElementById("bookLevels");
   container.innerHTML = "";
 
   bookLevelNames.forEach((level,index)=>{
-    const unlocked = unlockedBookLevels.includes(level);
+    const unlocked = devMode || unlockedBookLevels.includes(level);
     const books = readingBooks.filter(book=>book.level===level);
     const completedCount = books.filter(book=>
       completedBookIds.includes(book.title)
@@ -1927,14 +2002,14 @@ function renderBookLevels() {
       const unlockButton = document.createElement("button");
       unlockButton.className = "book-entry";
       unlockButton.innerHTML = `<span>🔒 Unlock ${level}</span><span>⭐ ${cost} points</span>`;
-      unlockButton.disabled = bookPoints < cost;
+      unlockButton.disabled = !devMode && bookPoints < cost;
 
       unlockButton.addEventListener("click",()=>{
-        if(bookPoints < cost) return;
+        if(!devMode && bookPoints < cost) return;
         if(!confirm("Unlock " + level + " for " + cost + " points?")) return;
 
-        bookPoints -= cost;
-        unlockedBookLevels.push(level);
+        if(!devMode) bookPoints -= cost;
+        if(!unlockedBookLevels.includes(level)) unlockedBookLevels.push(level);
         saveBookProgress();
         renderBookLevels();
       });
@@ -1974,32 +2049,49 @@ function speakBookMessage(message) {
 }
 
 function buildQuiz(book) {
-  // Build grounded questions from the story's paragraphs and its internally stored main idea.
-  const paragraphs = book.story.slice(0,3);
-  const mainIdea = book.summary;
-  const otherIdeas = readingBooks.filter(b=>b.title!==book.title).map(b=>b.summary);
-  const extractSentence = p => {
-    const sentences=p.match(/[^.!?]+[.!?]+/g)||[p];
-    return sentences.find(x=>x.trim().length>35)||sentences[0]||p;
+  const paragraphs=book.story;
+  const otherBooks=readingBooks.filter(b=>b.title!==book.title);
+  const sentenceList=paragraphs.flatMap(p=>(p.match(/[^.!?]+[.!?]+/g)||[p]).map(x=>x.trim())).filter(x=>x.length>35);
+  const makeMCQ=(sentence,index)=>{
+    const distractors=otherBooks.map(b=>b.title+": "+(b.summary||"")).filter(Boolean);
+    const wrong=distractors.slice(index,index+3);
+    const choices=[sentence,...wrong].slice(0,4);
+    while(choices.length<4) choices.push("This detail is not described in the story.");
+    return {type:"mcq",q:["Which event or detail is described in the story?","Which statement matches the story?","What does the story tell us?","Which detail is supported by the story?","Choose the correct story detail."][index%5],correct:sentence,choices};
   };
-  const correctFacts=paragraphs.map(extractSentence);
-  const questions=[];
-  correctFacts.slice(0,3).forEach((fact,i)=>questions.push({q:`What is described in story part ${i+1}?`,correct:fact.trim(),choices:[fact.trim(),correctFacts[(i+1)%3].trim(),correctFacts[(i+2)%3].trim(),extractSentence(otherIdeas[i%otherIdeas.length]).trim()]}));
-  questions.push({q:"Which statement best describes the main idea of this story?",correct:mainIdea,choices:[mainIdea,otherIdeas[0],otherIdeas[1],otherIdeas[2]]});
-  questions.push({q:"Which lesson or message is most closely connected to this story?",correct:mainIdea,choices:[mainIdea,otherIdeas[3],otherIdeas[4],otherIdeas[5]]});
-  return questions.map(q=>{q.choices=[...new Set(q.choices)];while(q.choices.length<4)q.choices.push(otherIdeas[q.choices.length]);q.choices=q.choices.slice(0,4);q.choices.sort(()=>Math.random()-0.5);return q;});
+  const makeBlank=(sentence,index)=>{
+    const words=sentence.replace(/[^A-Za-z0-9' -]/g,"").split(/\s+/).filter(w=>w.length>=5);
+    const answer=words[Math.min(index+1,words.length-1)]||words[0]||"story";
+    return {type:"blank",q:sentence.replace(new RegExp("\\b"+answer.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")+"\\b","i"),"________"),answer};
+  };
+  const main=(book.summary||paragraphs.join(" ")).replace(/\s+/g," ");
+  const writtenKeywords=(main.toLowerCase().match(/[a-z]{5,}/g)||[]).filter((w,i,a)=>a.indexOf(w)===i).slice(0,10);
+  const makeWritten=(question)=>({type:"written",q:question,keywords:writtenKeywords});
+  const mcq=Array.from({length:5},(_,i)=>makeMCQ(sentenceList[i%sentenceList.length],i));
+  if(book.level==="Beginner"||book.level==="Intermediate") return mcq;
+  if(book.level==="Professional") return [...mcq.slice(0,3),makeBlank(sentenceList[3]||sentenceList[0],0),makeBlank(sentenceList[4]||sentenceList[1],1)];
+  return [
+    mcq[0],
+    mcq[1],
+    makeBlank(sentenceList[2]||sentenceList[0],0),
+    makeBlank(sentenceList[3]||sentenceList[1],1),
+    makeWritten("In your own words, explain the main challenge or important lesson in this story."),
+    makeWritten("Describe an important event in the story and explain why it matters."),
+    makeWritten("What can readers learn from this story? Support your answer with details from the story.")
+  ];
 }
 function renderBookQuiz() {
   const container=document.getElementById("bookQuiz");container.innerHTML="";
   activeQuiz.forEach((q,i)=>{
     const card=document.createElement("div");card.style.cssText="background:#21002d;border:1px solid #ff8c00;border-radius:9px;padding:15px;margin:14px 0";
-    const title=document.createElement("p");title.textContent=`${i+1}. ${q.q}`;title.style.cssText="font-weight:bold;margin-bottom:10px";card.appendChild(title);
-    q.choices.forEach((choice,j)=>{
-      const label=document.createElement("label");label.style.cssText="display:flex;gap:10px;align-items:flex-start;margin:10px 0;cursor:pointer";
-      const radio=document.createElement("input");radio.type="radio";radio.name="bookQuizQ"+i;radio.value=choice;radio.style.width="auto";
-      const text=document.createElement("span");text.textContent=choice;
-      label.appendChild(radio);label.appendChild(text);card.appendChild(label);
-    });container.appendChild(card);
+    const title=document.createElement("p");title.textContent=`${i+1}. ${q.q}`;title.style.cssText="font-weight:bold;margin-bottom:10px;color:#fff";card.appendChild(title);
+    if(q.type==="mcq") {
+      q.choices=[...new Set(q.choices)];while(q.choices.length<4)q.choices.push("This is not mentioned in the story.");q.choices=q.choices.slice(0,4).sort(()=>Math.random()-0.5);
+      q.choices.forEach(choice=>{const label=document.createElement("label");label.style.cssText="display:flex;gap:10px;align-items:flex-start;margin:10px 0;cursor:pointer;color:#ddd";const radio=document.createElement("input");radio.type="radio";radio.name="bookQuizQ"+i;radio.value=choice;radio.style.width="auto";const text=document.createElement("span");text.textContent=choice;label.append(radio,text);card.appendChild(label);});
+    } else {
+      const input=q.type==="blank"?document.createElement("input"):document.createElement("textarea");input.name="bookQuizQ"+i;input.id="bookQuizQ"+i;input.placeholder=q.type==="blank"?"Type the missing word":"Write your answer here";input.style.cssText="box-sizing:border-box;width:100%;padding:12px;border:1px solid #ff8c00;border-radius:7px;background:#160020;color:white;min-height:44px;";card.appendChild(input);
+    }
+    container.appendChild(card);
   });
 }
 function openReadingBook(book) {
@@ -2022,11 +2114,17 @@ document.getElementById("bookQuizSubmit").addEventListener("click",()=>{
   const feedback=document.getElementById("bookQuizFeedback"),claim=document.getElementById("bookClaim");
   bookQuizValidated=false;claim.disabled=true;
   if(Date.now()<quizRetryAt){const wait=Math.ceil((quizRetryAt-Date.now())/1000);feedback.textContent=`Please read again and wait ${wait} seconds before retaking the quiz.`;return;}
-  const answers=activeQuiz.map((q,i)=>document.querySelector(`input[name="bookQuizQ${i}"]:checked`));
-  if(answers.some(a=>!a)){feedback.textContent="Please answer all five questions before submitting.";return;}
-  const correct=answers.filter((a,i)=>a.value===activeQuiz[i].correct).length;
-  if(correct===5){bookQuizValidated=true;feedback.textContent="🎉 All five answers are correct! You can claim your 20 points.";claim.disabled=false;}
-  else {quizRetryAt=Date.now()+QUIZ_RETRY_DELAY;quizRetryTimes[currentReadingBook.title]=quizRetryAt;feedback.textContent=`You got ${correct}/5 correct. Read the story again. You can try again in 20 seconds.`;speakBookMessage("Some answers were incorrect. Please read the story again and wait twenty seconds before trying again.");}
+  const answers=activeQuiz.map((q,i)=>q.type==="mcq"?document.querySelector(`input[name="bookQuizQ${i}"]:checked`):document.querySelector(`[name="bookQuizQ${i}"]`));
+  if(answers.some(a=>!a||!a.value.trim())){feedback.textContent=`Please answer all ${activeQuiz.length} questions before submitting.`;return;}
+  const correct=answers.filter((a,i)=>{
+    const q=activeQuiz[i],answer=a.value.trim().toLowerCase();
+    if(q.type==="mcq") return answer===q.correct.toLowerCase();
+    if(q.type==="blank") return answer.replace(/[^a-z0-9]/g,"")===q.answer.toLowerCase().replace(/[^a-z0-9]/g,"");
+    const matched=q.keywords.filter(word=>answer.includes(word)).length;
+    return answer.split(/\s+/).length>=5 && matched>=Math.min(3,q.keywords.length);
+  }).length;
+  if(correct===activeQuiz.length){bookQuizValidated=true;feedback.textContent=`🎉 All ${activeQuiz.length} answers are correct! You can claim your 20 points.`;claim.disabled=false;}
+  else {quizRetryAt=Date.now()+QUIZ_RETRY_DELAY;quizRetryTimes[currentReadingBook.title]=quizRetryAt;feedback.textContent=`You got ${correct}/${activeQuiz.length} correct. Read the story again. You can try again in 20 seconds.`;speakBookMessage("Some answers were incorrect. Please read the story again and wait twenty seconds before trying again.");}
 });
 
 document.getElementById("bookClaim").addEventListener("click",()=>{
@@ -2044,14 +2142,14 @@ document.getElementById("bookClaim").addEventListener("click",()=>{
   }
 
   completedBookIds.push(currentReadingBook.title);
-  bookPoints += 20;
+  if(!devMode) bookPoints += 20;
   saveBookProgress();
 
   document.getElementById("bookClaim").disabled = true;
   document.getElementById("bookClaim").textContent = "✅ Completed!";
   document.getElementById("bookNotice").textContent =
-    "Excellent work! You earned 20 points. Your new total is " + bookPoints + " points.";
-  speakBookMessage("Good job! You have completed this book and earned 20 points!");
+    devMode ? "DEV MODE: Book completed. Your points remain unlimited." : "Excellent work! You earned 20 points. Your new total is " + bookPoints + " points.";
+  speakBookMessage(devMode ? "Good job! You have completed this book. Developer mode gives unlimited points." : "Good job! You have completed this book and earned 20 points!");
   renderBookLevels();
 });
 
